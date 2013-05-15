@@ -1,6 +1,7 @@
+log.roo
+/target/*
+/.settings/*
 *.class
-
-# Package Files #
 *.jar
-*.war
-*.ear
+*.exe
+*~
