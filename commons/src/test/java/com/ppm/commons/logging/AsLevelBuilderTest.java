@@ -46,7 +46,7 @@ public class AsLevelBuilderTest {
 
 	/**
 	 * Test method for
-	 * {@link com.ppm.egw.util.logging.AsLevelBuilder#asInfo()}.
+	 * {@link com.ppm..util.logging.AsLevelBuilder#asInfo()}.
 	 */
 	@Test
 	public final void testAsInfo() {
@@ -58,7 +58,7 @@ public class AsLevelBuilderTest {
 
 	/**
 	 * Test method for
-	 * {@link com.ppm.egw.util.logging.AsLevelBuilder#asWarn()}.
+	 * {@link com.ppm..util.logging.AsLevelBuilder#asWarn()}.
 	 */
 	@Test
 	public final void testAsWarn() {
@@ -70,7 +70,7 @@ public class AsLevelBuilderTest {
 
 	/**
 	 * Test method for
-	 * {@link com.ppm.egw.util.logging.AsLevelBuilder#asError()}.
+	 * {@link com.ppm..util.logging.AsLevelBuilder#asError()}.
 	 */
 	@Test
 	public final void testAsError() {
@@ -82,7 +82,7 @@ public class AsLevelBuilderTest {
 
 	/**
 	 * Test method for
-	 * {@link com.ppm.egw.util.logging.AsLevelBuilder#asDebug()}.
+	 * {@link com.ppm..util.logging.AsLevelBuilder#asDebug()}.
 	 */
 	@Test
 	public final void testAsDebug() {

@@ -47,7 +47,7 @@ public class AsLevelBuilder implements AsLevel {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.ppm.egw.util.logging.AsLevel#asInfo()
+	 * @see com.ppm..util.logging.AsLevel#asInfo()
 	 */
 	@Override
 	public AsLevel asInfo() {
@@ -59,7 +59,7 @@ public class AsLevelBuilder implements AsLevel {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.ppm.egw.util.logging.AsLevel#asWarn()
+	 * @see com.ppm..util.logging.AsLevel#asWarn()
 	 */
 	@Override
 	public AsLevel asWarn() {
@@ -71,7 +71,7 @@ public class AsLevelBuilder implements AsLevel {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.ppm.egw.util.logging.AsLevel#asError()
+	 * @see com.ppm..util.logging.AsLevel#asError()
 	 */
 	@Override
 	public AsLevel asError() {
@@ -83,7 +83,7 @@ public class AsLevelBuilder implements AsLevel {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.ppm.egw.util.logging.AsLevel#asDebug()
+	 * @see com.ppm..util.logging.AsLevel#asDebug()
 	 */
 	@Override
 	public AsLevel asDebug() {

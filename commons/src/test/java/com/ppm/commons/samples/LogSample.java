@@ -55,7 +55,7 @@ public class LogSample {
 		logger.all().logKey("info").value("aaa").asInfo().asWarn();
 
 		// LOG SPLUNK SINGLE KEV-VALUE
-		logger.splunk().logKey("command=").value("egwNotifyRouterCommand").asError();
+		logger.splunk().logKey("command=").value("NotifyRouterCommand").asError();
 		// LOG SPLUNK KEY-VALUE ANY MODES.
 		logger.splunk().logKey("merchant=").value("bpagnovaiorque1").asInfo().asDebug().asWarn().asError();
 		// LOG ALL AS ERROR

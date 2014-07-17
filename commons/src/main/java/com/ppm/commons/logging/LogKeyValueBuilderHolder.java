@@ -39,7 +39,7 @@ public class LogKeyValueBuilderHolder implements LogKey, RecursiveLogKey {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ppm.egw.util.logging.LogKey#value(java.lang.Object)
+	 * @see com.ppm..util.logging.LogKey#value(java.lang.Object)
 	 */
 	@Override
 	public RecursiveLogKey value(Object msg) {

@@ -31,29 +31,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ToStringStyle {
 
-	/**
-	 *
-	 */
 	public enum Style {
-
-		/**
-		 *
-		 */
 		REFLECTION,
-
-		/**
-		 *
-		 */
 		IGNORE_NULL,
-
-		/**
-		 *
-		 */
-		CALL_TO_STRING}
-
-	/**
-	 *
-	 * @return
-	 */
+		CALL_TO_STRING,
+		MASK_FIELD
+	}
+	
 	public Style value() default Style.REFLECTION;
 }
