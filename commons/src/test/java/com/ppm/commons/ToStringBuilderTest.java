@@ -82,11 +82,11 @@ public class ToStringBuilderTest {
 	}
 
 	@SuppressWarnings("unused")
-	public class Address {
+	private class Address {
 
-		private String street;
-		private int number;
-		private String complement;
+		private final String street;
+		private final int number;
+		private final String complement;
 
 		private Address(String street, int number, String complement) {
 			super();
@@ -97,9 +97,9 @@ public class ToStringBuilderTest {
 	}
 
 	@SuppressWarnings("unused")
-	public class Order {
+	private class Order {
 
-		private int id;
+		private final int id;
 
 		private Order(int id) {
 			super();
@@ -108,7 +108,7 @@ public class ToStringBuilderTest {
 	}
 
 	@SuppressWarnings("unused")
-	public class Person implements Serializable {
+	private class Person implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 		public static final String CONSTANTE = "constante";
@@ -117,10 +117,10 @@ public class ToStringBuilderTest {
 		private Address address;
 		private short[] numbers;
 		private boolean alive;
-		private String NULL_OBJECT = null;
+		private final String NULL_OBJECT = null;
 		private List<Order> orders;
 		private Map<String, Person> parents;
-		private Class<Person> clazz = Person.class;
+		private final Class<Person> clazz = Person.class;
 
 		public void setName(String name) {
 			this.name = name;
@@ -166,7 +166,7 @@ public class ToStringBuilderTest {
 		System.out.println(result);
 	}
 
-	public class A {
+	private class A {
 
 		@SuppressWarnings("unused")
 		private B b;
@@ -185,7 +185,7 @@ public class ToStringBuilderTest {
 		}
 	}
 
-	public class B {
+	private class B {
 
 		@SuppressWarnings("unused")
 		private A a;
@@ -212,7 +212,7 @@ public class ToStringBuilderTest {
 		assertThat(result, equalTo(expected));
 	}
 
-	public class Card {
+	private class Card {
 
 		@ToStringStyle(Style.MASK_FIELD)
 		private final String ccNumber;
@@ -253,27 +253,18 @@ public class ToStringBuilderTest {
 		assertThat(result, equalTo(toStringExpected));
 	}
 
-	/**
-	 * Test arrays.
-	 */
 	@Test
 	@Ignore("Teste a ser Implementado.")
 	public void testArrays() {
 		// TODO: Implementar!!
 	}
 
-	/**
-	 * Test wrappers.
-	 */
 	@Test
 	@Ignore("Teste a ser Implementado.")
 	public void testWrappers() {
 		//TODO: Implementar!!
 	}
 
-	/**
-	 * Test map.
-	 */
 	@Test
 	@Ignore("Teste a ser Implementado.")
 	public void testMap() {
