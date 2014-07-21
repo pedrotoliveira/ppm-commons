@@ -1,9 +1,8 @@
-package com.ppm.commons.samples;
+package com.ppm.commons;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import com.ppm.commons.ToStringBuilder;
 import com.ppm.commons.annotation.ToStringStyle;
 import com.ppm.commons.annotation.ToStringStyle.Style;
 import java.io.Serializable;
@@ -48,7 +47,7 @@ public class ToStringBuilderTest {
 		person.setNumbers(new short[]{1, 3, 4, 5});
 		person.setOrders(Arrays.asList(new Order[]{new Order(12358), new Order(12387), new Order(821)}));
 
-		Map<String, Person> parents = new HashMap<String, ToStringBuilderTest.Person>();
+		Map<String, Person> parents = new HashMap<>();
 		Person father = new Person();
 		father.setName("Bill Doe");
 		father.setAddress(new Address("Cemitery", 582, null));
@@ -73,9 +72,9 @@ public class ToStringBuilderTest {
 				+ " orders=ArrayList{ Order[id=12358], Order[id=12387], Order[id=821] },"
 				+ " parents=Map{"
 				+ " (k1=mother, v1=[Person[name=Willy Mae Doe, age=70, address=Address[street=Older street, number=82, complement=bloco a], numbers=[9, 7, 6, 8], alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class com.ppm.commons.samples.ToStringBuilderTest$Person]]),"
+				+ " clazz=class com.ppm.commons.ToStringBuilderTest$Person]]),"
 				+ " (k2=father, v2=[Person[name=Bill Doe, age=0, address=Address[street=Cemitery, number=582, complement=null], numbers=null, alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class com.ppm.commons.samples.ToStringBuilderTest$Person]]) }, clazz=class com.ppm.commons.samples.ToStringBuilderTest$Person]";
+				+ " clazz=class com.ppm.commons.ToStringBuilderTest$Person]]) }, clazz=class com.ppm.commons.ToStringBuilderTest$Person]";
 
 		String result = person.toString();
 		System.out.println(result);

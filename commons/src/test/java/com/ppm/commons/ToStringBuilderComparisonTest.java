@@ -1,4 +1,4 @@
-package com.ppm.commons.samples;
+package com.ppm.commons;
 
 import com.ppm.commons.ToStringBuilder;
 import java.util.ArrayList;

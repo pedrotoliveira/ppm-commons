@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,6 +22,10 @@ public class LogKeyValueBuilderTest {
 	
 	@Mock
 	private Logger logger;
+
+	@Before
+	public void setUp() throws Exception {
+	}
 	
 	@Test
 	public final void testNewKey() {
@@ -51,5 +56,37 @@ public class LogKeyValueBuilderTest {
 	public final void testLogNullKey() {
 		LogKeyValueBuilder builder = LogKeyValueBuilder.create(logger, "command");
 		builder.logKey(null).value("sei não").asDebug();
+	}
+
+	@Test
+	public void testValue() {
+	}
+
+	@Test
+	public void testGetKey() {
+	}
+
+	@Test
+	public void testLogKey() {
+	}
+
+	@Test
+	public void testChangeKey() {
+	}
+
+	@Test
+	public void testAsInfo() {
+	}
+
+	@Test
+	public void testAsWarn() {
+	}
+
+	@Test
+	public void testAsError() {
+	}
+
+	@Test
+	public void testAsDebug() {
 	}
 }

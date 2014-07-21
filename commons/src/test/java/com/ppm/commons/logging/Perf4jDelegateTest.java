@@ -36,4 +36,32 @@ public class Perf4jDelegateTest {
 		delegate.stop("teste");
 	}
 
+	@Test
+	public void testStart_0args() {
+	}
+
+	@Test
+	public void testStart_String() {
+	}
+
+	@Test
+	public void testStop_0args() {
+	}
+
+	@Test
+	public void testStop_String() {
+	}
+
+	@Test
+	public void testStop_String_Exception() {
+	}
+
+	@Test
+	public void testLap() {
+	}
+
+	@Test
+	public void testStop_String_String() {
+	}
+
 }

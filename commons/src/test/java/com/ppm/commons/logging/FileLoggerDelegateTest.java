@@ -87,4 +87,48 @@ public class FileLoggerDelegateTest {
 		delegate.logKey("key=").value("value").asError();
 		verify(logger, atLeastOnce()).error("key=value ");
 	}
+
+	@Test
+	public void testLogInfo_Object() {
+	}
+
+	@Test
+	public void testLogWarn_Object() {
+	}
+
+	@Test
+	public void testLogError_Object() {
+	}
+
+	@Test
+	public void testLogDebug_Object() {
+	}
+
+	@Test
+	public void testLogInfo_Object_Throwable() {
+	}
+
+	@Test
+	public void testLogWarn_Object_Throwable() {
+	}
+
+	@Test
+	public void testLogError_Object_Throwable() {
+	}
+
+	@Test
+	public void testLogDebug_Object_Throwable() {
+	}
+
+	@Test
+	public void testLogData_Map() {
+	}
+
+	@Test
+	public void testLogData_Map_Throwable() {
+	}
+
+	@Test
+	public void testLogKey() {
+	}
 }

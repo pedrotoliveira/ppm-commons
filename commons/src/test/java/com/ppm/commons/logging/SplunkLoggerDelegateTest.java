@@ -73,4 +73,12 @@ public class SplunkLoggerDelegateTest {
 		verify(logger, atLeastOnce()).error("key=value ");
 	}
 
+	@Test
+	public void testLogKey() {
+	}
+
+	@Test
+	public void testLogData() {
+	}
+
 }

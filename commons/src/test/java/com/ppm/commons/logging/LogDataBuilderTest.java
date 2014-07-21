@@ -75,4 +75,36 @@ public class LogDataBuilderTest {
 		verify(logger, atLeastOnce()).error("command=tester ", ex);
 	}
 
+	@Test
+	public void testAsInfo() {
+	}
+
+	@Test
+	public void testAsWarn() {
+	}
+
+	@Test
+	public void testAsError() {
+	}
+
+	@Test
+	public void testAsDebug() {
+	}
+
+	@Test
+	public void testGetData() {
+	}
+
+	@Test
+	public void testHashCode() {
+	}
+
+	@Test
+	public void testEquals() {
+	}
+
+	@Test
+	public void testToString() {
+	}
+
 }
