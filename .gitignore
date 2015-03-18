@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 log.roo
 /target/*
 /.settings/*
@@ -5,3 +6,30 @@ log.roo
 *.jar
 *.exe
 *~
+=======
+/*.*~
+/build/*
+/.classpath
+/.gradle/*
+/**/build/*
+/.project
+/.settings/org.eclipse.jdt.core.prefs
+/**/.classpath
+/**/.project
+/**/.settings/*
+/**/.externalToolBuilders/*
+/**/*.class
+/**/target/*
+/**/bin/*
+*.log
+/**/*.log
+nb*
+/**/nb-configuration.xml
+/.idea/*
+*.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+>>>>>>> e8572cb19f69653faa27dbea506130aef311529e
