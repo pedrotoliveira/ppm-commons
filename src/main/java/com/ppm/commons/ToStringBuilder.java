@@ -43,30 +43,55 @@ import java.util.Locale;
  */
 public final class ToStringBuilder {
 
-	/** The Constant logger. */
+	/**
+	 * The Constant logger.
+	 */
 	//private static final FluentLogger logger = LoggerService.init(ToStringBuilder.class);
-
-	/** The Constant PAGE_SIZE. */
+	/**
+	 * The Constant PAGE_SIZE.
+	 */
 	private static final int PAGE_SIZE = 15;
 
-	/** The Constant EQUAL. */
+	/**
+	 * The Constant EQUAL.
+	 */
 	private static final String EQUAL = "=";
 
-	/** The Constant COMMA. */
+	/**
+	 * The Constant COMMA.
+	 */
 	private static final String COMMA = ", ";
 
-	/** The Constant IGNORE_SUPER_TYPES. */
+	/**
+	 * The Constant IGNORE_SUPER_TYPES.
+	 */
 	private static final boolean IGNORE_SUPER_TYPES = true;
 
-	/** The Constant NOT_IGNORE_SUPER_TYPES. */
+	/**
+	 * The Constant NOT_IGNORE_SUPER_TYPES.
+	 */
 	private static final boolean NOT_IGNORE_SUPER_TYPES = false;
 
-	/** The Constant DEFAULT_ERROR. */
+	/**
+	 * The Constant DEFAULT_ERROR.
+	 */
 	private static final String DEFAULT_ERROR = "<We got some error on ToStringBuilder!>";
 
-	/** The Constant TO_MANY_TO_STRING_CALLS_VIOLATION. */
+	/**
+	 * The Constant TO_MANY_TO_STRING_CALLS_VIOLATION.
+	 */
 	private static final String TO_MANY_TO_STRING_CALLS_VIOLATION = "<We got some error on ToStringBuilder, reflectionToString"
-			+ " method has reached the max depth calls! Please verify the circular references.>";
+	+ " method has reached the max depth calls! Please verify the circular references.>";
+
+	private final Object object;
+
+	public ToStringBuilder(final Object o) {
+		this.object = o;
+	}
+
+	public String reflectionToString() {
+		return ToStringBuilder.reflectionToString(object, NOT_IGNORE_SUPER_TYPES);
+	}
 
 	/**
 	 * Create a toString Pattern for an object and its super type, if any.
@@ -82,7 +107,7 @@ public final class ToStringBuilder {
 	/**
 	 * Create a toString Pattern for an object and its super type, if we want to.
 	 * <p>
-	 * @param o               the Object
+	 * @param o the Object
 	 * @param ignoreSuperType has to ignore the superType ?
 	 * <p>
 	 * @return toString Pattern
@@ -94,9 +119,9 @@ public final class ToStringBuilder {
 	/**
 	 * Reflection to string.
 	 * <p>
-	 * @param o               the o
+	 * @param o the o
 	 * @param ignoreSuperType the ignore super type
-	 * @param style           the style
+	 * @param style the style
 	 * <p>
 	 * @return the string
 	 */
@@ -134,9 +159,9 @@ public final class ToStringBuilder {
 	/**
 	 * To string fields.
 	 * <p>
-	 * @param o               the o
+	 * @param o the o
 	 * @param ignoreSuperType the ignore super type
-	 * @param style           the style
+	 * @param style the style
 	 * <p>
 	 * @return the string
 	 */
@@ -157,7 +182,7 @@ public final class ToStringBuilder {
 	 * Select style.
 	 * <p>
 	 * @param current the current
-	 * @param field   the field
+	 * @param field the field
 	 * <p>
 	 * @return the style
 	 */
@@ -174,8 +199,8 @@ public final class ToStringBuilder {
 	 */
 	private static Style getFieldStyle(Field field) {
 		return (field.isAnnotationPresent(ToStringStyle.class))
-				? field.getAnnotation(ToStringStyle.class).value()
-				: Style.REFLECTION;
+		? field.getAnnotation(ToStringStyle.class).value()
+		: Style.REFLECTION;
 	}
 
 	/**
@@ -210,7 +235,7 @@ public final class ToStringBuilder {
 	 * Checks if is not on.
 	 * <p>
 	 * @param classFields the class fields
-	 * @param field       the field
+	 * @param field the field
 	 * <p>
 	 * @return true, if is not on
 	 */
@@ -238,23 +263,23 @@ public final class ToStringBuilder {
 	 * Checks if is to print field.
 	 * <p>
 	 * @param field the field
-	 * @param name  the name
+	 * @param name the name
 	 * <p>
 	 * @return true, if is to print field
 	 */
 	private static boolean isToPrintField(Field field, String name) {
 		return !(field.isAnnotationPresent(ToStringExclude.class) || "serialVersionUID".equals(name) || "this$0".equals(name) || Modifier
-				.isStatic(field.getModifiers()));
+		.isStatic(field.getModifiers()));
 	}
 
 	/**
 	 * Append value.
 	 * <p>
-	 * @param o       the o
-	 * @param field   the field
-	 * @param name    the name
+	 * @param o the o
+	 * @param field the field
+	 * @param name the name
 	 * @param builder the builder
-	 * @param style   the style
+	 * @param style the style
 	 */
 	private static void appendValue(Object o, final Field field, final String name, final StringBuilder builder, Style style) {
 		try {
@@ -295,7 +320,7 @@ public final class ToStringBuilder {
 	/**
 	 * Handle exception.
 	 * <p>
-	 * @param ex      the ex
+	 * @param ex the ex
 	 * @param builder the builder
 	 */
 	private static void handleException(Exception ex, StringBuilder builder) {
@@ -378,21 +403,21 @@ public final class ToStringBuilder {
 	 */
 	private static boolean isWrapper(Object value) {
 		return (value.getClass().isPrimitive()
-				|| value.getClass().isInterface()
-				|| value instanceof String
-				|| value instanceof Integer
-				|| value instanceof Double
-				|| value instanceof Short
-				|| value instanceof Long
-				|| value instanceof Float
-				|| value instanceof Character
-				|| value instanceof Boolean
-				|| value instanceof Byte
-				|| value instanceof Date
-				|| value instanceof Calendar
-				|| value instanceof Locale
-				|| value instanceof Class<?>
-				|| value instanceof Enum<?>);
+		|| value.getClass().isInterface()
+		|| value instanceof String
+		|| value instanceof Integer
+		|| value instanceof Double
+		|| value instanceof Short
+		|| value instanceof Long
+		|| value instanceof Float
+		|| value instanceof Character
+		|| value instanceof Boolean
+		|| value instanceof Byte
+		|| value instanceof Date
+		|| value instanceof Calendar
+		|| value instanceof Locale
+		|| value instanceof Class<?>
+		|| value instanceof Enum<?>);
 	}
 
 	/**
@@ -420,15 +445,15 @@ public final class ToStringBuilder {
 	/**
 	 * Append array values.
 	 * <p>
-	 * @param o       the o
-	 * @param field   the field
+	 * @param o the o
+	 * @param field the field
 	 * @param builder the builder
 	 * <p>
 	 * @throws IllegalArgumentException the illegal argument exception
-	 * @throws IllegalAccessException   the illegal access exception
+	 * @throws IllegalAccessException the illegal access exception
 	 */
 	private static void appendArrayValues(Object o, Field field, StringBuilder builder) throws IllegalArgumentException,
-			IllegalAccessException {
+	IllegalAccessException {
 		Object array = field.get(o);
 		appendArrayValues(array, builder);
 	}
@@ -436,7 +461,7 @@ public final class ToStringBuilder {
 	/**
 	 * Append array values.
 	 * <p>
-	 * @param array   the array
+	 * @param array the array
 	 * @param builder the builder
 	 */
 	private static void appendArrayValues(Object array, StringBuilder builder) {
@@ -454,10 +479,10 @@ public final class ToStringBuilder {
 	/**
 	 * Append array values range.
 	 * <p>
-	 * @param array      the array
-	 * @param builder    the builder
+	 * @param array the array
+	 * @param builder the builder
 	 * @param beginIndex the begin index
-	 * @param endIndex   the end index
+	 * @param endIndex the end index
 	 */
 	private static void appendArrayValuesRange(Object array, StringBuilder builder, int beginIndex, int endIndex) {
 		for (int i = beginIndex; i < endIndex; i++) {
@@ -477,7 +502,7 @@ public final class ToStringBuilder {
 	 * Append collection.
 	 * <p>
 	 * @param collection the collection
-	 * @param builder    the builder
+	 * @param builder the builder
 	 */
 	@SuppressWarnings("unchecked")
 	private static void appendCollection(Collection<?> collection, StringBuilder builder) {
@@ -533,7 +558,7 @@ public final class ToStringBuilder {
 	/**
 	 * Append map.
 	 * <p>
-	 * @param map     the map
+	 * @param map the map
 	 * @param builder the builder
 	 */
 	@SuppressWarnings("unchecked")
