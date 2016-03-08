@@ -25,39 +25,79 @@ buildscript {
 }
 apply plugin: 'io.codearte.nexus-staging'
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-			repository(url: "file://~/.m2/repository/")
-			pom.project {
-				name 'ppm-commons'
-				description 'PPM Commons Library'
-				packaging 'jar'
-				url 'https://github.com/pedrotoliveira/ppm-commons'
-				inceptionYear '2016'
-				scm {
-					connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
-					developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
-					url 'https://github.com/pedrotoliveira/ppm-commons.git'
-				}
+if (project.hasProperty('release')) {
+	subprojects {
 
-				licenses {
-					license {
-						name 'GNU GENERAL PUBLIC LICENSE, Version 3'
-						url 'http://www.gnu.org/licenses/gpl.txt'
-						distribution 'repo'
+        task javadocJar(type: Jar) {
+            classifier = 'javadoc'
+            from javadoc
+        }
+
+        task sourcesJar(type: Jar) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        artifacts {
+            archives javadocJar, sourcesJar
+        }
+    }
+
+	allprojects {
+        apply plugin: 'signing'
+        apply plugin: 'maven'
+
+        // Signature of artifacts
+        signing {
+            sign configurations.archives
+        }
+
+        // OSSRH publication
+		uploadArchives {
+			repositories {
+				mavenDeployer {
+					// POM signature
+					beforeDeployment{ MavenDeployment deployment -> signing.signPom(deployment) }
+					// Target repository
+					repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+						authentication(userName: ossrhUser, password: ossrhPassword)
 					}
-				}
-				developers {
-					developer {
-						id = 'pedrotoliveira'
-						name = 'Pedro Oliveira'
-						email = 'pedro.oliveira20@mail.com'
+					pom.project {
+						name 'ppm-commons'
+						description 'PPM Commons Library'
+						packaging 'jar'
+						url 'https://github.com/pedrotoliveira/ppm-commons'
+						inceptionYear '2016'
+						scm {
+							connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
+							developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
+							url 'https://github.com/pedrotoliveira/ppm-commons.git'
+						}
+
+						licenses {
+							license {
+								name 'GNU GENERAL PUBLIC LICENSE, Version 3'
+								url 'http://www.gnu.org/licenses/gpl.txt'
+								distribution 'repo'
+							}
+						}
+						developers {
+							developer {
+								id = 'pedrotoliveira'
+								name = 'Pedro Oliveira'
+								email = 'pedro.oliveira20@mail.com'
+							}
+						}
 					}
 				}
 			}
 		}
 	}
+}
+
+nexusStaging {
+    username = ossrhUser
+    password = ossrhPassword
 }
 
 dependencies {
