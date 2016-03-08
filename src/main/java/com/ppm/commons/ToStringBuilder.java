@@ -34,11 +34,13 @@ import com.ppm.commons.annotation.ToStringStyle.Style;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * ToStringBuilder
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  *
  */
 public final class ToStringBuilder {
@@ -46,7 +48,7 @@ public final class ToStringBuilder {
     /**
      * The Constant logger.
      */
-    //private static final FluentLogger logger = LoggerService.init(ToStringBuilder.class);
+    private static final Logger logger = LogManager.getFormatterLogger(ToStringBuilder.class);
     /**
      * The Constant PAGE_SIZE.
      */
@@ -326,7 +328,7 @@ public final class ToStringBuilder {
      * @param builder the builder
      */
     private static void handleException(Exception ex, StringBuilder builder) {
-        //logger.file().logError(DEFAULT_ERROR, ex);
+        logger.error(DEFAULT_ERROR, ex);
         builder.append(DEFAULT_ERROR);
     }
 

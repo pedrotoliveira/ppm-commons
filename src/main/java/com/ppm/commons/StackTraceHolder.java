@@ -18,9 +18,9 @@ package com.ppm.commons;
 
 /**
  * Holds a state of a call in the thread stack.
- * <p>
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
- * <p>
+ *
+ * @author Pedro T. Oliveira
+ *
  */
 public class StackTraceHolder {
 

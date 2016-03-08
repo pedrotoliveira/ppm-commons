@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Call the toString method from the field.
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -37,6 +37,6 @@ public @interface ToStringStyle {
 		CALL_TO_STRING,
 		MASK_FIELD
 	}
-	
+
 	public Style value() default Style.REFLECTION;
 }

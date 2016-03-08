@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Exclude field from the toString.
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  *
  */
 @Retention(RetentionPolicy.RUNTIME)

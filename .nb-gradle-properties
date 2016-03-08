@@ -21,4 +21,9 @@
       <task-jvm-args/>
     </task>
   </common-tasks>
+  <license-header>
+    <name>GNU-V3</name>
+    <template>LICENSE</template>
+    <property name="organization">ppm</property>
+  </license-header>
 </gradle-project-properties>

@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  * Validator Utils - A class with some utilities methods
  * Useful for identifying programmer errors early and clearly at runtime.
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  */
 public class ValidatorUtils {
 
@@ -85,7 +85,7 @@ public class ValidatorUtils {
 	 * Validate if size is different from the parameter
 	 *
 	 * @param collection a Collection
-	 * @param size
+	 * @param size the size of the collection
 	 * @param paramName  the parameter name.
 	 *
 	 * @throws IllegalArgumentException if the parameter size is different

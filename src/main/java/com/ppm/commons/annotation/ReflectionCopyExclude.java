@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -18,17 +18,19 @@ package com.ppm.commons;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * RecursiveToStringDepthController - controls concurrent calls of ToStringBuilder.reflectiveToString.
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  *
  */
-public final class RecursiveToStringDepthController {
+final class RecursiveToStringDepthController {
 
 	/** The Constant logger. */
-	//private static final Logger logger = Logger
+	private static final Logger logger = LogManager.getLogger(RecursiveToStringDepthController.class);
 
 	/** The Constant SUCCESS. */
 	private static final boolean SUCCESS = true;
@@ -83,7 +85,7 @@ public final class RecursiveToStringDepthController {
 			int count = getCurrentHolder().getCallCounts();
 			if (count > MAX_DEPTH) {
 				valid = false;
-				//logger.file().logError("ToString not allowed, " + getCurrentHolder());
+				logger.error("ToString not allowed, " + getCurrentHolder());
 			}
 		}
 		return valid;
@@ -98,7 +100,7 @@ public final class RecursiveToStringDepthController {
 		try {
 			final int stackTraceLength = Thread.currentThread().getStackTrace().length;
 			if (stackTraceLength == MAX_STACK_SIZE) {
-				//logger.file().logError("ToString not allowed, Max Stack Size " + MAX_STACK_SIZE + " Reached!");
+				logger.error("ToString not allowed, Max Stack Size " + MAX_STACK_SIZE + " Reached!");
 				getAllholdersInCurrentThread().clear();
 				return FAIL;
 			}
