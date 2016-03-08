@@ -96,8 +96,8 @@ if (project.hasProperty('release')) {
 }
 
 nexusStaging {
-    username = ossrhUser
-    password = ossrhPassword
+    //username = ossrhUser
+    //password = ossrhPassword
 }
 
 dependencies {
