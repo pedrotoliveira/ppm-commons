@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Pedro T. Oliveira <pedro.oliveira.nom.br>
+ *  Copyright (C) 2016 Pedro T. Oliveira <pedro.oliveira.nom.br>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
