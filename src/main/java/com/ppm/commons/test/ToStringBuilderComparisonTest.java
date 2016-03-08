@@ -1,16 +1,17 @@
-package com.ppm.commons;
+package com.ppm.commons.test;
 
 import com.ppm.commons.ToStringBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import java.util.UUID;
+import java.util.concurrent.ForkJoinPool;
 
 /**
+ * A Stress test for ToStringBuilder
+ *
  * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
  *
  */
@@ -18,7 +19,7 @@ public class ToStringBuilderComparisonTest {
 
 	public static void main(String[] args) throws Exception {
 
-		int maxTasks = 100000;
+		int maxTasks = 1000000;
 
 		List<ExecuteToStringTask> tasks = new ArrayList<>();
 		for (int i = 0; i < maxTasks; i++) {
@@ -27,10 +28,10 @@ public class ToStringBuilderComparisonTest {
 		}
 
 		long startTime1 = System.currentTimeMillis();
-		ExecutorService executor = Executors.newFixedThreadPool(200);
+		ForkJoinPool executor = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
 
 		@SuppressWarnings("unused")
-		List<Future<String>> futures = executor.invokeAll(tasks);
+		List<Future<String>> futures =  executor.invokeAll(tasks);
 		executor.shutdown();
 		while (!executor.isTerminated()){}
 		long finTime1 = executionTime(startTime1);
@@ -43,15 +44,15 @@ public class ToStringBuilderComparisonTest {
 		}
 
 		long startTime2 = System.currentTimeMillis();
-		executor = Executors.newFixedThreadPool(200);
+		executor = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
 		@SuppressWarnings("unused")
 		List<Future<String>> futures2 = executor.invokeAll(tasks);
 		executor.shutdown();
 		while (!executor.isTerminated()){}
 		long finTime2 = executionTime(startTime2);
 
-		System.out.println("1. msecs=" + finTime1);
-		System.out.println("2. msecs=" + finTime2);
+		System.out.println("1 Reflection. msecs=" + finTime1);
+		System.out.println("2 Normal. msecs=" + finTime2);
 		System.out.println("Terminated");
 	}
 
@@ -93,9 +94,7 @@ public class ToStringBuilderComparisonTest {
 
 	private static class ExecuteToStringTask implements Callable<String> {
 
-		//private static final FluentLogger logger = LoggerService.init(ExecuteToStringTask.class);
-
-		private Object context;
+		private final Object context;
 
 		public ExecuteToStringTask(Object context) {
 			this.context = context;
@@ -104,10 +103,10 @@ public class ToStringBuilderComparisonTest {
 		@Override
 		public String call() throws Exception {
 			try {
-				//logger.all().logInfo(context.toString());
+				//System.out.println("TEST: " + context.toString());
 				return "OK";
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				//ex.printStackTrace();
 				throw ex;
 			}
 		}
