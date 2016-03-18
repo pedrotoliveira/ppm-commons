@@ -2,12 +2,12 @@ language: java
 sudo: required
 jdk:
   - oraclejdk8
-  - oraclejdk7
 install: true
 script:
   - sudo apt-get update && sudo apt-get install oracle-java8-installer
   - java -version
-  - gradle test
+  - gradle assemble
+  - gradle ckeck
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
