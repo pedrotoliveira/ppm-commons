@@ -3,6 +3,8 @@ ppm-commons
 
 PPM Commons Library.
 
+Requires JDK 1.7+
+
 Latest Build Status:
 https://travis-ci.org/pedrotoliveira/ppm-commons
 
