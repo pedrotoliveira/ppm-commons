@@ -1,9 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'maven'
+apply plugin: 'signing'
 
-group ='com.ppm'
-version = '1.0-SNAPSHOT'
+group ='br.com.ppm'
+version = '1.0'
+archivesBaseName = 'ppm-commons'
 
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -17,87 +19,76 @@ buildscript {
 	repositories {
         mavenCentral()
         //Needed only for SNAPSHOT versions
-        //maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
-    }
-    dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
+        maven {
+			url "http://oss.sonatype.org/content/repositories/snapshots/"
+		}
     }
 }
-apply plugin: 'io.codearte.nexus-staging'
 
 if (project.hasProperty('release')) {
-	subprojects {
 
-        task javadocJar(type: Jar) {
-            classifier = 'javadoc'
-            from javadoc
-        }
+	task javadocJar(type: Jar) {
+		classifier = 'javadoc'
+		from javadoc
+	}
 
-        task sourcesJar(type: Jar) {
-            classifier = 'sources'
-            from sourceSets.main.allSource
-        }
+	task sourcesJar(type: Jar) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
 
-        artifacts {
-            archives javadocJar, sourcesJar
-        }
-    }
+	artifacts {
+		archives javadocJar, sourcesJar
+	}
 
-	allprojects {
-        apply plugin: 'signing'
-        apply plugin: 'maven'
+	// Signature of artifacts
+	signing {
+		sign configurations.archives
+	}
 
-        // Signature of artifacts
-        signing {
-            sign configurations.archives
-        }
+	// OSSRH publication
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				// POM signature
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-        // OSSRH publication
-		uploadArchives {
-			repositories {
-				mavenDeployer {
-					// POM signature
-					beforeDeployment{ MavenDeployment deployment -> signing.signPom(deployment) }
-					// Target repository
-					repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-						authentication(userName: ossrhUser, password: ossrhPassword)
+				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+					authentication(userName: ossrhUser, password: ossrhPassword)
+				}
+				snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+					authentication(userName: ossrhUsername, password: ossrhPassword)
+				}
+				pom.project {
+					name 'ppm-commons'
+					description 'PPM Commons Library'
+					packaging 'jar'
+					url 'http://pedrotoliveira.github.io/ppm-commons/'
+					inceptionYear '2016'
+					scm {
+						connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
+						developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
+						url 'https://github.com/pedrotoliveira/ppm-commons.git'
 					}
-					pom.project {
-						name 'ppm-commons'
-						description 'PPM Commons Library'
-						packaging 'jar'
-						url 'https://github.com/pedrotoliveira/ppm-commons'
-						inceptionYear '2016'
-						scm {
-							connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
-							developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
-							url 'https://github.com/pedrotoliveira/ppm-commons.git'
-						}
 
-						licenses {
-							license {
-								name 'GNU GENERAL PUBLIC LICENSE, Version 3'
-								url 'http://www.gnu.org/licenses/gpl.txt'
-								distribution 'repo'
-							}
+					licenses {
+						license {
+							name 'GNU GENERAL PUBLIC LICENSE, Version 3'
+							url 'http://www.gnu.org/licenses/gpl.txt'
+							distribution 'repo'
 						}
-						developers {
-							developer {
-								id = 'pedrotoliveira'
-								name = 'Pedro Oliveira'
-								email = 'pedro.oliveira20@mail.com'
-							}
+					}
+					developers {
+						developer {
+							id = 'pedrotoliveira'
+							name = 'Pedro Oliveira'
+							email = 'pedro.oliveira20@mail.com'
 						}
 					}
 				}
 			}
 		}
 	}
-}
-
-nexusStaging {
-    //username = ossrhUser
-    //password = ossrhPassword
 }
 
 dependencies {

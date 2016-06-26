@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ppm.commons;
+package br.com.ppm.commons;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;

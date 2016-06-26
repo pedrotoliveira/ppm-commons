@@ -1,10 +1,11 @@
-package com.ppm.commons;
+package br.com.ppm.commons;
+
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import com.ppm.commons.annotation.ToStringStyle;
-import com.ppm.commons.annotation.ToStringStyle.Style;
+import br.com.ppm.commons.annotation.ToStringStyle;
+import br.com.ppm.commons.annotation.ToStringStyle.Style;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,9 +73,9 @@ public class ToStringBuilderTest {
 				+ " orders=ArrayList{ Order[id=12358], Order[id=12387], Order[id=821] },"
 				+ " parents=Map{"
 				+ " (k1=mother, v1=[Person[name=Willy Mae Doe, age=70, address=Address[street=Older street, number=82, complement=bloco a], numbers=[9, 7, 6, 8], alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class com.ppm.commons.ToStringBuilderTest$Person]]),"
+				+ " clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]]),"
 				+ " (k2=father, v2=[Person[name=Bill Doe, age=0, address=Address[street=Cemitery, number=582, complement=null], numbers=null, alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class com.ppm.commons.ToStringBuilderTest$Person]]) }, clazz=class com.ppm.commons.ToStringBuilderTest$Person]";
+				+ " clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]]) }, clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]";
 
 		String result = person.toString();
 		System.out.println(result);

@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ppm.commons;
+package br.com.ppm.commons;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -27,9 +27,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.ppm.commons.annotation.ToStringExclude;
-import com.ppm.commons.annotation.ToStringStyle;
-import com.ppm.commons.annotation.ToStringStyle.Style;
+import br.com.ppm.commons.annotation.ToStringExclude;
+import br.com.ppm.commons.annotation.ToStringStyle;
+import br.com.ppm.commons.annotation.ToStringStyle.Style;
 
 import java.util.Calendar;
 import java.util.Date;

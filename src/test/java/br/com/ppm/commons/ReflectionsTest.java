@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ppm.commons;
+package br.com.ppm.commons;
 
 import org.junit.Before;
 import org.junit.Test;
