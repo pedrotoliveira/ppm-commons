@@ -4,9 +4,11 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+apply from: 'deploy.gradle'
+
 group ='br.com.ppm'
 archivesBaseName = 'ppm-commons'
-version = '1.0'
+version = '1.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,7 +33,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
+    gradleVersion = '4.0.2'
 }
 
 mainClassName = "br.com.ppm.commons.test.ToStringBuilderComparisonTest"
@@ -51,8 +53,6 @@ buildscript {
     }
 }
 
-
-
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
@@ -65,54 +65,4 @@ task sourcesJar(type: Jar) {
 
 artifacts {
     archives javadocJar, sourcesJar
-}
-
-// Signature of artifacts
-signing {
-    sign configurations.archives
-}
-
-// OSSRH publication
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            // POM signature
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-                
-            pom.project {
-                name 'ppm-commons'
-                description 'PPM Commons Library'
-                packaging 'jar'
-                url 'http://pedrotoliveira.github.io/ppm-commons/'
-                inceptionYear '2016'
-                scm {
-                    connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
-                    developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
-                    url 'https://github.com/pedrotoliveira/ppm-commons.git'
-                }
-
-                licenses {
-                    license {
-                        name 'GNU GENERAL PUBLIC LICENSE, Version 3'
-                        url 'http://www.gnu.org/licenses/gpl.txt'							
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'pedrotoliveira'
-                        name = 'Pedro Oliveira'
-                        email = 'pedro.oliveira20@mail.com'
-                    }
-                }                    
-            }                
-        }
-    }
 }

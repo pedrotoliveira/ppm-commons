@@ -11,3 +11,12 @@ Latest Build Status:
 https://travis-ci.org/pedrotoliveira/ppm-commons
 
 Github Page: http://pedrotoliveira.github.io/ppm-commons/
+
+To use ppm-commons add to your pom file:
+```
+<dependency>
+  <groupId>br.com.ppm</groupId>
+  <artifactId>ppm-commons</artifactId>
+  <version>1.0</version>
+</dependency>
+```

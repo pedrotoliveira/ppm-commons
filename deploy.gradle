@@ -1,17 +1,19 @@
-if (project.hasProperty('release') && project.findProperty('release')) {
-    
-    println '-------------------------'
-    println 'OK WE ARE GOOD!!'
-    println '-------------------------'
-    
+if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('release'))) {
+
+    if (!hasProperty('ossrhUsername') || !hasProperty('ossrhPassword')) {
+        println 'CAN\'T RELEASE PROJECT'
+        return;
+    }
+
     // Signature of artifacts
     signing {
         sign configurations.archives
     }
-    
-    if (ossrhUsername == null || ossrhPassword == null) {
-        return;
-    }
+
+    println '-------------------------'
+    println 'RELEASE PROJECT          '
+    println 'triggered by: ' + ossrhUsername
+    println '-------------------------'
 
     // OSSRH publication
     uploadArchives {

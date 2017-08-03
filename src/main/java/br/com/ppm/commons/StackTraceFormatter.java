@@ -21,14 +21,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- *
+ * Utility Class to format Java Stack Traces.
+ * 
  * @author Pedro T. Oliveira
  */
 public class StackTraceFormatter {
 
-    /**
-     * Padrões de formatação das StackTraces em String.
-     */
     public enum Format {
 
         /**
