@@ -17,6 +17,6 @@ To use ppm-commons add to your pom file:
 <dependency>
   <groupId>br.com.ppm</groupId>
   <artifactId>ppm-commons</artifactId>
-  <version>1.0</version>
+  <version>1.2</version>
 </dependency>
 ```
