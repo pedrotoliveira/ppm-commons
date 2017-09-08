@@ -1,0 +1,62 @@
+if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('release'))) {
+
+    if (!hasProperty('ossrhUsername') || !hasProperty('ossrhPassword')) {
+        println 'CAN\'T RELEASE PROJECT'
+        return;
+    }
+
+    // Signature of artifacts
+    signing {
+        sign configurations.archives
+    }
+
+    println '-------------------------'
+    println 'RELEASE PROJECT          '
+    println 'triggered by: ' + ossrhUsername
+    println '-------------------------'
+
+    // OSSRH publication
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                // POM signature
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+                
+                pom.project {
+                    name 'ppm-commons'
+                    description 'PPM Commons Library'
+                    packaging 'jar'
+                    url 'http://pedrotoliveira.github.io/ppm-commons/'
+                    inceptionYear '2016'
+                    scm {
+                        connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
+                        developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
+                        url 'https://github.com/pedrotoliveira/ppm-commons.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'GNU GENERAL PUBLIC LICENSE, Version 3'
+                            url 'http://www.gnu.org/licenses/gpl.txt'							
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'pedrotoliveira'
+                            name = 'Pedro Oliveira'
+                            email = 'pedro.oliveira20@mail.com'
+                        }
+                    }                    
+                }                
+            }
+        }
+    }   
+}

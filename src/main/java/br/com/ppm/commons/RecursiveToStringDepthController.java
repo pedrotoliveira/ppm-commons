@@ -171,7 +171,7 @@ final class RecursiveToStringDepthController {
 	/**
 	 * Gets the current holder.
 	 *
-	 * @return the currentholder
+	 * @return the current holder
 	 */
 	static StackTraceHolder getCurrentHolder() {
 		return currentHolder.get();
@@ -187,9 +187,9 @@ final class RecursiveToStringDepthController {
 	}
 
 	/**
-	 * Gets the allholders in current thread.
+	 * Gets the all holders in current thread.
 	 *
-	 * @return the allholdersincurrentthread
+	 * @return the all holders in current thread
 	 */
 	static Set<StackTraceHolder> getAllholdersInCurrentThread() {
 		return allHoldersInCurrentThread.get();

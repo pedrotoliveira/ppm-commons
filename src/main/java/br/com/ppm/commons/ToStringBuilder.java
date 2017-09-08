@@ -21,19 +21,19 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import br.com.ppm.commons.annotation.ToStringExclude;
 import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -300,7 +300,7 @@ public final class ToStringBuilder {
             } else if (isArray(value)) {
                 builder.append(name).append(EQUAL);
                 appendArrayValues(o, field, builder);
-            } else if (isWrapper(value) || Style.CALL_TO_STRING.equals(style) || Style.MASK_FIELD.equals(style) || haveImplementedToString(value)) {
+            } else if (isWrapper(value) || Style.CALL_TO_STRING.equals(style) || Style.MASK_FIELD.equals(style) || hasImplementedToString(value)) {
                 builder.append(name).append(EQUAL);
                 builder.append(Style.MASK_FIELD.equals(style) ? maskField(value) : value.toString());
             } else if (isCollection(value)) {
@@ -389,7 +389,7 @@ public final class ToStringBuilder {
      * <p>
      * @return true, if successful
      */
-    private static boolean haveImplementedToString(Object value) {
+    private static boolean hasImplementedToString(Object value) {
         try {
             Method toString = value.getClass().getDeclaredMethod("toString");
             return (toString != null);
@@ -543,7 +543,7 @@ public final class ToStringBuilder {
                 builder.append(element);
             } else if (isArray(element)) {
                 appendArrayValues(element, builder);
-            } else if (isWrapper(element) || haveImplementedToString(element)) {
+            } else if (isWrapper(element) || hasImplementedToString(element)) {
                 builder.append("[");
                 builder.append(element);
                 builder.append("]");

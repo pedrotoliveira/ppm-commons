@@ -1,18 +1,44 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-group ='br.com.ppm'
-version = '1.0'
-archivesBaseName = 'ppm-commons'
+apply from: 'deploy.gradle'
 
-sourceCompatibility = '1.8'
+group ='br.com.ppm'
+archivesBaseName = 'ppm-commons'
+version = '1.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
 	mavenLocal()
 	mavenCentral()
+}
+
+jar {
+    baseName = archivesBaseName
+    version =  version
+}
+
+dependencies {
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.9.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.9.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0.2'
+}
+
+mainClassName = "br.com.ppm.commons.test.ToStringBuilderComparisonTest"
+
+task runComparisonTest(type: JavaExec) {
+	main = mainClassName
+	classpath = sourceSets.main.runtimeClasspath
 }
 
 buildscript {
@@ -25,87 +51,16 @@ buildscript {
     }
 }
 
-if (project.hasProperty('release')) {
-
-	task javadocJar(type: Jar) {
-		classifier = 'javadoc'
-		from javadoc
-	}
-
-	task sourcesJar(type: Jar) {
-		classifier = 'sources'
-		from sourceSets.main.allSource
-	}
-
-	artifacts {
-		archives javadocJar, sourcesJar
-	}
-
-	// Signature of artifacts
-	signing {
-		sign configurations.archives
-	}
-
-	// OSSRH publication
-	uploadArchives {
-		repositories {
-			mavenDeployer {
-				// POM signature
-				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-					authentication(userName: ossrhUser, password: ossrhPassword)
-				}
-				snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-					authentication(userName: ossrhUsername, password: ossrhPassword)
-				}
-				pom.project {
-					name 'ppm-commons'
-					description 'PPM Commons Library'
-					packaging 'jar'
-					url 'http://pedrotoliveira.github.io/ppm-commons/'
-					inceptionYear '2016'
-					scm {
-						connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
-						developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
-						url 'https://github.com/pedrotoliveira/ppm-commons.git'
-					}
-
-					licenses {
-						license {
-							name 'GNU GENERAL PUBLIC LICENSE, Version 3'
-							url 'http://www.gnu.org/licenses/gpl.txt'
-							distribution 'repo'
-						}
-					}
-					developers {
-						developer {
-							id = 'pedrotoliveira'
-							name = 'Pedro Oliveira'
-							email = 'pedro.oliveira20@mail.com'
-						}
-					}
-				}
-			}
-		}
-	}
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
 }
 
-dependencies {
-	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.6.1'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.6.1'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.6.1'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-nosql', version: '2.6.1'
-    testCompile group: 'junit', name: 'junit', version: '4.10'
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
-}
-
-mainClassName = "com.ppm.commons.test.ToStringBuilderComparisonTest"
-
-task runComparisonTest(type: JavaExec) {
-	main = mainClassName
-	classpath = sourceSets.main.runtimeClasspath
+artifacts {
+    archives javadocJar, sourcesJar
 }
