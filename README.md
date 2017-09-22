@@ -5,12 +5,15 @@ PPM Commons Library.
 
 Requires JDK 8+
 
-[![Build Status](https://travis-ci.org/pedrotoliveira/ppm-commons.svg?branch=master)](https://travis-ci.org/pedrotoliveira/ppm-commons) [![Apache 2](http://img.shields.io/badge/license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://travis-ci.org/pedrotoliveira/ppm-commons.svg?branch=master)](https://travis-ci.org/pedrotoliveira/ppm-commons)
+[![AUR](https://img.shields.io/aur/license/yaourt.svg)]()
 
 Latest Build Status:
 https://travis-ci.org/pedrotoliveira/ppm-commons
 
 Github Page: http://pedrotoliveira.github.io/ppm-commons/
+
+[![Maven Central](https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg)]()
 
 To use ppm-commons add to your pom file:
 ```

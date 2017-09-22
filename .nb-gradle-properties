@@ -22,7 +22,7 @@
     </task>
   </common-tasks>
   <license-header>
-    <name>gpl30</name>
+    <name>apache20</name>
     <property name="organization">ppm</property>
   </license-header>
 </gradle-project-properties>
