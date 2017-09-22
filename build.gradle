@@ -3,6 +3,7 @@ apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'jacoco'
 
 apply from: 'deploy.gradle'
 
@@ -26,7 +27,7 @@ jar {
 
 dependencies {
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.9.0'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.9.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.9.0'    
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -64,3 +65,17 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives javadocJar, sourcesJar
 }
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacocoHTML")
+    }
+}
+
+
