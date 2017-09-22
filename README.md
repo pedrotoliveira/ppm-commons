@@ -7,8 +7,7 @@ Requires JDK 8+
 
 [![Build Status](https://travis-ci.org/pedrotoliveira/ppm-commons.svg?branch=master)](https://travis-ci.org/pedrotoliveira/ppm-commons)
 [![LISCENSE](https://img.shields.io/aur/license/yaourt.svg)](https://www.gnu.org/licenses/quick-guide-gplv3.html)
-[![Maven Central](https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22br.com.ppm%22%20AND%20a%3A%22ppm-commons%22)
-
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/br.com.ppm/ppm-commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/br.com.ppm/ppm-commons)
 Latest Build Status:
 https://travis-ci.org/pedrotoliveira/ppm-commons
 
