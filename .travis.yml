@@ -1,5 +1,5 @@
 dist: trusty
-sudo: false
+sudo: true
 addons:
   apt:
     packages:
@@ -17,8 +17,10 @@ cache:
     - $HOME/.gradle/wrapper/
 before_script:
 - chmod a+x gradlew
-sccript: ./gradlew assemble
+sccript: ./gradlew clean test jacocoTestReport assemble
 branches:
   only:
     - master
     - develop
+after_success:
+    - ./gradlew sendCoverageToCodacy
