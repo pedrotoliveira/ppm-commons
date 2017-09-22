@@ -13,6 +13,7 @@ if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('
     println '-------------------------'
     println 'RELEASE PROJECT          '
     println 'triggered by: ' + ossrhUsername
+    println 'version: ' + projectVersion
     println '-------------------------'
 
     // OSSRH publication
@@ -31,11 +32,11 @@ if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('
                 }
                 
                 pom.project {
-                    name 'ppm-commons'
-                    description 'PPM Commons Library'
+                    name projectName
+                    description projectDescription
                     packaging 'jar'
                     url 'http://pedrotoliveira.github.io/ppm-commons/'
-                    inceptionYear '2016'
+                    inceptionYear projectInceptionYear
                     scm {
                         connection 'scm:git:https://github.com/pedrotoliveira/ppm-commons.git'
                         developerConnection 'scm:git:git@github.com:https://github.com/pedrotoliveira/ppm-commons.git'
