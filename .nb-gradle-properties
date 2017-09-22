@@ -20,6 +20,15 @@
       <task-args/>
       <task-jvm-args/>
     </task>
+    <task>
+      <display-name>jacoco</display-name>
+      <non-blocking>no</non-blocking>
+      <task-names>
+        <name must-exist="no">jacocoTestReport</name>
+      </task-names>
+      <task-args/>
+      <task-jvm-args/>
+    </task>
   </common-tasks>
   <license-header>
     <name>apache20</name>
