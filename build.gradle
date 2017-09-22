@@ -70,10 +70,20 @@ jacoco {
     toolVersion = '0.7.9'
 }
 
+test {
+    jacoco {        
+        excludes = [
+            '**/*br/com/ppm/commons/test/*',
+            '**/*Test*'
+        ]
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
-        csv.enabled false
+        csv.enabled true
+        html.enabled true
         html.destination file("${buildDir}/reports/jacocoHTML")
     }
 }
