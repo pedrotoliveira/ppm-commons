@@ -18,6 +18,7 @@ package br.com.ppm.commons;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -71,7 +72,7 @@ final class RecursiveToStringDepthController {
 	 * @return true, if is allowed
 	 */
 	static boolean isAllowed() {
-		return registerCaller() ? validateCallCounts() : false;
+        return registerCaller() && validateCallCounts();
 	}
 
 	/**
@@ -131,7 +132,7 @@ final class RecursiveToStringDepthController {
 			return SUCCESS;
 
 		} catch (SecurityException ex) {
-			// nothing to do now...
+            logger.warn("Security Warn", ex);
 			return SUCCESS;
 		}
 	}
