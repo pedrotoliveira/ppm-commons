@@ -10,7 +10,7 @@ apply from: 'deploy.gradle'
 
 group = projectGroup
 archivesBaseName = projectName
-version = projectVersion
+version = version
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -102,7 +102,6 @@ jacocoTestReport {
 }
     
 release {
-    properties.version = projectVersion
     git {
         requireBranch = 'develop'
         pushToRemote = 'origin'
