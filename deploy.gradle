@@ -1,4 +1,4 @@
-if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('release'))) {
+if (project.hasProperty('deploy') && Boolean.parseBoolean(project.getProperty('deploy'))) {
 
     if (!hasProperty('ossrhUsername') || !hasProperty('ossrhPassword')) {
         println 'CAN\'T RELEASE PROJECT'
@@ -9,15 +9,14 @@ if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('
     signing {
         sign configurations.archives
     }
-
-    println '-------------------------'
-    println 'RELEASE PROJECT          '
-    println 'triggered by: ' + ossrhUsername
-    println 'version: ' + project.version
-    println '-------------------------'
     
     // OSSRH publication
     uploadArchives {
+        println '-------------------------'
+        println 'RELEASE PROJECT          '
+        println 'triggered by: ' + ossrhUsername
+        println 'version: ' + project.version
+        println '-------------------------'
         repositories {
             mavenDeployer {
                 // POM signature
