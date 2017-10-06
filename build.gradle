@@ -4,6 +4,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
+apply plugin: 'net.researchgate.release'
 
 apply from: 'deploy.gradle'
 
@@ -48,13 +49,25 @@ buildscript {
         //Needed only for SNAPSHOT versions
         maven {
 			url "http://oss.sonatype.org/content/repositories/snapshots/"
+            url 'https://plugins.gradle.org/m2/'
 		}
+        dependencies {
+            classpath 'net.researchgate:gradle-release:2.4.0'
+        }
     }
 }
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -87,5 +100,12 @@ jacocoTestReport {
         html.destination file("${buildDir}/reports/jacocoHTML")
     }
 }
+    
+release {
+    git {
+        requireBranch = 'develop'
+        pushToRemote = 'origin'
+    }
+}
 
-
+afterReleaseBuild.dependsOn uploadArchives
