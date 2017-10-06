@@ -13,7 +13,7 @@ if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('
     println '-------------------------'
     println 'RELEASE PROJECT          '
     println 'triggered by: ' + ossrhUsername
-    println 'version: ' + projectVersion
+    println 'version: ' + project.version
     println '-------------------------'
     
     // OSSRH publication
