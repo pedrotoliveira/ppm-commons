@@ -102,7 +102,7 @@ jacocoTestReport {
 }
     
 release {
-    version = projectVersion
+    properties.version = projectVersion
     git {
         requireBranch = 'develop'
         pushToRemote = 'origin'
