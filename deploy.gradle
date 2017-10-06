@@ -5,10 +5,6 @@ if (project.hasProperty('deploy') && Boolean.parseBoolean(project.getProperty('d
         return;
     }
     
-    plugins {
-        id 'net.researchgate.release' version '2.4.0'
-    }
-
     // Signature of artifacts
     signing {
         sign configurations.archives
