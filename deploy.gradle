@@ -59,6 +59,14 @@ if (project.hasProperty('deploy') && Boolean.parseBoolean(project.getProperty('d
             }
         }
     }
+    
+    release {
+        git {
+            requireBranch = 'develop'
+            pushToRemote = 'origin'
+        }
+    }
+    afterReleaseBuild.dependsOn uploadArchives
 }
 
 configurations { 

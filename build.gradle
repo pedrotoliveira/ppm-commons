@@ -4,7 +4,6 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
-apply plugin: 'net.researchgate.release'
 
 apply from: 'deploy.gradle'
 
@@ -51,8 +50,8 @@ buildscript {
 			url "http://oss.sonatype.org/content/repositories/snapshots/"
             url 'https://plugins.gradle.org/m2/'
 		}
-        dependencies {
-            classpath 'net.researchgate:gradle-release:2.4.0'
+        plugins {
+            id 'net.researchgate.release' version '2.4.0'
         }
     }
 }
@@ -100,12 +99,3 @@ jacocoTestReport {
         html.destination file("${buildDir}/reports/jacocoHTML")
     }
 }
-    
-release {
-    git {
-        requireBranch = 'develop'
-        pushToRemote = 'origin'
-    }
-}
-
-afterReleaseBuild.dependsOn uploadArchives
