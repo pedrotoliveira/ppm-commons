@@ -25,10 +25,10 @@ import java.util.NoSuchElementException;
  *
  * @author Pedro T. Oliveira
  */
-public class ValidatorUtils {
+public final class Validator {
 
 	/** No instances for this class */
-	private ValidatorUtils() {
+    private Validator() {
 	}
 
 	/**

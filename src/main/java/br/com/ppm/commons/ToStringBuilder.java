@@ -340,7 +340,7 @@ public final class ToStringBuilder {
      * @return the masked String
      */
     public static String mask(String value) {
-        ValidatorUtils.notNullParameter(value, "value");
+        Validator.notNullParameter(value, "value");
         return maskField(value).toString();
     }
 

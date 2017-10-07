@@ -22,7 +22,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Reflections Operations
@@ -31,9 +33,11 @@ import java.util.Objects;
  */
 public final class Reflections {
 
-    /**
-     * The Constant FIELDS_SEPARATOR.
-     */
+    private static final Logger logger = LogManager.getLogger(Reflections.class);
+
+    private static final String FIELD_NOT_FOUND = "Field Not Found";
+    private static final String FIELD_CAN_NOT_BE_NULL = "Field Can not be null.";
+    private static final String EXCEPTION_ACCESSING_FIELD = "Exception accessing field";
     private static final String FIELDS_SEPARATOR = "\\.";
 
     /**
@@ -43,38 +47,29 @@ public final class Reflections {
     }
 
     /**
-     * Method get.
+     * Return the Method get "Accessor" to a given Class Field.
      *
      * @param field the field
      *
-     * @return the string
+     * @return the string "getFieldName"
      */
     public static String methodGet(final Field field) {
-        final String fieldName = capitalizeFirstLetter(field.getName());
+        Validator.notNullParameter(field, FIELD_CAN_NOT_BE_NULL);
+        final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "get".concat(fieldName);
     }
 
     /**
-     * Method set.
+     * Return Method set "Mutator" to a given Class Field
      *
      * @param field the field
      *
-     * @return the string
+     * @return the string "setFieldName"
      */
     public static String methodSet(final Field field) {
-        final String fieldName = capitalizeFirstLetter(field.getName());
+        Validator.notNullParameter(field, FIELD_CAN_NOT_BE_NULL);
+        final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "set".concat(fieldName);
-    }
-
-    /**
-     * Capitalize.
-     *
-     * @param str the str
-     *
-     * @return the string
-     */
-    private static String capitalizeFirstLetter(final String str) {
-        return new StringBuilder(str.length()).append(Character.toUpperCase(str.charAt(0))).append(str.substring(1)).toString();
     }
 
     /**
@@ -145,7 +140,7 @@ public final class Reflections {
 
             return value;
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            throw new IllegalArgumentException("Exception accessing field", e);
+            throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, e);
         }
     }
 
@@ -169,22 +164,37 @@ public final class Reflections {
         return target instanceof List<?>;
     }
 
-    private static Object getValueFromField(final String field, final Object target)
-            throws NoSuchFieldException, SecurityException, IllegalAccessException {
-
+    /**
+     * Get a value from a given field in the Target Object
+     *
+     * @param fieldName
+     * @param target
+     * @return Object value
+     */
+    public static Object getValueFromField(final String fieldName, final Object target) {
         if (target == null) {
             return null;
         }
-        Field f = null;
         try {
-            f = target.getClass().getDeclaredField(field);
-        } catch (NoSuchFieldException n) {
-            if (target.getClass().getSuperclass() != null) {
-                f = target.getClass().getSuperclass().getDeclaredField(field);
+            return getValueFromField(fieldName, target.getClass(), target);
+        } catch (IllegalArgumentException ex) {
+            logger.warn(FIELD_NOT_FOUND.concat(String.format("[%s] - Trying Parent Class", ex.getMessage())));
+            Class<?> superClass = target.getClass().getSuperclass();
+            if (superClass != null) {
+                return getValueFromField(fieldName, superClass, target);
             }
         }
-        f.setAccessible(true);
-        return f.get(target);
+        throw Validator.handleIllegalArgumentException(FIELD_NOT_FOUND);
+    }
+
+    private static Object getValueFromField(final String fieldName, final Class<?> targetClass, final Object target) {
+        try {
+            Field targetField = targetClass.getDeclaredField(fieldName);
+            targetField.setAccessible(true);
+            return targetField.get(target);
+        } catch (NoSuchFieldException | IllegalAccessException | SecurityException ex) {
+            throw new IllegalArgumentException(FIELD_NOT_FOUND, ex);
+        }
     }
 
     private static Object getValueFromMap(final String field, final Object target) {
@@ -200,7 +210,7 @@ public final class Reflections {
         if (target == null || !isList(target)) {
             return null;
         }
-        if (isNumber(field)) {
+        if (Numbers.isNumber(field)) {
             int index = Integer.parseInt(field);
             return ((List<?>) target).get(index);
         } else {
@@ -208,14 +218,21 @@ public final class Reflections {
         }
     }
 
+    /**
+     *
+     * @param field
+     * @param target
+     * @param value
+     */
     public static void setByFieldName(final String field, final Object target, final Object value) {
-
+        Validator.notNullParameter(field, "Field Can not Be Null");
+        Validator.notNullParameter(target, "Target Can not Be Null");
         try {
-            Field f = target.getClass().getDeclaredField(field);
-            f.setAccessible(true);
-            f.set(target, value);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            throw new IllegalArgumentException("Exception accessing field");
+            Field targetField = target.getClass().getDeclaredField(field);
+            targetField.setAccessible(true);
+            targetField.set(target, value);
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, ex);
         }
     }
 
@@ -227,20 +244,16 @@ public final class Reflections {
      * <p>
      * @return the by field get method
      */
-    public static Object getFieldByGetMethod(final String field, final Object target) {
-        Objects.requireNonNull(field, "Field is Empty");
-        String methodName = String.format("get%s", capitalizeFirstLetter(field));
-
+    public static Object getFieldByGetMethod(final Field field, final Object target) {
+        Validator.notNullParameter(field, "Field Can not Be Null");
+        Validator.notNullParameter(target, "Target Can not Be Null");
         try {
+            String methodName = methodGet(field);
             Method method = target.getClass().getMethod(methodName);
             return method.invoke(target);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException ex) {
-            throw new IllegalArgumentException("Exception accessing field", ex);
+            throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, ex);
         }
-    }
-
-    private static boolean isNumber(String field) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

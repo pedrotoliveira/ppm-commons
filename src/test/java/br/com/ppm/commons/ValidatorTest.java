@@ -24,9 +24,9 @@ import org.junit.Test;
  *
  * @author cad_ptoliveira
  */
-public class ValidatorUtilsTest {
+public class ValidatorTest {
 
-	public ValidatorUtilsTest() {
+	public ValidatorTest() {
 	}
 
 	@Before
