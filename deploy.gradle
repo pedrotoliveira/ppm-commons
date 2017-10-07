@@ -1,23 +1,22 @@
-if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('release'))) {
+if (project.hasProperty('deploy') && Boolean.parseBoolean(project.getProperty('deploy'))) {
 
     if (!hasProperty('ossrhUsername') || !hasProperty('ossrhPassword')) {
         println 'CAN\'T RELEASE PROJECT'
         return;
     }
-
+    
     // Signature of artifacts
     signing {
         sign configurations.archives
     }
-
-    println '-------------------------'
-    println 'RELEASE PROJECT          '
-    println 'triggered by: ' + ossrhUsername
-    println 'version: ' + projectVersion
-    println '-------------------------'
-
+    
     // OSSRH publication
     uploadArchives {
+        println '-------------------------'
+        println 'RELEASE PROJECT          '
+        println 'triggered by: ' + ossrhUsername
+        println 'version: ' + project.version
+        println '-------------------------'
         repositories {
             mavenDeployer {
                 // POM signature
@@ -59,7 +58,15 @@ if (project.hasProperty('release') && Boolean.parseBoolean(project.getProperty('
                 }                
             }
         }
-    }   
+    }
+    
+    release {
+        git {
+            requireBranch = 'develop'
+            pushToRemote = 'origin'
+        }
+    }
+    afterReleaseBuild.dependsOn uploadArchives
 }
 
 configurations { 
@@ -84,6 +91,6 @@ task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
             "-r",
             "${buildDir}/reports/jacoco/test/jacocoTestReport.xml",   
             "--projectToken",
-            projectToken
+        projectToken
     ]
 }

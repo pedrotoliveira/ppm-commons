@@ -4,12 +4,13 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
+apply plugin: 'net.researchgate.release'
 
 apply from: 'deploy.gradle'
 
 group = projectGroup
 archivesBaseName = projectName
-version = projectVersion
+version = version
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -48,13 +49,25 @@ buildscript {
         //Needed only for SNAPSHOT versions
         maven {
 			url "http://oss.sonatype.org/content/repositories/snapshots/"
+            url 'https://plugins.gradle.org/m2/'
 		}
+        dependencies {
+            classpath 'net.researchgate:gradle-release:2.4.0'
+        }
     }
 }
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -70,12 +83,20 @@ jacoco {
     toolVersion = '0.7.9'
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacocoHTML")
+test {
+    jacoco {        
+        excludes = [
+            '**/*br/com/ppm/commons/test/*',
+            '**/*Test*'
+        ]
     }
 }
 
-
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.enabled true
+        html.destination file("${buildDir}/reports/jacocoHTML")
+    }
+}
