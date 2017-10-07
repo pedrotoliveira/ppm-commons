@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 cad_ptoliveira
+ * Copyright (C) 2014 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,47 +14,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package br.com.ppm.commons;
 
 import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Reflections Unit Tests
  *
- * @author cad_ptoliveira
+ * @author pedrotoliveira
  */
 public class ReflectionsTest {
 
-	public ReflectionsTest() {
-	}
+    public ReflectionsTest() {
+    }
 
-	@Before
-	public void setUp() {
-	}
+    @Before
+    public void setUp() {
+    }
 
-	@Test
-	public void testMethodGet() {
-	}
+    @Test
+    public void testMethodGet() {
+    }
 
-	@Test
-	public void testMethodSet() {
-	}
+    @Test
+    public void testMethodSet() {
+    }
 
-	@Test
-	public void testFindMethod_Class_String() {
-	}
+    @Test
+    public void testFindMethod_Class_String() {
+    }
 
-	@Test
-	public void testFindMethod_3args() {
-	}
+    @Test
+    public void testFindMethod_3args() {
+    }
 
-	@Test
-	public void testCopyProperties() {
-	}
+    @Test
+    public void testCopyProperties() {
+    }
 
-	@Test
-	public void testCopyNonNullFields() throws Exception {
-	}
+    @Test
+    public void testCopyNonNullFields() throws Exception {
+    }
 
 }
