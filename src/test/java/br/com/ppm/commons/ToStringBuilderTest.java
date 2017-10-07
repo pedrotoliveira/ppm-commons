@@ -1,25 +1,30 @@
 package br.com.ppm.commons;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import br.com.ppm.commons.annotation.ToStringStyle;
-import br.com.ppm.commons.annotation.ToStringStyle.Style;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import br.com.ppm.commons.model.Address;
+import br.com.ppm.commons.model.Card;
+import br.com.ppm.commons.model.ClassA;
+import br.com.ppm.commons.model.ClassB;
+import br.com.ppm.commons.model.Order;
+import br.com.ppm.commons.model.Person;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
 /**
  * The Class ToStringBuilderTest.
  *
- * @author Pedro T. Oliveira <pedro.oliveira20@gmail.com>
+ * @author Pedro T. Oliveira
  */
 public class ToStringBuilderTest {
 
@@ -82,124 +87,14 @@ public class ToStringBuilderTest {
 		assertThat(result, equalTo(toStringExpected));
 	}
 
-	@SuppressWarnings("unused")
-	private class Address {
-
-		private final String street;
-		private final int number;
-		private final String complement;
-
-		private Address(String street, int number, String complement) {
-			super();
-			this.number = number;
-			this.street = street;
-			this.complement = complement;
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private class Order {
-
-		private final int id;
-
-		private Order(int id) {
-			super();
-			this.id = id;
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private class Person implements Serializable {
-
-		private static final long serialVersionUID = 1L;
-		public static final String CONSTANTE = "constante";
-		private String name;
-		private int age;
-		private Address address;
-		private short[] numbers;
-		private boolean alive;
-		private final String NULL_OBJECT = null;
-		private List<Order> orders;
-		private Map<String, Person> parents;
-		private final Class<Person> clazz = Person.class;
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public void setAge(int age) {
-			this.age = age;
-		}
-
-		public void setAddress(Address address) {
-			this.address = address;
-		}
-
-		public void setNumbers(short[] numbers) {
-			this.numbers = numbers;
-		}
-
-		public void setAlive(boolean alive) {
-			this.alive = alive;
-		}
-
-		public void setOrders(List<Order> orders) {
-			this.orders = orders;
-		}
-
-		public void setParents(Map<String, Person> parents) {
-			this.parents = parents;
-		}
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
-		}
-	}
-
-	@Test
+    @Test
 	public void testCyclicReferences() {
-		A a = new A();
-		B b = new B(a);
+        ClassA a = new ClassA();
+        ClassB b = new ClassB(a);
 		a.setB(b);
 
 		String result = ToStringBuilder.reflectionToString(b);
 		System.out.println(result);
-	}
-
-	private class A {
-
-		@SuppressWarnings("unused")
-		private B b;
-
-		private A() {
-			super();
-		}
-
-		public void setB(B b) {
-			this.b = b;
-		}
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
-		}
-	}
-
-	private class B {
-
-		@SuppressWarnings("unused")
-		private A a;
-
-		private B(A a) {
-			super();
-			this.a = a;
-		}
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
-		}
 	}
 
 	@Test
@@ -211,26 +106,6 @@ public class ToStringBuilderTest {
 		String result = new Card(number, cvv).toString();
 		System.out.println(result);
 		assertThat(result, equalTo(expected));
-	}
-
-	private class Card {
-
-		@ToStringStyle(Style.MASK_FIELD)
-		private final String ccNumber;
-
-		@ToStringStyle(Style.MASK_FIELD)
-		private final String cvv;
-
-		public Card(String ccNumber, String cvv) {
-			super();
-			this.ccNumber = ccNumber;
-			this.cvv = cvv;
-		}
-
-		@Override
-		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
-		}
 	}
 
 	/**

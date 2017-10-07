@@ -16,13 +16,10 @@
  */
 package br.com.ppm.commons;
 
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -43,13 +40,13 @@ public class NumbersIsNumberTest {
     }
 
     @Parameterized.Parameters(name = "Case {index}: (For text: {0}, we got: {1})")
-    public static Collection<Object[]> parameters() {
-        return asList(new Object[][]{
+    public static Object[][] parameters() {
+        return new Object[][]{
             {"123", true},
             {null, false},
             {"", false},
             {"15135889447155841714711811651889186863888", true}
-        });
+        };
     }
 
     /**
