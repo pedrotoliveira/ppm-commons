@@ -71,7 +71,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return true, if is allowed
 	 */
-	static boolean isAllowed() {
+    protected static boolean isAllowed() {
         return registerCaller() && validateCallCounts();
 	}
 
@@ -158,7 +158,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return the callers
 	 */
-	static StackTraceElement[] getCallers() {
+    protected static StackTraceElement[] getCallers() {
 		StackTraceElement[] callers = null;
 		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 		if (stacks != null) {
@@ -174,7 +174,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return the current holder
 	 */
-	static StackTraceHolder getCurrentHolder() {
+    private static StackTraceHolder getCurrentHolder() {
 		return currentHolder.get();
 	}
 
@@ -183,7 +183,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @param holder the new current holder
 	 */
-	static void setCurrentHolder(StackTraceHolder holder) {
+    private static void setCurrentHolder(StackTraceHolder holder) {
 		currentHolder.set(holder);
 	}
 
@@ -192,7 +192,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return the all holders in current thread
 	 */
-	static Set<StackTraceHolder> getAllholdersInCurrentThread() {
+    private static Set<StackTraceHolder> getAllholdersInCurrentThread() {
 		return allHoldersInCurrentThread.get();
 	}
 }

@@ -112,10 +112,7 @@ public class StackTraceHolder {
 		return methodName;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
+    @Override
 	public int hashCode() {
 		if (hashcode == 0) {
 			final int prime = 31;
@@ -126,10 +123,8 @@ public class StackTraceHolder {
 		return hashcode;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
+    @Override
+    @SuppressWarnings("PMD")
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
