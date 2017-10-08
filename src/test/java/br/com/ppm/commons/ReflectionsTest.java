@@ -16,7 +16,6 @@
  */
 package br.com.ppm.commons;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -26,15 +25,9 @@ import org.junit.Test;
  */
 public class ReflectionsTest {
 
-    public ReflectionsTest() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
     @Test
     public void testMethodGet() {
+
     }
 
     @Test
@@ -42,11 +35,11 @@ public class ReflectionsTest {
     }
 
     @Test
-    public void testFindMethod_Class_String() {
+    public void testFindMethodClassString() {
     }
 
     @Test
-    public void testFindMethod_3args() {
+    public void testFindMethod3args() {
     }
 
     @Test

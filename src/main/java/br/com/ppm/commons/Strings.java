@@ -24,6 +24,12 @@ package br.com.ppm.commons;
 public final class Strings {
 
     /**
+     * No instances for this class
+     */
+    private Strings() {
+    }
+
+    /**
      * Capitalize the first letter from a Text
      *
      * @param text the text string

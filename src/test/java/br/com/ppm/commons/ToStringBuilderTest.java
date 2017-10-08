@@ -14,7 +14,6 @@ import br.com.ppm.commons.model.ClassB;
 import br.com.ppm.commons.model.Order;
 import br.com.ppm.commons.model.Person;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -28,17 +27,8 @@ import static org.junit.Assert.assertThat;
  */
 public class ToStringBuilderTest {
 
-	/**
-	 * Sets the up.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * Test method for.
+    /**
+   	 * Test method for.
 	 *
 	 * {@link com.ppm..util.ToStringBuilder#reflectionToString(java.lang.Object)}
 	 * .
@@ -72,19 +62,22 @@ public class ToStringBuilderTest {
 
 		person.setParents(parents);
 
-		String toStringExpected = "Person[name=John Doe, age=35, address=Address[street=Some street, number=35, complement=Apto 2],"
-				+ " numbers=[1, 3, 4, 5],"
-				+ " alive=true, NULL_OBJECT=null,"
-				+ " orders=ArrayList{ Order[id=12358], Order[id=12387], Order[id=821] },"
-				+ " parents=Map{"
-				+ " (k1=mother, v1=[Person[name=Willy Mae Doe, age=70, address=Address[street=Older street, number=82, complement=bloco a], numbers=[9, 7, 6, 8], alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]]),"
-				+ " (k2=father, v2=[Person[name=Bill Doe, age=0, address=Address[street=Cemitery, number=582, complement=null], numbers=null, alive=false, NULL_OBJECT=null, orders=null, parents=null,"
-				+ " clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]]) }, clazz=class br.com.ppm.commons.ToStringBuilderTest$Person]";
+        String toStringExpected = "Person[name=John Doe, age=35, "
+                + "address=Address[street=Some street, number=35, complement=Apto 2], "
+                + "numbers=[1, 3, 4, 5], "
+                + "alive=true, "
+                + "NULL_OBJECT=null, "
+                + "orders=ArrayList{ Order[id=12358], Order[id=12387], Order[id=821] }, "
+                + "parents=Map{ (k1=mother, v1=[Person[name=Willy Mae Doe, age=70, "
+                + "address=Address[street=Older street, number=82, complement=bloco a], "
+                + "numbers=[9, 7, 6, 8], alive=false, NULL_OBJECT=null, orders=null, parents=null, "
+                + "clazz=class br.com.ppm.commons.model.Person]]), (k2=father, v2=[Person[name=Bill Doe, age=0, "
+                + "address=Address[street=Cemitery, number=582, complement=null], numbers=null, alive=false, "
+                + "NULL_OBJECT=null, orders=null, parents=null, clazz=class br.com.ppm.commons.model.Person]]) }, "
+                + "clazz=class br.com.ppm.commons.model.Person]";
 
-		String result = person.toString();
-		System.out.println(result);
-		assertThat(result, equalTo(toStringExpected));
+        String result = person.toString();
+        assertThat("toString result should be equal to expected", result, equalTo(toStringExpected));
 	}
 
     @Test
@@ -103,9 +96,8 @@ public class ToStringBuilderTest {
 		String cvv = "***";
 		String maskedNumber = "105803******0055";
 		String expected = "Card[ccNumber=" + maskedNumber + ", cvv=" + "***" + "]";
-		String result = new Card(number, cvv).toString();
-		System.out.println(result);
-		assertThat(result, equalTo(expected));
+        String result = new Card(number, cvv).toString();
+        assertThat("CardNumber should be masked", result, equalTo(expected));
 	}
 
 	/**
@@ -124,15 +116,14 @@ public class ToStringBuilderTest {
 				+ " ArrayList{ [one], [two], [three] },"
 				+ " ArrayList{ [one], [two], [three] }"
 				+ " }";
-		String result = ToStringBuilder.reflectionToString(listWithList);
-		System.out.println(result);
-		assertThat(result, equalTo(toStringExpected));
+
+        String result = ToStringBuilder.reflectionToString(listWithList);
+        assertThat("toString of Collections should be equal to expected", result, equalTo(toStringExpected));
 	}
 
-	@Test
-	@Ignore("Teste a ser Implementado.")
+    @Test
 	public void testArrays() {
-		// TODO: Implementar!!
+
 	}
 
 	@Test
