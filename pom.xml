@@ -227,6 +227,7 @@
                                 <phase>test</phase>
                                 <goals>
                                     <goal>report</goal>
+                                    <goal>check</goal>
                                 </goals>
                                 <configuration>
                                     <!-- Sets the path to the file which contains the execution data. -->
