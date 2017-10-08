@@ -18,10 +18,10 @@
         <dependency.version.hamcrest-core>1.3</dependency.version.hamcrest-core>
         <dependency.version.log4j>2.9.0</dependency.version.log4j>
         <dependency.version.jacoco>0.7.9</dependency.version.jacoco>
-        <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
+        <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
         <jacoco.output.directory>${project.build.directory}/jacoco</jacoco.output.directory>
         <jacoco.report.directory>${project.build.directory}/jacoco-reports</jacoco.report.directory>
-        <jacoco.out.file>jacoco.exec</jacoco.out.file>
+        <jacoco.out.file>jacoco.exec</jacoco.out.file>        
         <sonar.jacoco.reportPath>${jacoco.output.directory}/${jacoco.out.file}</sonar.jacoco.reportPath>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
@@ -177,7 +177,7 @@
                                     <name>listener</name>
                                     <value>org.sonar.java.jacoco.JUnitListener</value>
                                 </property>
-                            </properties>                            
+                            </properties>
                             <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
@@ -227,7 +227,6 @@
                                 <phase>test</phase>
                                 <goals>
                                     <goal>report</goal>
-                                    <goal>check</goal>
                                 </goals>
                                 <configuration>
                                     <!-- Sets the path to the file which contains the execution data. -->
