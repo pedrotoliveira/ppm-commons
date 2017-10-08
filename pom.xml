@@ -23,6 +23,7 @@
         <jacoco.report.directory>${project.build.directory}/jacoco-reports</jacoco.report.directory>
         <jacoco.out.file>jacoco.exec</jacoco.out.file>
         <sonar.jacoco.reportPath>${jacoco.output.directory}/${jacoco.out.file}</sonar.jacoco.reportPath>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
 
     <scm>
