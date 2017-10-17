@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,77 +77,76 @@ public final class Reflections {
     /**
      * Find method that has no parameters.
      *
-     * @param clazz the clazz
-     * @param name the name
+     * @param clazz a class
+     * @param name the method name to find
      *
-     * @return the method
+     * @return an Optional of Method
      */
-    public static Method findMethod(Class<?> clazz, String name) {
-        return findMethod(clazz, name, null);
+    public static Optional<Method> findMethod(final Class<?> clazz, final String name) {
+        return Arrays.stream(clazz.getMethods())
+                .filter(filterByMethodName(name))
+                .findFirst();
+    }
+
+    private static Predicate<Method> filterByMethodName(String name) {
+        return (method) -> method.getName().equals(name);
     }
 
     /**
-     * Find method.
+     * Find a method with specified parameter.
      *
-     * @param clazz the clazz
-     * @param name the name
-     * @param paramType the param type
+     * @param clazz a class
+     * @param name the method name
+     * @param typeParams the method type parameters
      *
-     * @return the method
+     * @return an Optional of Method
      */
-    public static Method findMethod(Class<?> clazz, String name, Class<?> paramType) {
-        Method[] methods = clazz.getMethods();
-        Method toReturn = null;
-        for (Method method : methods) {
-            if (method.getName().equals(name)
-                    && (paramType == null || Arrays.equals(new Class<?>[]{paramType}, method.getParameterTypes()))) {
-                toReturn = method;
-                break;
-            }
-        }
-        return toReturn;
+    public static Optional<Method> findMethod(Class<?> clazz, String name, Class<?>... typeParams) {
+        return Arrays.stream(clazz.getMethods())
+                .filter(filterByMethodName(name))
+                .filter(filterByMethodParameterTypes(typeParams))
+                .findFirst();
     }
 
-    public static void copyProperties(final Object src, final Object dest) {
+    private static Predicate<Method> filterByMethodParameterTypes(Class<?>... typeParams) {
+        return (method) -> Arrays.equals(typeParams, method.getParameterTypes());
     }
 
     /**
      * Gets the value by field name.
      * <p>
-     * Use the dot notation: "thing.child";
-     * <p>
-     * To access Map fields, use the same notation: "some.mapField.thing";
-     * <p>
-     * To access List fields, use the index: "some.listField.0";
-     * <p>
-     * @param fieldName the field
-     * @param target the target
-     * <p>
+     * Use the dot notation: "thing.child",<br />
+     * To get Map fields use the same notation: "some.mapField.thing" <br />
+     * To get List fields use the index: "some.listField.0";
+     * </p>
+     *
+     * @param fieldName the field name
+     * @param target the target instance
      * @return the by field name
      */
-    public static Object getByFieldName(final String fieldName, final Object target) {
+    public static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
+        Validator.notNullParameter(fieldName, "FieldName Can not Be Null");
         String[] fields = fieldName.split(FIELDS_SEPARATOR);
         try {
             Object value = target;
 
-            for (String fName : fields) {
+            for (String name : fields) {
                 if (isMap(value)) {
-                    value = getValueFromMap(fName, value);
+                    value = getValueFromMap(name, value);
                 } else if (isList(value)) {
-                    value = getValueFromList(fName, value);
+                    value = getValueFromList(name, value);
                 } else {
-                    value = getValueFromField(fName, value);
+                    value = getValueFromField(name, value);
                 }
             }
-
-            return value;
+            return Optional.of(value);
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, e);
         }
     }
 
     /**
-     * Checks if is map.
+     * Checks if is Map
      *
      * @param target the target
      * @return true, if is map
@@ -155,7 +156,7 @@ public final class Reflections {
     }
 
     /**
-     * Checks if is list.
+     * Checks if is List
      *
      * @param target the target
      * @return true, if is list
@@ -165,23 +166,23 @@ public final class Reflections {
     }
 
     /**
-     * Get a value from a given field in the Target Object
+     * Get a value from a given field in the Target Object instance
      *
-     * @param fieldName
-     * @param target
-     * @return Object value
+     * @param fieldName name of the field
+     * @param target instance
+     * @return Optional of Object
      */
-    public static Object getValueFromField(final String fieldName, final Object target) {
+    public static Optional<Object> getValueFromField(final String fieldName, final Object target) {
         if (target == null) {
-            return null;
+            return Optional.empty();
         }
         try {
-            return getValueFromField(fieldName, target.getClass(), target);
+            return Optional.of(getValueFromField(fieldName, target.getClass(), target));
         } catch (IllegalArgumentException ex) {
             logger.warn(FIELD_NOT_FOUND.concat(String.format("[%s] - Trying Parent Class", ex.getMessage())));
             Class<?> superClass = target.getClass().getSuperclass();
             if (superClass != null) {
-                return getValueFromField(fieldName, superClass, target);
+                return Optional.of(getValueFromField(fieldName, superClass, target));
             }
         }
         throw Validator.handleIllegalArgumentException(FIELD_NOT_FOUND);

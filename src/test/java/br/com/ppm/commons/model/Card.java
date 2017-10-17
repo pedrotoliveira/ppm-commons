@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,8 @@
  */
 package br.com.ppm.commons.model;
 
+import java.util.Objects;
+
 import br.com.ppm.commons.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
@@ -32,7 +34,6 @@ public final class Card {
     private final String cvv;
 
     public Card(String ccNumber, String cvv) {
-        super();
         this.ccNumber = ccNumber;
         this.cvv = cvv;
     }
@@ -43,6 +44,35 @@ public final class Card {
 
     public String getCvv() {
         return cvv;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.ccNumber);
+        hash = 97 * hash + Objects.hashCode(this.cvv);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Card other = (Card) obj;
+        if (!Objects.equals(this.ccNumber, other.ccNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.cvv, other.cvv)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
