@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ public class NumbersIsNumberTest {
      */
     @Test
     public void test() {
-        assertThat(Numbers.isNumber(text), equalTo(expected));
+        assertThat("Result should be equal to expected", Numbers.isNumber(text), equalTo(expected));
     }
 
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.com.ppm.commons;
+
+import java.util.Objects;
 
 /**
  * Holds a state of a call in the thread stack.
@@ -124,55 +126,32 @@ public class StackTraceHolder {
 	}
 
     @Override
-    @SuppressWarnings("PMD")
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		StackTraceHolder other = (StackTraceHolder) obj;
-		if (hashcode != other.hashcode) {
-			return false;
-		}
-		if (methodName == null) {
-			if (other.methodName != null) {
-				return false;
-			}
-		} else if (!methodName.equals(other.methodName)) {
-			return false;
-		}
-		if (objectName == null) {
-			if (other.objectName != null) {
-				return false;
-			}
-		} else if (!objectName.equals(other.objectName)) {
-			return false;
-		}
-		return true;
-	}
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StackTraceHolder other = (StackTraceHolder) obj;
+        if (this.hashcode != other.hashcode) {
+            return false;
+        }
+        if (!Objects.equals(this.objectName, other.objectName)) {
+            return false;
+        }
+        if (!Objects.equals(this.methodName, other.methodName)) {
+            return false;
+        }
+        return true;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StackTraceHolder [hashcode=");
-		builder.append(hashcode);
-		builder.append(", objectName=");
-		builder.append(objectName);
-		builder.append(", methodName=");
-		builder.append(methodName);
-		builder.append(", callCounts=");
-		builder.append(callCounts);
-		builder.append(", stackSize=");
-		builder.append(stackSize);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        return "StackTraceHolder{" + "objectName=" + objectName + ", methodName=" + methodName + ", callCounts=" + callCounts + ", stackSize=" + stackSize + '}';
+    }
+
 }

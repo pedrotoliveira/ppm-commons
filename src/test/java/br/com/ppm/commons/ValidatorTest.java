@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,52 +16,63 @@
  */
 package br.com.ppm.commons;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author cad_ptoliveira
+ * @author pedrotoliveira
  */
 public class ValidatorTest {
 
-	public ValidatorTest() {
-	}
 
 	@Before
 	public void setUp() {
 	}
 
-	@Test
-	public void testNotNullParameter() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotNullParameter() {
+        Validator.notNullParameter(null, "some param");
 	}
 
-	@Test
-	public void testNotEmptyParameter() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testNotEmptyParameter() {
+        Validator.notEmptyParameter(new String[]{}, "String Array");
 	}
 
-	@Test
-	public void testNoNullElementsParameter() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testNoNullElementsParameter() {
+        Validator.noNullElementsParameter(new String[]{"one", null, "three"}, "String Array");
 	}
 
-	@Test
-	public void testIsNotEmpty() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testIsNotEmpty() {
+        Validator.isNotEmpty("", "string");
 	}
 
-	@Test
-	public void testCorrectSize() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testCorrectSize() {
+        Collection<?> collection = Arrays.asList(new String[]{"one", "two", "three"});
+        Validator.correctSize(collection, 5, "collection");
 	}
 
-	@Test
-	public void testHandleNoSuchElement() {
+    @Test(expected = NoSuchElementException.class)
+    public void testHandleNoSuchElement() {
+        throw Validator.handleNoSuchElement("element");
 	}
 
-	@Test
-	public void testHandleIllegalArgumentException() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testHandleIllegalArgumentException() {
+        throw Validator.handleIllegalArgumentException("argument");
 	}
 
-	@Test
-	public void testHandleIllegalStateException() {
+    @Test(expected = IllegalStateException.class)
+    public void testHandleIllegalStateException() {
+        throw Validator.handleIllegalStateException("message");
 	}
 
 }

@@ -37,8 +37,8 @@ public final class Reflections {
 
     private static final Logger logger = LogManager.getLogger(Reflections.class);
 
+    private static final String FIELD = "field";
     private static final String FIELD_NOT_FOUND = "Field Not Found";
-    private static final String FIELD_CAN_NOT_BE_NULL = "Field Can not be null.";
     private static final String EXCEPTION_ACCESSING_FIELD = "Exception accessing field";
     private static final String FIELDS_SEPARATOR = "\\.";
 
@@ -56,7 +56,7 @@ public final class Reflections {
      * @return the string "getFieldName"
      */
     public static String methodGet(final Field field) {
-        Validator.notNullParameter(field, FIELD_CAN_NOT_BE_NULL);
+        Validator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "get".concat(fieldName);
     }
@@ -69,7 +69,7 @@ public final class Reflections {
      * @return the string "setFieldName"
      */
     public static String methodSet(final Field field) {
-        Validator.notNullParameter(field, FIELD_CAN_NOT_BE_NULL);
+        Validator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "set".concat(fieldName);
     }
@@ -125,7 +125,7 @@ public final class Reflections {
      * @return the by field name
      */
     public static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
-        Validator.notNullParameter(fieldName, "FieldName Can not Be Null");
+        Validator.notNullParameter(fieldName, "fieldName");
         String[] fields = fieldName.split(FIELDS_SEPARATOR);
         try {
             Object value = target;
@@ -226,8 +226,8 @@ public final class Reflections {
      * @param value
      */
     public static void setByFieldName(final String field, final Object target, final Object value) {
-        Validator.notNullParameter(field, "Field Can not Be Null");
-        Validator.notNullParameter(target, "Target Can not Be Null");
+        Validator.notNullParameter(field, FIELD);
+        Validator.notNullParameter(target, "target");
         try {
             Field targetField = target.getClass().getDeclaredField(field);
             targetField.setAccessible(true);
@@ -246,8 +246,8 @@ public final class Reflections {
      * @return the by field get method
      */
     public static Object getFieldByGetMethod(final Field field, final Object target) {
-        Validator.notNullParameter(field, "Field Can not Be Null");
-        Validator.notNullParameter(target, "Target Can not Be Null");
+        Validator.notNullParameter(field, FIELD);
+        Validator.notNullParameter(target, "target");
         try {
             String methodName = methodGet(field);
             Method method = target.getClass().getMethod(methodName);

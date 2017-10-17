@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,6 +55,6 @@ public class StringsIsBlankTest {
 
     @Test
     public void test() {
-        assertThat(Strings.isBlank(text), equalTo(expected));
+        assertThat("Result should be equal to expected", Strings.isBlank(text), equalTo(expected));
     }
 }

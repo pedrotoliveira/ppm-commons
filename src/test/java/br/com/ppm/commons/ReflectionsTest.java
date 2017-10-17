@@ -37,6 +37,7 @@ import static org.junit.Assert.*;
  */
 public class ReflectionsTest {
 
+    @SuppressWarnings("PMD")
     private Card card;
 
     @Before

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ public class StringsCapitalizeFirstLetterTest {
      */
     @Test
     public void test() {
-        assertThat(Strings.capitalizeFirstLetter(text), equalTo(expected));
+        assertThat("First letter should be capitalized", Strings.capitalizeFirstLetter(text), equalTo(expected));
     }
 
 }
