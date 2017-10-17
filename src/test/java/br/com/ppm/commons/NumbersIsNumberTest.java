@@ -45,7 +45,14 @@ public class NumbersIsNumberTest {
             {"123", true},
             {null, false},
             {"", false},
-            {"15135889447155841714711811651889186863888", true}
+            {"15135889447155841714711811651889186863888", true},
+            {"0x5ADF1234", true},
+            {"4K", false},
+            {"97E", false},
+            {"9.3e25", true},
+            {"65.87", true},
+            {"65.874858517", true},
+            {"2L", true}
         };
     }
 
