@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,45 +16,24 @@
  */
 package br.com.ppm.commons;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-
 /**
  *
  * @author pedrotoliveira
  */
 public enum StackTraceFormatters implements StackTracerFormatter {
 
-    HTML("<br />"),
-    PLAIN_TEXT("\n");
+    HTML(new HtmlStackTraceFormatter()),
+    PLAIN_TEXT(new TextStackTraceFormatter()),
+    JSON(new JsonStackTraceFormatter());
 
-    private final String separator;
+    private final StackTracerFormatter formatter;
 
-    private StackTraceFormatters(String separator) {
-        this.separator = separator;
+    private StackTraceFormatters(StackTracerFormatter formatter) {
+        this.formatter = formatter;
     }
 
     @Override
     public String formatToString(final Throwable t) {
-        try (final ByteArrayOutputStream buffer = new ByteArrayOutputStream();final PrintStream ps = new PrintStream(buffer)) {
-            t.printStackTrace(ps);
-            final StringBuilder sb = new StringBuilder(buffer.toString()).append(separator);
-            for (Throwable cause = t.getCause(); cause != null; cause = cause.getCause()) {
-                cause.printStackTrace(ps);
-                sb.append(buffer.toString());
-                if (cause.getCause() != null) {
-                    sb.append(separator);
-                }
-            }
-            return sb.toString();
-        } catch (IOException ex) {
-            return "Unable to get stack trace [ " + ex.getMessage() + " ]";
-        }
+        return this.formatter.formatToString(t);
     }
-
-    StackTraceFormatters get() {
-        return this;
-    }
-
 }

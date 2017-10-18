@@ -113,34 +113,58 @@ public final class Reflections {
     }
 
     /**
-     * Gets the value by field name.
+     * Gets the value by field name spaces, navigating in object hierarchy
      * <p>
-     * Use the dot notation: "thing.child",<br />
-     * To get Map fields use the same notation: "some.mapField.thing" <br />
-     * To get List fields use the index: "some.listField.0";
+     * Use the dot notation to navigate to the desired field <br />
+     * Example: "thing.child" <br />
+     * To get Map fields use the same notation "some.mapField.thing" <br />
+     * To get List fields use the index "some.listField.0";
+     * </p>
+     *
+     * @param <T> return type
+     * @param fieldName the field name
+     * @param target the target instance
+     * @param returnType expected type that will be use to cat the result.
+     * @return the value
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getValueByNamespace(final String fieldName, final Object target, Class<T> returnType) {
+        Optional<Object> optional = getValueByNamespace(fieldName, target);
+        if (optional.isPresent()) {
+            return (T) optional.get();
+        }
+        return null;
+    }
+
+    /**
+     * Gets the value by field name spaces, navigating in object hierarchy
+     * <p>
+     * Use the dot notation to navigate to the desired field <br />
+     * Example: "thing.child" <br />
+     * To get Map fields use the same notation "some.mapField.thing" <br />
+     * To get List fields use the index "some.listField.0";
      * </p>
      *
      * @param fieldName the field name
      * @param target the target instance
-     * @return the by field name
+     * @return the value
      */
-    public static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
+    public static Optional<Object> getValueByNamespace(final String fieldName, final Object target) {
         Validator.notNullParameter(fieldName, "fieldName");
         String[] fields = fieldName.split(FIELDS_SEPARATOR);
         try {
-            Object value = target;
-
+            Optional<Object> value = Optional.of(target);
             for (String name : fields) {
-                if (isMap(value)) {
-                    value = getValueFromMap(name, value);
-                } else if (isList(value)) {
-                    value = getValueFromList(name, value);
+                if (isMap(value.get())) {
+                    value = getMapValueByFieldName(name, value.get());
+                } else if (isList(value.get())) {
+                    value = getListValueByFieldName(name, value.get());
                 } else {
-                    value = getValueFromField(name, value);
+                    value = getValueByFieldName(name, value.get());
                 }
             }
-            return Optional.of(value);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            return value;
+        } catch (SecurityException | IllegalArgumentException e) {
             throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, e);
         }
     }
@@ -166,23 +190,23 @@ public final class Reflections {
     }
 
     /**
-     * Get a value from a given field in the Target Object instance
+     * Get a value from a given field name in the Target Object instance
      *
      * @param fieldName name of the field
      * @param target instance
      * @return Optional of Object
      */
-    public static Optional<Object> getValueFromField(final String fieldName, final Object target) {
+    public static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
         if (target == null) {
             return Optional.empty();
         }
         try {
-            return Optional.of(getValueFromField(fieldName, target.getClass(), target));
+            return Optional.ofNullable(getValueFromField(fieldName, target.getClass(), target));
         } catch (IllegalArgumentException ex) {
             logger.warn(FIELD_NOT_FOUND.concat(String.format("[%s] - Trying Parent Class", ex.getMessage())));
             Class<?> superClass = target.getClass().getSuperclass();
             if (superClass != null) {
-                return Optional.of(getValueFromField(fieldName, superClass, target));
+                return Optional.ofNullable(getValueFromField(fieldName, superClass, target));
             }
         }
         throw Validator.handleIllegalArgumentException(FIELD_NOT_FOUND);
@@ -198,24 +222,21 @@ public final class Reflections {
         }
     }
 
-    private static Object getValueFromMap(final String field, final Object target) {
-        if (target == null || !isMap(target)) {
-            return null;
+    private static Optional<Object> getMapValueByFieldName(final String fieldName, final Object target) {
+        if (target != null && isMap(target)) {
+            Object value = Map.class.cast(target).get(fieldName);
+            return Optional.ofNullable(value);
         }
-        return ((Map<?, ?>) target).get(field);
+        return Optional.empty();
     }
 
-    private static Object getValueFromList(final String field, final Object target)
-            throws NoSuchFieldException, SecurityException, IllegalAccessException {
-
-        if (target == null || !isList(target)) {
-            return null;
-        }
-        if (Numbers.isNumber(field)) {
-            int index = Integer.parseInt(field);
-            return ((List<?>) target).get(index);
+    private static Optional<Object> getListValueByFieldName(final String fieldName, final Object target) {
+        if (target != null && isList(target) && Numbers.isNumber(fieldName)) {
+            int index = Integer.parseInt(fieldName);
+            Object value = List.class.cast(target).get(index);
+            return Optional.ofNullable(value);
         } else {
-            return getValueFromField(field, target);
+            return getValueByFieldName(fieldName, target);
         }
     }
 

@@ -14,47 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
+
+import org.junit.Test;
 
 /**
- * An Order
+ * Unit Tests of class StackTraceFormatters
  *
  * @author pedrotoliveira
  */
-public class Order {
+public class StackTraceFormattersTest {
 
-    private final int id;
-
-    public Order(int id) {
-        this.id = id;
+    /**
+     * Test of formatToString method, of class StackTraceFormatters.
+     */
+    @Test
+    public void testFormatToString() {
     }
 
-    public int getId() {
-        return id;
+    /**
+     * Test of get method, of class StackTraceFormatters.
+     */
+    @Test
+    public void testGet() {
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Order other = (Order) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
-    }
 }

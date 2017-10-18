@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -162,7 +162,7 @@ final class RecursiveToStringDepthController {
 		StackTraceElement[] callers = null;
 		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 		if (stacks != null) {
-			int offset = (stacks.length < 10) ? stacks.length : 10;
+            int offset = stacks.length < 10 ? stacks.length : 10;
 			callers = new StackTraceElement[offset];
 			System.arraycopy(stacks, 0, callers, 0, offset);
 		}

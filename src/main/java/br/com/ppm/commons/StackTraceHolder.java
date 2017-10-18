@@ -47,8 +47,7 @@ public class StackTraceHolder {
 	 * @param objectName the object name
 	 * @param methodName the method name
 	 */
-	StackTraceHolder(String objectName, String methodName) {
-		super();
+    StackTraceHolder(String objectName, String methodName) {
 		this.objectName = objectName;
 		this.methodName = methodName;
 	}

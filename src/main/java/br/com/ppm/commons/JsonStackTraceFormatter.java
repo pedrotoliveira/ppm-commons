@@ -14,47 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
- * An Order
+ * Json Stack Trace Formatter
  *
  * @author pedrotoliveira
  */
-public class Order {
-
-    private final int id;
-
-    public Order(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
+final class JsonStackTraceFormatter implements StackTracerFormatter {
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        return hash;
+    public String formatToString(final Throwable throwable) {
+        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+        return gson.toJson(throwable.getStackTrace());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Order other = (Order) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
-    }
 }

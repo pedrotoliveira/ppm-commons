@@ -18,10 +18,16 @@ package br.com.ppm.commons;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import br.com.ppm.commons.model.Address;
 import br.com.ppm.commons.model.Card;
+import br.com.ppm.commons.model.Order;
 import br.com.ppm.commons.model.Person;
 
 import org.junit.Before;
@@ -35,14 +41,22 @@ import static org.junit.Assert.*;
  *
  * @author pedrotoliveira
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class ReflectionsTest {
 
-    @SuppressWarnings("PMD")
     private Card card;
+    private Person person;
 
     @Before
     public void beforeEach() {
+        this.person = createPerson();
         this.card = createRandomCard();
+    }
+
+    private Person createPerson() {
+        Person newPerson = new Person("John Doe", 35, true);
+        newPerson.setAddress(new Address("Village St.", 350, "First Parking"));
+        return newPerson;
     }
 
     private Card createRandomCard() {
@@ -99,4 +113,60 @@ public class ReflectionsTest {
     public void testFindMethodWithParametersNotFound() throws Exception {
         assertFalse("We expect that method is not present", Reflections.findMethod(Card.class, "setCvv", String.class).isPresent());
     }
+
+    @Test
+    public void testGetValueByFieldName() throws Exception {
+        String ccNumber = String.valueOf(Reflections.getValueByFieldName("ccNumber", card).get());
+        String expectedValue = card.getCcNumber();
+        assertThat("CcNumber should be equal to ".concat(expectedValue), ccNumber, equalTo(expectedValue));
+    }
+
+    @Test
+    public void testGetValueByFieldNameWithNullTarget() throws Exception {
+        Optional<Object> result = Reflections.getValueByFieldName("ccNumber", null);
+        assertThat("Result should be empty", result, equalTo(Optional.empty()));
+    }
+
+    @Test
+    public void testGetValueByNamespace() throws Exception {
+        String name = Reflections.getValueByNamespace("name", person, String.class);
+        String expectedName = person.getName();
+        assertThat("The name should be equal to ".concat(expectedName), name, equalTo(expectedName));
+    }
+
+    @Test
+    public void testGetValueByNamespaceListField() throws Exception {
+        Order expected = new Order(123118596);
+        List<Order> orders = new ArrayList<>(1);
+        orders.add(expected);
+        person.setOrders(orders);
+
+        Order result = Reflections.getValueByNamespace("orders.0", person, Order.class);
+        assertThat("Order should be equal to ".concat(expected.toString()), result, equalTo(expected));
+    }
+
+    @Test
+    public void testGetValueByNamespaceMapField() throws Exception {
+        Person expected = new Person("Will Doe", 55, true);
+        Map<String, Person> parents = new HashMap<>();
+        parents.put("father", expected);
+        person.setParents(parents);
+
+        Person result = Reflections.getValueByNamespace("parents.father", person, Person.class);
+        assertThat("The father should be equal to ".concat(expected.toString()), result, equalTo(expected));
+    }
+
+    @Test
+    public void testSetByFieldName() throws Exception {
+        Reflections.setByFieldName("alive", person, false);
+        assertFalse("Alive should be false", person.isAlive());
+    }
+
+    @Test
+    public void testGetFieldByGetMethod() throws Exception {
+        Field field = Card.class.getDeclaredField("ccNumber");
+        String ccNumber = String.valueOf(Reflections.getFieldByGetMethod(field, card));
+        assertThat("CcNumber should be the same on card", ccNumber, equalTo(card.getCcNumber()));
+    }
+
 }

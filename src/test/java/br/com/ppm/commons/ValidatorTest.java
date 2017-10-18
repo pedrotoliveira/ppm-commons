@@ -20,19 +20,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Unit tests of class Validator
  *
  * @author pedrotoliveira
  */
 public class ValidatorTest {
-
-
-	@Before
-	public void setUp() {
-	}
 
     @Test(expected = IllegalArgumentException.class)
     public void testNotNullParameter() {
@@ -73,6 +68,6 @@ public class ValidatorTest {
     @Test(expected = IllegalStateException.class)
     public void testHandleIllegalStateException() {
         throw Validator.handleIllegalStateException("message");
-	}
+    }
 
 }

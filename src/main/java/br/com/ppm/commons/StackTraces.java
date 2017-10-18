@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ public class StackTraces {
      *
      */
     public static String toString(final Throwable throwable, StackTraceFormatters format) {
-        return format.get().formatToString(throwable);
+        return format.formatToString(throwable);
     }
 
     /**
