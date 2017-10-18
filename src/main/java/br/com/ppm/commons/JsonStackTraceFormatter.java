@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 cad_ptoliveira
+ * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,55 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package br.com.ppm.commons;
 
-import org.junit.Before;
-import org.junit.Test;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
+ * Json Stack Trace Formatter
  *
- * @author cad_ptoliveira
+ * @author pedrotoliveira
  */
-public class ValidatorUtilsTest {
+final class JsonStackTraceFormatter implements StackTracerFormatter {
 
-	public ValidatorUtilsTest() {
-	}
-
-	@Before
-	public void setUp() {
-	}
-
-	@Test
-	public void testNotNullParameter() {
-	}
-
-	@Test
-	public void testNotEmptyParameter() {
-	}
-
-	@Test
-	public void testNoNullElementsParameter() {
-	}
-
-	@Test
-	public void testIsNotEmpty() {
-	}
-
-	@Test
-	public void testCorrectSize() {
-	}
-
-	@Test
-	public void testHandleNoSuchElement() {
-	}
-
-	@Test
-	public void testHandleIllegalArgumentException() {
-	}
-
-	@Test
-	public void testHandleIllegalStateException() {
-	}
+    @Override
+    public String formatToString(final Throwable throwable) {
+        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+        return gson.toJson(throwable.getStackTrace());
+    }
 
 }

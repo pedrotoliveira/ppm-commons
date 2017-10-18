@@ -1,29 +1,29 @@
 /*
- *  Copyright (C) 2016 Pedro T. Oliveira <pedro.oliveira.nom.br>
+ * Copyright (C) 2017 pedrotoliveira
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.com.ppm.commons.test;
 
-import br.com.ppm.commons.ToStringBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
-import java.util.UUID;
-import java.util.concurrent.ForkJoinPool;
+import br.com.ppm.commons.ToStringBuilder;
 
 /**
  * A Stress test for ToStringBuilder
@@ -31,6 +31,7 @@ import java.util.concurrent.ForkJoinPool;
  * @author Pedro T. Oliveira
  *
  */
+@SuppressWarnings("PMD")
 public class ToStringBuilderComparisonTest {
 
 	public static void main(String[] args) throws Exception {
@@ -84,8 +85,8 @@ public class ToStringBuilderComparisonTest {
 
 		@Override
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
-		}
+            return ToStringBuilder.reflectionToString(this);
+        }
 	}
 
 	private static class PersonTwo {

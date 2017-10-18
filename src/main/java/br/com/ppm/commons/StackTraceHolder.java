@@ -1,20 +1,22 @@
 /*
- *  Copyright (C) 2016 Pedro T. Oliveira <pedro.oliveira.nom.br>
+ * Copyright (C) 2017 pedrotoliveira
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.com.ppm.commons;
+
+import java.util.Objects;
 
 /**
  * Holds a state of a call in the thread stack.
@@ -45,8 +47,7 @@ public class StackTraceHolder {
 	 * @param objectName the object name
 	 * @param methodName the method name
 	 */
-	StackTraceHolder(String objectName, String methodName) {
-		super();
+    StackTraceHolder(String objectName, String methodName) {
 		this.objectName = objectName;
 		this.methodName = methodName;
 	}
@@ -112,10 +113,7 @@ public class StackTraceHolder {
 		return methodName;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
+    @Override
 	public int hashCode() {
 		if (hashcode == 0) {
 			final int prime = 31;
@@ -126,58 +124,33 @@ public class StackTraceHolder {
 		return hashcode;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		StackTraceHolder other = (StackTraceHolder) obj;
-		if (hashcode != other.hashcode) {
-			return false;
-		}
-		if (methodName == null) {
-			if (other.methodName != null) {
-				return false;
-			}
-		} else if (!methodName.equals(other.methodName)) {
-			return false;
-		}
-		if (objectName == null) {
-			if (other.objectName != null) {
-				return false;
-			}
-		} else if (!objectName.equals(other.objectName)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StackTraceHolder other = (StackTraceHolder) obj;
+        if (this.hashcode != other.hashcode) {
+            return false;
+        }
+        if (!Objects.equals(this.objectName, other.objectName)) {
+            return false;
+        }
+        if (!Objects.equals(this.methodName, other.methodName)) {
+            return false;
+        }
+        return true;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StackTraceHolder [hashcode=");
-		builder.append(hashcode);
-		builder.append(", objectName=");
-		builder.append(objectName);
-		builder.append(", methodName=");
-		builder.append(methodName);
-		builder.append(", callCounts=");
-		builder.append(callCounts);
-		builder.append(", stackSize=");
-		builder.append(stackSize);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        return "StackTraceHolder{" + "objectName=" + objectName + ", methodName=" + methodName + ", callCounts=" + callCounts + ", stackSize=" + stackSize + '}';
+    }
+
 }

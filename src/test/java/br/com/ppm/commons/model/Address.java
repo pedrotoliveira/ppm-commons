@@ -14,20 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.annotation;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package br.com.ppm.commons.model;
 
 /**
- * Exclude field from the toString.
  *
- * @author Pedro T. Oliveira
- *
+ * @author pedrotoliveira
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ToStringExclude {
+public final class Address {
+
+    private final String street;
+    private final int number;
+    private final String complement;
+
+    public Address(String street, int number, String complement) {
+        super();
+        this.number = number;
+        this.street = street;
+        this.complement = complement;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
 }

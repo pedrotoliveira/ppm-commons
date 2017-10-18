@@ -14,20 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.annotation;
+package br.com.ppm.commons.suite;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import br.com.ppm.commons.StringsCapitalizeFirstLetterTest;
+import br.com.ppm.commons.StringsIsBlankTest;
+import br.com.ppm.commons.StringsIsEmptyTest;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
- * Exclude field from the toString.
  *
- * @author Pedro T. Oliveira
- *
+ * @author pedrotoliveira
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ToStringExclude {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    StringsIsEmptyTest.class,
+    StringsIsBlankTest.class,
+    StringsCapitalizeFirstLetterTest.class
+})
+public class StringsTestSuite {
 }

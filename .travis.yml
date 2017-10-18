@@ -1,5 +1,5 @@
 dist: trusty
-sudo: true
+sudo: required
 addons:
   apt:
     packages:
@@ -8,19 +8,22 @@ language: java
 jdk:
   - openjdk8
   - oraclejdk8
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    - $HOME/.mvn/wrapper/
+before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)    
 before_script:
-- chmod a+x gradlew
-sccript: ./gradlew clean test jacocoTestReport assemble
+- chmod a+x mvnw
+script:  
+  - java -version
+  - ./mvnw clean  
+  - ./mvnw install
+  - ./mvnw test -Pcoverage
+after_success:
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/jacoco-reports/jacoco.xml
 branches:
   only:
     - master
     - develop
-after_success:
-    - ./gradlew sendCoverageToCodacy

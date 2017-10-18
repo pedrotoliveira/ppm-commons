@@ -14,20 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.annotation;
+package br.com.ppm.commons.model;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import br.com.ppm.commons.ToStringBuilder;
 
 /**
- * Exclude field from the toString.
  *
- * @author Pedro T. Oliveira
- *
+ * @author pedrotoliveira
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ToStringExclude {
+public final class ClassB {
+
+    private final ClassA a;
+
+    public ClassB(ClassA a) {
+        this.a = a;
+    }
+
+    public ClassA getA() {
+        return a;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

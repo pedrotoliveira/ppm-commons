@@ -1,18 +1,18 @@
 /*
- *  Copyright (C) 2016 Pedro T. Oliveira <pedro.oliveira.nom.br>
+ * Copyright (C) 2017 pedrotoliveira
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package br.com.ppm.commons;
 
@@ -25,10 +25,10 @@ import java.util.NoSuchElementException;
  *
  * @author Pedro T. Oliveira
  */
-public class ValidatorUtils {
+public final class Validator {
 
 	/** No instances for this class */
-	private ValidatorUtils() {
+    private Validator() {
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class ValidatorUtils {
 	 *
 	 * @throws IllegalArgumentException if the parameter is null
 	 */
-	public static final void notNullParameter(Object param, final String paramName) {
+    public static void notNullParameter(final Object param, final String paramName) {
 		notNull(param, invalidParam(paramName));
 	}
 
@@ -51,7 +51,7 @@ public class ValidatorUtils {
 	 *
 	 * @throws IllegalArgumentException if the array parameter is empty
 	 */
-	public static final void notEmptyParameter(Object[] param, final String paramName) {
+    public static void notEmptyParameter(final Object[] param, final String paramName) {
 		notEmpty(param, invalidParam(paramName));
 	}
 
@@ -63,7 +63,7 @@ public class ValidatorUtils {
 	 *
 	 * @throws IllegalArgumentException if the array parameter contains null elements.
 	 */
-	public static final void noNullElementsParameter(Object[] param, final String paramName) {
+    public static void noNullElementsParameter(final Object[] param, final String paramName) {
 		noNullElements(param, invalidParam(paramName));
 	}
 
@@ -75,7 +75,7 @@ public class ValidatorUtils {
 	 *
 	 * @throws IllegalArgumentException if the parameter is null or empty
 	 */
-	public static final void isNotEmpty(final String param, final String paramName) {
+    public static void isNotEmpty(final String param, final String paramName) {
 		if (param == null || param.isEmpty()) {
 			throw handleIllegalArgumentException(paramName);
 		}
@@ -90,7 +90,7 @@ public class ValidatorUtils {
 	 *
 	 * @throws IllegalArgumentException if the parameter size is different
 	 */
-	public static final void correctSize(final Collection<?> collection, final int size, final String paramName) {
+    public static void correctSize(final Collection<?> collection, final int size, final String paramName) {
 		notEmpty(collection, invalidParam(paramName));
 		if (collection.size() != size) {
 			throw handleIllegalArgumentException(paramName);
@@ -104,7 +104,7 @@ public class ValidatorUtils {
 	 *
 	 * @return NoSuchElementException
 	 */
-	public static final NoSuchElementException handleNoSuchElement(final String element) {
+    public static NoSuchElementException handleNoSuchElement(final String element) {
 		return new NoSuchElementException(element + " not found.");
 	}
 
@@ -115,7 +115,7 @@ public class ValidatorUtils {
 	 *
 	 * @return IllegalArgumentException
 	 */
-	public static final IllegalArgumentException handleIllegalArgumentException(final String paramName) {
+    public static IllegalArgumentException handleIllegalArgumentException(final String paramName) {
 		return new IllegalArgumentException(invalidParam(paramName));
 	}
 
@@ -126,7 +126,7 @@ public class ValidatorUtils {
 	 *
 	 * @return IllegalStateException
 	 */
-	public static final IllegalStateException handleIllegalStateException(final String msg) {
+    public static IllegalStateException handleIllegalStateException(final String msg) {
 		return new IllegalStateException(msg);
 	}
 
@@ -134,19 +134,19 @@ public class ValidatorUtils {
 		return String.format("%s is invalid.", paramName);
 	}
 
-	private static void notEmpty(Object[] param, String message) {
+    private static void notEmpty(final Object[] param, final String message) {
 		if (param == null || param.length < 1) {
 			throw new IllegalArgumentException(message);
 		}
 	}
 
-	private static void notNull(Object param, String message) {
+    private static void notNull(final Object param, final String message) {
 		if (param == null) {
 			throw new IllegalArgumentException(message);
 		}
 	}
 
-	private static void noNullElements(Object[] param, String message) {
+    private static void noNullElements(final Object[] param, final String message) {
 		if (param == null) {
 			throw new IllegalArgumentException(message);
 		}
@@ -158,7 +158,7 @@ public class ValidatorUtils {
 		}
 	}
 
-	private static void notEmpty(Collection<?> collection, String message) {
+    private static void notEmpty(final Collection<?> collection, final String message) {
 		if (collection == null || collection.isEmpty()) {
 			throw new IllegalArgumentException(message);
 		}
