@@ -14,44 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
- * An Order
  *
  * @author pedrotoliveira
  */
-public class Order {
+public class CollectionToStringBuilderTest {
 
-    private final int id;
-
-    public Order(int id) {
-        this.id = id;
+    /**
+     * Test of build method, of class CollectionToStringBuilder.
+     */
+    @Test
+    public void testBuild() {
+        final List<String> collection = Arrays.asList(new String[]{"one", "two", "three"});
+        String toStringExpected = "ArrayList[one, two, three]";
+        String result = new CollectionToStringBuilder(collection).build();
+        assertThat("toString of Collections should be equal to expected", result, equalTo(toStringExpected));
     }
 
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Order other = (Order) obj;
-        return this.id != other.id;
-    }
 }

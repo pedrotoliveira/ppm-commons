@@ -142,10 +142,7 @@ public class StackTraceHolder {
         if (!Objects.equals(this.objectName, other.objectName)) {
             return false;
         }
-        if (!Objects.equals(this.methodName, other.methodName)) {
-            return false;
-        }
-        return true;
+        return !Objects.equals(this.methodName, other.methodName);
     }
 
     @Override

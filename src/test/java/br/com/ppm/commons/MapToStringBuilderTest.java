@@ -14,44 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
- * An Order
  *
  * @author pedrotoliveira
  */
-public class Order {
+public class MapToStringBuilderTest {
 
-    private final int id;
+    /**
+     * Test of build method, of class MapToStringBuilder.
+     */
+    @Test
+    public void testBuild() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("one", 1);
+        map.put("two", 2);
+        map.put("three", 3);
 
-    public Order(int id) {
-        this.id = id;
+        String result = new MapToStringBuilder(map).build();
+        String expected = "Map[1.key=one, val=1, 2.key=two, val=2, 3.key=three, val=3]";
+        assertThat("toString shoud be equal to expected", result, equalTo(expected));
     }
 
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Order other = (Order) obj;
-        return this.id != other.id;
-    }
 }

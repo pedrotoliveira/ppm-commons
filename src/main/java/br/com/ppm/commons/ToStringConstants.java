@@ -14,44 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
 
 /**
- * An Order
+ * Constants Used in ToStringBuilder Classes
  *
  * @author pedrotoliveira
  */
-public class Order {
+public final class ToStringConstants {
 
-    private final int id;
+    public static final String OPEN_MAP_BRACKET = "Map[";
+    public static final String OPEN_BRACKET = "{";
+    public static final String CLOSE_BRACKET = "}";
+    public static final String KEY = "key=";
+    public static final String VALUE = ", val=";
+    public static final char OPEN_SQUARE_BRACKET = '[';
+    public static final char CLOSE_SQUARE_BRACKET = ']';
+    public static final String EQUAL = "=";
+    public static final String COMMA = ", ";
+    public static final boolean IGNORE_SUPER_TYPES = true;
+    public static final boolean NOT_IGNORE_SUPER_TYPES = false;
 
-    public Order(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Order other = (Order) obj;
-        return this.id != other.id;
+    private ToStringConstants() {
     }
 }

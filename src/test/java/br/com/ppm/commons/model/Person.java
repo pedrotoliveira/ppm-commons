@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ public final class Person implements Serializable {
     private final Class<Person> clazz = Person.class;
 
     public Person() {
+        super();
     }
 
     public Person(String name, int age, boolean alive) {
@@ -79,7 +80,7 @@ public final class Person implements Serializable {
         return Arrays.copyOf(numbers, numbers.length);
     }
 
-    public void setNumbers(short[] numbers) {
+    public void setNumbers(short... numbers) {
         if (numbers != null) {
             this.numbers = Arrays.copyOf(numbers, numbers.length);
         }
@@ -110,7 +111,6 @@ public final class Person implements Serializable {
     }
 
     @Override
-    @SuppressWarnings("PMD")
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.name);
@@ -123,7 +123,7 @@ public final class Person implements Serializable {
     }
 
     @Override
-    @SuppressWarnings("PMD")
+    @SuppressWarnings("PMD.SimplifyBooleanReturns")
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

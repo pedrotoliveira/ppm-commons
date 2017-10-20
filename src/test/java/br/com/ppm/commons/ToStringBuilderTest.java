@@ -77,16 +77,15 @@ public class ToStringBuilderTest {
 
         String toStringExpected = "Person[name=John Doe, age=35, "
                 + "address=Address[street=Some street, number=35, complement=Apto 2], "
-                + "numbers=[1, 3, 4, 5], "
-                + "alive=true, "
-                + "NULL_OBJECT=null, "
-                + "orders=ArrayList{ Order[id=12358], Order[id=12387], Order[id=821] }, "
-                + "parents=Map{ (k1=mother, v1=[Person[name=Willy Mae Doe, age=70, "
-                + "address=Address[street=Older street, number=82, complement=bloco a], "
+                + "numbers=[1, 3, 4, 5], alive=true, NULL_OBJECT=null, orders=ArrayList[Order[id=12358], Order[id=12387], Order[id=821]], "
+                + "parents=Map["
+                + "1.key=mother, "
+                + "val=Person[name=Willy Mae Doe, age=70, address=Address[street=Older street, number=82, complement=bloco a], "
                 + "numbers=[9, 7, 6, 8], alive=false, NULL_OBJECT=null, orders=null, parents=null, "
-                + "clazz=class br.com.ppm.commons.model.Person]]), (k2=father, v2=[Person[name=Bill Doe, age=0, "
-                + "address=Address[street=Cemitery, number=582, complement=null], numbers=null, alive=false, "
-                + "NULL_OBJECT=null, orders=null, parents=null, clazz=class br.com.ppm.commons.model.Person]]) }, "
+                + "clazz=class br.com.ppm.commons.model.Person], "
+                + "2.key=father, "
+                + "val=Person[name=Bill Doe, age=0, address=Address[street=Cemitery, number=582, complement=null], "
+                + "numbers=null, alive=false, NULL_OBJECT=null, orders=null, parents=null, clazz=class br.com.ppm.commons.model.Person]], "
                 + "clazz=class br.com.ppm.commons.model.Person]";
 
         String result = person.toString();
@@ -120,20 +119,20 @@ public class ToStringBuilderTest {
      * Test collections.
      */
     @Test
-    public void testCollections() {
-        final List<String> l = Arrays.asList(new String[]{"one", "two", "three"});
-        final List<List<String>> listWithList = new ArrayList<>();
-        listWithList.add(l);
-        listWithList.add(l);
-        listWithList.add(l);
+    public void testMultiCollections() {
+        final List<String> collection1 = Arrays.asList(new String[]{"one", "two", "three"});
+        final List<List<String>> collection2 = new ArrayList<>();
+        collection2.add(collection1);
+        collection2.add(collection1);
+        collection2.add(collection1);
 
-        String toStringExpected = "ArrayList{"
-                + " ArrayList{ [one], [two], [three] },"
-                + " ArrayList{ [one], [two], [three] },"
-                + " ArrayList{ [one], [two], [three] }"
-                + " }";
+        String toStringExpected = "ArrayList["
+                + "ArrayList[one, two, three], "
+                + "ArrayList[one, two, three], "
+                + "ArrayList[one, two, three]"
+                + "]";
 
-        String result = ToStringBuilder.reflectionToString(listWithList);
+        String result = ToStringBuilder.reflectionToString(collection2);
         assertThat("toString of Collections should be equal to expected", result, equalTo(toStringExpected));
     }
 
@@ -172,7 +171,7 @@ public class ToStringBuilderTest {
         map.put("three", 3);
 
         String result = ToStringBuilder.reflectionToString(map);
-        String expected = "Map{ (k1=one, v1=[1]), (k2=two, v2=[2]), (k3=three, v3=[3]) }";
+        String expected = new MapToStringBuilder(map).build();
         assertThat("toString shoud be equal to expected", result, equalTo(expected));
     }
 
