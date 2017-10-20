@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,8 @@ public @interface ToStringStyle {
 		REFLECTION,
 		IGNORE_NULL,
 		CALL_TO_STRING,
-		MASK_FIELD
+        MASK_FIELD,
+        NO_STYLE
 	}
 
 	public Style value() default Style.REFLECTION;

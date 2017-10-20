@@ -28,6 +28,8 @@ import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static br.com.ppm.commons.Types.*;
+
 /**
  * Reflections Operations
  *
@@ -167,26 +169,6 @@ public final class Reflections {
         } catch (SecurityException | IllegalArgumentException e) {
             throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, e);
         }
-    }
-
-    /**
-     * Checks if is Map
-     *
-     * @param target the target
-     * @return true, if is map
-     */
-    private static boolean isMap(final Object target) {
-        return target instanceof Map<?, ?>;
-    }
-
-    /**
-     * Checks if is List
-     *
-     * @param target the target
-     * @return true, if is list
-     */
-    private static boolean isList(final Object target) {
-        return target instanceof List<?>;
     }
 
     /**

@@ -14,28 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;//NOPMD - GodClass
+package br.com.ppm.commons;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import br.com.ppm.commons.annotation.ToStringExclude;
 import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.ppm.commons.ToStringConstants.*;
+import static br.com.ppm.commons.Types.*;
+import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
 
 /**
  * ToStringBuilder
@@ -45,16 +40,6 @@ import org.apache.logging.log4j.Logger;
  */
 public final class ToStringBuilder {
 
-    private static final Logger logger = LogManager.getFormatterLogger(ToStringBuilder.class);
-
-    private static final int PAGE_SIZE = 15;
-    private static final String EQUAL = "=";
-    private static final String COMMA = ", ";
-    private static final char OPEN_SQUARE_BRACKET = '[';
-    private static final char CLOSE_SQUARE_BRACKET = ']';
-    private static final boolean IGNORE_SUPER_TYPES = true;
-    private static final boolean NOT_IGNORE_SUPER_TYPES = false;
-    private static final String DEFAULT_ERROR = "[Error on ToStringBuilder]";
     private static final String TO_MANY_TO_STRING_CALLS_VIOLATION = "[Error on ToStringBuilder, "
             + "reflectionToString method has reached the max depth calls! Please verify the circular references]";
 
@@ -70,7 +55,7 @@ public final class ToStringBuilder {
      * @return toString Pattern
      */
     public String build() {
-        return reflectionToString(object, NOT_IGNORE_SUPER_TYPES);
+        return build(NOT_IGNORE_SUPER_TYPES);
     }
 
     /**
@@ -80,7 +65,11 @@ public final class ToStringBuilder {
      * @return toString Pattern
      */
     public String build(final boolean ignoreSuperType) {
-        return reflectionToString(object, ignoreSuperType);
+        return build(ignoreSuperType, NO_STYLE);
+    }
+
+    public String build(final boolean ignoreSuperType, final Style style) {
+        return reflectionToString(object, ignoreSuperType, style);
     }
 
     /**
@@ -91,7 +80,7 @@ public final class ToStringBuilder {
      * @return toString Pattern
      */
     public static String reflectionToString(final Object object) {
-        return reflectionToString(object, NOT_IGNORE_SUPER_TYPES);
+        return new ToStringBuilder(object).build();
     }
 
     /**
@@ -103,7 +92,7 @@ public final class ToStringBuilder {
      * @return toString Pattern
      */
     public static String reflectionToString(final Object object, final boolean ignoreSuperType) {
-        return reflectionToString(object, ignoreSuperType, null);
+        return new ToStringBuilder(object).build(ignoreSuperType);
     }
 
     /**
@@ -115,22 +104,22 @@ public final class ToStringBuilder {
      * <p>
      * @return the string
      */
-    private static String reflectionToString(final Object object, final boolean ignoreSuperType, final Style style) {
+    private String reflectionToString(final Object object, final boolean ignoreSuperType, final Style style) {
         if (object == null) {
             return "Object=null ";
         }
         final StringBuilder builder = new StringBuilder();
         if (RecursiveToStringDepthController.isAllowed()) {
             if (isArray(object)) {
-                appendArrayValues(object, builder);
+                builder.append(new ArrayToStringBuilder(object).build());
             } else if (isWrapper(object)) {
                 builder.append(OPEN_SQUARE_BRACKET);
                 builder.append(object);
                 builder.append(CLOSE_SQUARE_BRACKET);
             } else if (isCollection(object)) {
-                appendCollection((Collection<?>) object, builder);
+                builder.append(new CollectionToStringBuilder(Collection.class.cast(object)).build());
             } else if (isMap(object)) {
-                appendMap((Map<?, ?>) object, builder);
+                builder.append(new MapToStringBuilder(Map.class.cast(object)).build());
             } else {
                 builder.append(object.getClass().getSimpleName());
                 builder.append(OPEN_SQUARE_BRACKET);
@@ -140,8 +129,7 @@ public final class ToStringBuilder {
             }
         } else {
             builder.append(OPEN_SQUARE_BRACKET);
-            builder.append("toStringError=");
-            builder.append(TO_MANY_TO_STRING_CALLS_VIOLATION);
+            builder.append("toStringError=").append(TO_MANY_TO_STRING_CALLS_VIOLATION);
             builder.append(CLOSE_SQUARE_BRACKET);
         }
         return builder.toString();
@@ -156,14 +144,14 @@ public final class ToStringBuilder {
      * <p>
      * @return the string
      */
-    private static String toStringFields(final Object object, final boolean ignoreSuperType, final Style style) {
+    private String toStringFields(final Object object, final boolean ignoreSuperType, final Style style) {
         StringBuilder builder = new StringBuilder();
         Field[] fields = ignoreSuperType ? object.getClass().getDeclaredFields() : extractSuperClassFields(object);
         for (Field field : fields) {
             String name = field.getName();
             if (isToPrintField(field, name)) {
                 Style selectedStyle = selectStyle(style, field);
-                appendValue(object, field, name, builder, selectedStyle);
+                StringBuilderAppender.appendValue(object, field, name, builder, selectedStyle);
             }
         }
         return builder.toString();
@@ -178,7 +166,7 @@ public final class ToStringBuilder {
      * @return the style
      */
     private static Style selectStyle(Style current, Field field) {
-        return (current == null) ? getFieldStyle(field) : current;
+        return (current == NO_STYLE) ? getFieldStyle(field) : current;
     }
 
     /**
@@ -266,63 +254,6 @@ public final class ToStringBuilder {
     }
 
     /**
-     * Append value.
-     * <p>
-     * @param o the o
-     * @param field the field
-     * @param name the name
-     * @param builder the builder
-     * @param style the style
-     */
-    private static void appendValue(Object o, final Field field, final String name, final StringBuilder builder, Style style) {
-        try {
-            if (!field.isAccessible()) {
-                field.setAccessible(true);
-            }
-            Object value = field.get(o);
-            if (value == null) {
-                if (Style.IGNORE_NULL.equals(style)) {
-                    return;
-                }
-                builder.append(name).append(EQUAL);
-                builder.append("null");
-            } else if (isArray(value)) {
-                builder.append(name).append(EQUAL);
-                appendArrayValues(o, field, builder);
-            } else if (isWrapper(value) || Style.CALL_TO_STRING.equals(style) || Style.MASK_FIELD.equals(style) || hasImplementedToString(value)) {
-                builder.append(name).append(EQUAL);
-                builder.append(Style.MASK_FIELD.equals(style) ? maskField(value) : value.toString());
-            } else if (isCollection(value)) {
-                builder.append(name).append(EQUAL);
-                appendCollection((Collection<?>) value, builder);
-            } else if (isMap(value)) {
-                builder.append(name).append(EQUAL);
-                appendMap((Map<?, ?>) value, builder);
-            } else {
-                builder.append(name).append(EQUAL);
-                builder.append(reflectionToString(value, IGNORE_SUPER_TYPES, style));
-            }
-
-            builder.append(COMMA);
-
-        } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            handleException(ex, builder);
-        }
-    }
-
-    /**
-     * Handle exception.
-     * <p>
-     * @param ex the ex
-     * @param builder the builder
-     */
-    private static void handleException(Exception ex, StringBuilder builder) {
-        logger.error(DEFAULT_ERROR, ex);
-        builder.append("toStringError=");
-        builder.append(DEFAULT_ERROR);
-    }
-
-    /**
      * Mask a String value.
      *
      * @param value to mask
@@ -357,224 +288,6 @@ public final class ToStringBuilder {
         for (int i = 0; i < maskSize; i++) {
             sb.append('*');
         }
-        sb.append(strValue.substring(size - lastPart, size));
-        return sb.toString();
-    }
-
-    /**
-     * Checks if is array.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return true, if is array
-     */
-    private static boolean isArray(Object value) {
-        return value.getClass().isArray();
-    }
-
-    /**
-     * Have implemented to string.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return true, if successful
-     */
-    private static boolean hasImplementedToString(Object value) {
-        try {
-            Method toStringMethod = value.getClass().getDeclaredMethod("toString");
-            return toStringMethod != null;
-        } catch (SecurityException | NoSuchMethodException ex) {
-            return false;
-        }
-    }
-
-    /**
-     * Checks if is wrapper.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return true, if is wrapper
-     */
-    private static boolean isWrapper(Object value) {
-        return value.getClass().isPrimitive()
-                || value.getClass().isInterface()
-                || value instanceof String
-                || value instanceof Integer
-                || value instanceof Double
-                || value instanceof Short
-                || value instanceof Long
-                || value instanceof Float
-                || value instanceof Character
-                || value instanceof Boolean
-                || value instanceof Byte
-                || value instanceof Date
-                || value instanceof Calendar
-                || value instanceof Locale
-                || value instanceof Class<?>
-                || value instanceof Enum<?>;
-    }
-
-    /**
-     * Checks if is map.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return true, if is map
-     */
-    private static boolean isMap(Object value) {
-        return value instanceof Map;
-    }
-
-    /**
-     * Checks if is collection.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return true, if is collection
-     */
-    private static boolean isCollection(Object value) {
-        return value instanceof Collection;
-    }
-
-    /**
-     * Append array values.
-     * <p>
-     * @param object the o
-     * @param field the field
-     * @param builder the builder
-     * <p>
-     * @throws IllegalArgumentException the illegal argument exception
-     * @throws IllegalAccessException the illegal access exception
-     */
-    private static void appendArrayValues(final Object object, final Field field, final StringBuilder builder)
-            throws IllegalArgumentException, IllegalAccessException {
-        Object array = field.get(object);
-        appendArrayValues(array, builder);
-    }
-
-    /**
-     * Append array values.
-     * <p>
-     * @param array the array
-     * @param builder the builder
-     */
-    private static void appendArrayValues(Object array, StringBuilder builder) {
-        int lenght = Array.getLength(array);
-        builder.append(OPEN_SQUARE_BRACKET);
-        if (lenght > PAGE_SIZE) {
-            appendArrayValuesRange(array, builder, 0, PAGE_SIZE);
-            builder.append(", ...");
-        } else {
-            appendArrayValuesRange(array, builder, 0, lenght);
-        }
-        builder.append(CLOSE_SQUARE_BRACKET);
-    }
-
-    /**
-     * Append array values range.
-     * <p>
-     * @param array the array
-     * @param builder the builder
-     * @param beginIndex the begin index
-     * @param endIndex the end index
-     */
-    private static void appendArrayValuesRange(Object array, StringBuilder builder, int beginIndex, int endIndex) {
-        for (int i = beginIndex; i < endIndex; i++) {
-            Object element = Array.get(array, i);
-            if (element != null && element.getClass().isArray()) {
-                appendArrayValues(element, builder);
-            } else {
-                builder.append(element);
-                if (i != endIndex - 1) {
-                    builder.append(COMMA);
-                }
-            }
-        }
-    }
-
-    /**
-     * Append collection.
-     * <p>
-     * @param collection the collection
-     * @param builder the builder
-     */
-    @SuppressWarnings("unchecked")
-    private static void appendCollection(Collection<?> collection, StringBuilder builder) {
-        try {
-            builder.append(collection.getClass().getSimpleName()).append("{ ");
-            int counter = 0;
-            for (Iterator<Object> it = (Iterator<Object>) collection.iterator(); it.hasNext();) {
-                Object element = it.next();
-                appendCollectionValue(element, builder);
-                if (it.hasNext()) {
-                    builder.append(COMMA);
-                }
-                counter++;
-                if (counter == PAGE_SIZE) {
-                    builder.append(", ...");
-                    break;
-                }
-            }
-            builder.append(" }");
-        } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
-        }
-    }
-
-    /**
-     * Append collection value.
-     * <p>
-     * @param element the element
-     * @param builder the builder
-     */
-    private static void appendCollectionValue(Object element, StringBuilder builder) {
-        try {
-            if (element == null) {
-                builder.append(element);
-            } else if (isArray(element)) {
-                appendArrayValues(element, builder);
-            } else if (isWrapper(element) || hasImplementedToString(element)) {
-                builder.append(OPEN_SQUARE_BRACKET);
-                builder.append(element);
-                builder.append(CLOSE_SQUARE_BRACKET);
-            } else if (isCollection(element)) {
-                appendCollection((Collection<?>) element, builder);
-            } else if (isMap(element)) {
-                appendMap((Map<?, ?>) element, builder);
-            } else {
-                builder.append(reflectionToString(element, IGNORE_SUPER_TYPES));
-            }
-        } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
-        }
-    }
-
-    /**
-     * Append map.
-     * <p>
-     * @param map the map
-     * @param builder the builder
-     */
-    @SuppressWarnings("unchecked")
-    private static void appendMap(Map<?, ?> map, StringBuilder builder) {
-        try {
-            builder.append("Map{ ");
-            int counter = 1;
-            for (Iterator<Object> keyIt = (Iterator<Object>) map.keySet().iterator(); keyIt.hasNext();) {
-                Object key = keyIt.next();
-                builder.append("(k").append(counter).append(EQUAL);
-                builder.append(key);
-                builder.append(", v").append(counter).append(EQUAL);
-                appendCollectionValue(map.get(key), builder);
-                builder.append(')');
-                if (keyIt.hasNext()) {
-                    builder.append(COMMA);
-                }
-                counter++;
-            }
-            builder.append(" }");
-        } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
-        }
+        return sb.append(strValue.substring(size - lastPart, size)).toString();
     }
 }

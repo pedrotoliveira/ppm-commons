@@ -35,7 +35,6 @@ public class JsonStackTraceFormatterTest {
     public void testFormatToString() {
         Throwable throwable = new RuntimeException("test format to string");
         String result = new JsonStackTraceFormatter().formatToString(throwable);
-        @SuppressWarnings("PMD.AvoidDuplicateLiterals")
         String expected = "[\n"
                 + "  {\n"
                 + "    \"declaringClass\": \"br.com.ppm.commons.JsonStackTraceFormatterTest\",\n"

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,5 +49,30 @@ public final class Strings {
 
     public static boolean isBlank(final String text) {
         return text != null && text.isEmpty();
+    }
+
+    /**
+     * Mask a String
+     * <p>
+     * @param value the value
+     * <p>
+     * @return the object
+     */
+    public static String mask(String value) {
+        final int size = value.length();
+
+        if (size < 11) {
+            return value.replaceAll("\\.", "*");
+        }
+
+        final int lastPart = 4;
+        final int firstPart = 6;
+        final int maskSize = size - lastPart - firstPart;
+
+        final StringBuilder sb = new StringBuilder(value.substring(0, firstPart));
+        for (int i = 0; i < maskSize; i++) {
+            sb.append('*');
+        }
+        return sb.append(value.substring(size - lastPart, size)).toString();
     }
 }

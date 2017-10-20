@@ -111,7 +111,6 @@ public final class Person implements Serializable {
     }
 
     @Override
-    @SuppressWarnings("PMD")
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.name);
@@ -124,7 +123,7 @@ public final class Person implements Serializable {
     }
 
     @Override
-    @SuppressWarnings("PMD")
+    @SuppressWarnings("PMD.SimplifyBooleanReturns")
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
