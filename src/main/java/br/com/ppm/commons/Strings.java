@@ -59,6 +59,7 @@ public final class Strings {
      * @return the object
      */
     public static String mask(String value) {
+        Validator.notNullParameter(value, "value");
         final int size = value.length();
 
         if (size < 11) {

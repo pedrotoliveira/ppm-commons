@@ -165,7 +165,7 @@ public final class ToStringBuilder {
      * <p>
      * @return the style
      */
-    private static Style selectStyle(Style current, Field field) {
+    private Style selectStyle(Style current, Field field) {
         return (current == NO_STYLE) ? getFieldStyle(field) : current;
     }
 
@@ -176,7 +176,7 @@ public final class ToStringBuilder {
      * <p>
      * @return the field style
      */
-    private static Style getFieldStyle(Field field) {
+    private Style getFieldStyle(Field field) {
         return field.isAnnotationPresent(ToStringStyle.class)
                 ? field.getAnnotation(ToStringStyle.class).value()
                 : Style.REFLECTION;
@@ -189,7 +189,7 @@ public final class ToStringBuilder {
      * <p>
      * @return the field[]
      */
-    private static Field[] extractSuperClassFields(Object o) {
+    private Field[] extractSuperClassFields(Object o) {
         Field[] classFields = o.getClass().getDeclaredFields();
         if (hasSuperType(o)) {
             Field[] superFields = o.getClass().getSuperclass().getDeclaredFields();
@@ -218,7 +218,7 @@ public final class ToStringBuilder {
      * <p>
      * @return true, if is not on
      */
-    private static boolean isNotOn(Field[] classFields, Field field) {
+    private boolean isNotOn(Field[] classFields, Field field) {
         for (Field classField : classFields) {
             if (field.getName().equals(classField.getName()) && field.getType().equals(classField.getType())) {
                 return false;
@@ -234,7 +234,7 @@ public final class ToStringBuilder {
      * <p>
      * @return true, if successful
      */
-    private static boolean hasSuperType(Object o) {
+    private boolean hasSuperType(Object o) {
         return !(o.getClass().getSuperclass().equals(Object.class));
     }
 
@@ -246,48 +246,10 @@ public final class ToStringBuilder {
      * <p>
      * @return true, if is to print field
      */
-    private static boolean isToPrintField(Field field, String name) {
+    private boolean isToPrintField(Field field, String name) {
         return !(field.isAnnotationPresent(ToStringExclude.class)
                 || "serialVersionUID".equals(name)
                 || "this$0".equals(name)
                 || Modifier.isStatic(field.getModifiers()));
-    }
-
-    /**
-     * Mask a String value.
-     *
-     * @param value to mask
-     * <p>
-     * @return the masked String
-     */
-    public static String mask(String value) {
-        Validator.notNullParameter(value, "value");
-        return maskField(value).toString();
-    }
-
-    /**
-     * Mask field.
-     * <p>
-     * @param value the value
-     * <p>
-     * @return the object
-     */
-    private static Object maskField(Object value) {
-        String strValue = value.toString();
-        final int size = strValue.length();
-
-        if (size < 11) {
-            return strValue.replaceAll("\\.", "*");
-        }
-
-        final int lastPart = 4;
-        final int firstPart = 6;
-        final int maskSize = size - lastPart - firstPart;
-
-        final StringBuilder sb = new StringBuilder(strValue.substring(0, firstPart));
-        for (int i = 0; i < maskSize; i++) {
-            sb.append('*');
-        }
-        return sb.append(strValue.substring(size - lastPart, size)).toString();
     }
 }
