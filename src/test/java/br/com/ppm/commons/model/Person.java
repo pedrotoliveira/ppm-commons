@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ public final class Person implements Serializable {
     private final Class<Person> clazz = Person.class;
 
     public Person() {
+        super();
     }
 
     public Person(String name, int age, boolean alive) {
@@ -79,7 +80,7 @@ public final class Person implements Serializable {
         return Arrays.copyOf(numbers, numbers.length);
     }
 
-    public void setNumbers(short[] numbers) {
+    public void setNumbers(short... numbers) {
         if (numbers != null) {
             this.numbers = Arrays.copyOf(numbers, numbers.length);
         }

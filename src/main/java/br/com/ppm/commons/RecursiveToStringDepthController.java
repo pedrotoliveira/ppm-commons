@@ -71,7 +71,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return true, if is allowed
 	 */
-    protected static boolean isAllowed() {
+    static boolean isAllowed() {
         return registerCaller() && validateCallCounts();
 	}
 
@@ -85,8 +85,8 @@ final class RecursiveToStringDepthController {
 		if (getCurrentHolder() != null) {
 			int count = getCurrentHolder().getCallCounts();
 			if (count > MAX_DEPTH) {
-				valid = false;
-				logger.error("ToString not allowed, " + getCurrentHolder());
+                valid = false;
+                logError("ToString not allowed, " + getCurrentHolder());
 			}
 		}
 		return valid;
@@ -100,8 +100,8 @@ final class RecursiveToStringDepthController {
 	private static boolean registerCaller() {
 		try {
 			final int stackTraceLength = Thread.currentThread().getStackTrace().length;
-			if (stackTraceLength == MAX_STACK_SIZE) {
-				logger.error("ToString not allowed, Max Stack Size " + MAX_STACK_SIZE + " Reached!");
+            if (stackTraceLength == MAX_STACK_SIZE) {
+                logError("ToString not allowed, Max Stack Size " + MAX_STACK_SIZE + " Reached!");
 				getAllholdersInCurrentThread().clear();
 				return FAIL;
 			}
@@ -137,6 +137,12 @@ final class RecursiveToStringDepthController {
 		}
 	}
 
+    private static void logError(String message) {
+        if (logger.isErrorEnabled()) {
+            logger.error(message);
+        }
+    }
+
 	/**
 	 * Retrieve holder.
 	 *
@@ -158,7 +164,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return the callers
 	 */
-    protected static StackTraceElement[] getCallers() {
+    static StackTraceElement[] getCallers() {
 		StackTraceElement[] callers = null;
 		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 		if (stacks != null) {

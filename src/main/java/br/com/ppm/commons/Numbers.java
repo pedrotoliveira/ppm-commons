@@ -17,10 +17,14 @@
 package br.com.ppm.commons;
 
 /**
+ * Utility class Numbers
  *
  * @author pedrotoliveira
  */
 public final class Numbers {
+
+    private Numbers() {
+    }
 
     /**
      * Verifies if a given text is a Number

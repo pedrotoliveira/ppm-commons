@@ -214,6 +214,7 @@
                                 <exclude>**/*Test*</exclude>
                                 <exclude>**/*br/com/ppm/commons/model/*</exclude>
                                 <exclude>**/*br/com/ppm/commons/suite/*</exclude>
+                                <exclude>**/*br/com/ppm/commons/extras/pmd/*</exclude>
                             </excludes>
                         </configuration>
                         <executions>

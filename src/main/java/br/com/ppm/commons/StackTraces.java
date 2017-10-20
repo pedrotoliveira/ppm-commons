@@ -21,7 +21,7 @@ package br.com.ppm.commons;
  *
  * @author Pedro T. Oliveira
  */
-public class StackTraces {
+public final class StackTraces {
 
     /**
      * Can't be instantiate

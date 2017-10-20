@@ -52,9 +52,6 @@ public class Order {
             return false;
         }
         final Order other = (Order) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+        return this.id != other.id;
     }
 }
