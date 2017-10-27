@@ -109,7 +109,7 @@ public final class ToStringBuilder {
             return "Object=null ";
         }
         final StringBuilder builder = new StringBuilder();
-        if (RecursiveToStringDepthController.isAllowed()) {
+        if (StackDepthController.isAllowed()) {
             if (isArray(object)) {
                 builder.append(new ArrayToStringBuilder(object).build());
             } else if (isWrapper(object)) {

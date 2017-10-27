@@ -23,15 +23,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * RecursiveToStringDepthController - controls concurrent calls of ToStringBuilder.reflectiveToString.
+ * StackDepthController - controls concurrent calls of ToStringBuilder.reflectiveToString.
  *
  * @author Pedro T. Oliveira
  *
  */
-final class RecursiveToStringDepthController {
+final class StackDepthController {
 
 	/** The Constant logger. */
-	private static final Logger logger = LogManager.getLogger(RecursiveToStringDepthController.class);
+    private static final Logger logger = LogManager.getLogger(StackDepthController.class);
 
 	/** The Constant SUCCESS. */
 	private static final boolean SUCCESS = true;
@@ -62,7 +62,7 @@ final class RecursiveToStringDepthController {
 	/**
 	 * Instantiates a new recursive to string depth controller.
 	 */
-	private RecursiveToStringDepthController() {
+    private StackDepthController() {
 		/** No instances for this class */
 	}
 
@@ -71,7 +71,7 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return true, if is allowed
 	 */
-    static boolean isAllowed() {
+    public static boolean isAllowed() {
         return registerCaller() && validateCallCounts();
 	}
 
@@ -164,15 +164,15 @@ final class RecursiveToStringDepthController {
 	 *
 	 * @return the callers
 	 */
-    static StackTraceElement[] getCallers() {
-		StackTraceElement[] callers = null;
+    public static StackTraceElement[] getCallers() {
 		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 		if (stacks != null) {
             int offset = stacks.length < 10 ? stacks.length : 10;
-			callers = new StackTraceElement[offset];
-			System.arraycopy(stacks, 0, callers, 0, offset);
+            StackTraceElement[] callers = new StackTraceElement[offset];
+            System.arraycopy(stacks, 0, callers, 0, offset);
+            return callers;
 		}
-		return callers;
+        return new StackTraceElement[0];
 	}
 
 	/**
