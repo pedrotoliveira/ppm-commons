@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2018 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,6 +68,11 @@ public class ValidatorTest {
     @Test(expected = IllegalStateException.class)
     public void testHandleIllegalStateException() {
         throw Validator.handleIllegalStateException("message");
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidEmail() {
+        Validator.isValidEmail("email@aeh.cio.", "email");
     }
 
 }

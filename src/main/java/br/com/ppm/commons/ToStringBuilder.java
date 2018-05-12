@@ -33,9 +33,12 @@ import static br.com.ppm.commons.Types.*;
 import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
 
 /**
- * ToStringBuilder
+ * Class ToStringBuilder is a Utility class to implement java toString pattern.
  *
- * @author Pedro T. Oliveira
+ * This implementation should be more realible, faster and secure them other ToStringBuilders on the market.
+ *
+ * @author Pedro T. Oliveira (pedrotoliveira)
+ * @since 05/15/2013
  *
  */
 public final class ToStringBuilder {
