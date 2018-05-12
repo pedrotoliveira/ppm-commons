@@ -13,16 +13,15 @@ cache:
     - $HOME/.mvn/wrapper/
 before_install:
   - sudo apt-get install jq
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)    
+  - wget -O ./codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 before_script:
 - chmod a+x mvnw
 script:  
   - java -version
   - ./mvnw clean  
-  - ./mvnw install
-  - ./mvnw test -Pcoverage
+  - ./mvnw install -Pcoverage
 after_success:
-  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/jacoco-reports/jacoco.xml
+  - java -cp ./codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter report -l Java -r target/jacoco-reports/jacoco.xml
 branches:
   only:
     - master
