@@ -28,7 +28,7 @@ public enum StackTraceFormatters implements StackTracerFormatter {
 
     private final StackTracerFormatter formatter;
 
-    private StackTraceFormatters(StackTracerFormatter formatter) {
+    StackTraceFormatters(StackTracerFormatter formatter) {
         this.formatter = formatter;
     }
 

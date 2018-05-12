@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ToStringStyle {
 
-	public enum Style {
+	enum Style {
 		REFLECTION,
 		IGNORE_NULL,
 		CALL_TO_STRING,
@@ -39,5 +39,5 @@ public @interface ToStringStyle {
         NO_STYLE
 	}
 
-	public Style value() default Style.REFLECTION;
+	Style value() default Style.REFLECTION;
 }

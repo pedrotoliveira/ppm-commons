@@ -132,10 +132,7 @@ public final class Reflections {
     @SuppressWarnings("unchecked")
     public static <T> T getValueByNamespace(final String fieldName, final Object target, Class<T> returnType) {
         Optional<Object> optional = getValueByNamespace(fieldName, target);
-        if (optional.isPresent()) {
-            return (T) optional.get();
-        }
-        return null;
+        return (T) optional.orElse(null);
     }
 
     /**

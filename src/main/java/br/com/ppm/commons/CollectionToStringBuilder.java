@@ -44,9 +44,6 @@ public final class CollectionToStringBuilder {
 
     /**
      * Append collection.
-     * <p>
-     * @param collection the collection
-     * @param builder the builder
      */
     @SuppressWarnings("unchecked")
     public String build() {

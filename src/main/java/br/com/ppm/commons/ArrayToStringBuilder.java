@@ -36,19 +36,16 @@ public final class ArrayToStringBuilder {
 
     /**
      * Append array values.
-     * <p>
-     * @param array the array
-     * @param builder the builder
      */
     public String build() {
         StringBuilder builder = new StringBuilder();
-        int lenght = Array.getLength(array);
+        int length = Array.getLength(array);
         builder.append(OPEN_SQUARE_BRACKET);
-        if (lenght > PAGE_SIZE) {
-            appendArrayValuesRange(array, builder, 0, PAGE_SIZE);
+        if (length > PAGE_SIZE) {
+            appendArrayValuesRange(array, builder, PAGE_SIZE);
             builder.append(", ...");
         } else {
-            appendArrayValuesRange(array, builder, 0, lenght);
+            appendArrayValuesRange(array, builder, length);
         }
         builder.append(CLOSE_SQUARE_BRACKET);
         return builder.toString();
@@ -59,11 +56,10 @@ public final class ArrayToStringBuilder {
      * <p>
      * @param array the array
      * @param builder the builder
-     * @param beginIndex the begin index
      * @param endIndex the end index
      */
-    private void appendArrayValuesRange(Object array, StringBuilder builder, int beginIndex, int endIndex) {
-        for (int i = beginIndex; i < endIndex; i++) {
+    private void appendArrayValuesRange(Object array, StringBuilder builder, int endIndex) {
+        for (int i = 0; i < endIndex; i++) {
             Object element = Array.get(array, i);
             if (element != null && element.getClass().isArray()) {
                 builder.append(new ArrayToStringBuilder(element).build());

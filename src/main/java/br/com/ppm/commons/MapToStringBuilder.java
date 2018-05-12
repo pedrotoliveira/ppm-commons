@@ -41,9 +41,6 @@ public class MapToStringBuilder {
 
     /**
      * Append map.
-     * <p>
-     * @param map the map
-     * @param builder the builder
      */
     @SuppressWarnings("unchecked")
     public String build() {

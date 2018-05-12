@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2018 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ public final class Validator {
 	}
 
 	/**
-	 * Create a NoSuchElementException whith a message equal the message
+	 * Create a NoSuchElementException with a message equal the message
 	 *
 	 * @param msg the message
 	 *
@@ -163,4 +163,10 @@ public final class Validator {
 			throw new IllegalArgumentException(message);
 		}
 	}
+	
+	public static void isValidEmail(final String email, final String paramName) {
+        if (!new EmailPattern(email).matches()) {
+            throw handleIllegalArgumentException(paramName);
+        }
+    }
 }
