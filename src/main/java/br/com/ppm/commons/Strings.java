@@ -37,10 +37,8 @@ public final class Strings {
      * @return the new text with first letter Capitalized
      */
     public static String capitalizeFirstLetter(final String text) {
-        return new StringBuilder(text.length())
-                .append(Character.toUpperCase(text.charAt(0)))
-                .append(text.substring(1))
-                .toString();
+        return String.valueOf(Character.toUpperCase(text.charAt(0))) +
+                text.substring(1);
     }
 
     public static boolean isEmpty(final String text) {

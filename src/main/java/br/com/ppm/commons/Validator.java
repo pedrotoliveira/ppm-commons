@@ -120,7 +120,7 @@ public final class Validator {
 	}
 
 	/**
-	 * Create a NoSuchElementException whith a message equal the message
+	 * Create a NoSuchElementException with a message equal the message
 	 *
 	 * @param msg the message
 	 *

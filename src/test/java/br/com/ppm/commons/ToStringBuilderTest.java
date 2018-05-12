@@ -44,7 +44,7 @@ public class ToStringBuilderTest {
     /**
      * Test method for.
      *
-     * {@link com.ppm..util.ToStringBuilder#reflectionToString(java.lang.Object)} .
+     * {@link ToStringBuilder#reflectionToString(java.lang.Object)} .
      */
     @Test
     public final void testReflectionToString() {
