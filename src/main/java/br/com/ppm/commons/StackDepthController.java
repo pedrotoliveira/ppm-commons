@@ -37,7 +37,7 @@ final class StackDepthController {
 	private static final boolean SUCCESS = true;
 
 	/** The Constant FAIL. */
-	private static final boolean FAIL = !SUCCESS;
+	private static final boolean FAIL = false;
 
 	/** The Constant TO_STRING_BUILDER_CLASS_NAME. */
 	private static final String TO_STRING_BUILDER_CLASS_NAME = ToStringBuilder.class.getName();

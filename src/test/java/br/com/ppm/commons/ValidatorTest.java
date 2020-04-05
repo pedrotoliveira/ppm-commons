@@ -34,6 +34,11 @@ public class ValidatorTest {
         Validator.notNullParameter(null, "some param");
 	}
 
+	@Test
+	public void shoudPassWhenParameterNotNull() {
+        Validator.notNullParameter("Not Null", "some param");
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testNotEmptyParameter() {
         Validator.notEmptyParameter(new String[]{}, "String Array");
@@ -75,4 +80,8 @@ public class ValidatorTest {
         Validator.isValidEmail("email@aeh.cio.", "email");
     }
 
+    @Test
+    public void testValidEmail() {
+        Validator.isValidEmail("pedro.oliveira20@gmail.com", "email");
+    }
 }

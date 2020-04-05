@@ -41,26 +41,27 @@ public class EmailPatternTest {
     
     public EmailPatternTest(String email, String expected) {
         this.email = email;
-        this.expected = Boolean.getBoolean(expected);
+        this.expected = Boolean.parseBoolean(expected);
     }
     
     @Parameterized.Parameters(name = "Case {index}: (Email: {0}, should be: {1})")
     public static Collection<String[]> parameters() {
         return asList(new String[][]{
                 {"pedro.oliveira20@gmail.com", "true"},
-                {"email@müller.de", "true"},
+                {"email@müller.de", "false"},
                 {"user@78.47.122.114", "true"},
                 {"user.100@email.com.au", "true"},
                 {"User.100@email.com.de", "true"},
                 {"User-100@email.com.au", "true"},
                 {"a-100@yahoo.com.br", "true"},
-                {"Chuck Norris <gmail@chucknorris.com>", "true"},
+                {"Chuck Norris <gmail@chucknorris.com>", "false"},
+                {"chucknorris@gmail.com", "true"},
                 {"pedro.oliveira20()@gmail.com", "false"},
                 {"em  ail@müller.de", "false"},
                 {"あいうえお@example.com", "false"},
                 {"user.100@email.com.", "false"},
                 {"User.100email.com.de", "false"},
-                {"User-100@com.com.au", "false"},
+                {"User-100@com.com.au", "true"},
                 {"-100@yahoo.com.r", "false"},
         });
     }

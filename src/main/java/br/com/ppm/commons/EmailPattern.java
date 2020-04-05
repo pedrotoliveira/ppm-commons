@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  */
 public class EmailPattern {
     
-    public static final String REGEX = "^([A-Z0-9._%+-]+){1,32}@([\\w&&[^_]]+){2,255}.[a-z]{4,}$";
+    public static final String REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z0-9]{2,6}$";
     public final Pattern VALID_EMAIL_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
     
     private final Matcher matcher;
