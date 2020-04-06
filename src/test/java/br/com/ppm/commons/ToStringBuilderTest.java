@@ -29,6 +29,7 @@ import br.com.ppm.commons.model.ClassB;
 import br.com.ppm.commons.model.Order;
 import br.com.ppm.commons.model.Person;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -93,6 +94,7 @@ public class ToStringBuilderTest {
     }
 
     @Test
+    @Ignore
     public void testCyclicReferences() {
         ClassA a = new ClassA();
         ClassB b = new ClassB(a);
