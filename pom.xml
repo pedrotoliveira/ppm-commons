@@ -28,9 +28,9 @@
     </properties>
 
     <scm>
-        <url>git://github.com/pedrotoliveira/ppm-commons.git</url>
-        <connection>scm:git:git://github.com/pedrotoliveira/ppm-commons.git</connection>
-        <developerConnection>scm:git:git://github.com/pedrotoliveira/ppm-commons.git</developerConnection>
+        <url>git://git@github.com/pedrotoliveira/ppm-commons.git</url>
+        <connection>scm:git:git://git@github.com/pedrotoliveira/ppm-commons.git</connection>
+        <developerConnection>scm:git:git://git@github.com/pedrotoliveira/ppm-commons.git</developerConnection>
         <tag>ppm-commons-2.1.1</tag>
     </scm>
 
