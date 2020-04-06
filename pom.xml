@@ -28,10 +28,10 @@
     </properties>
 
     <scm>
-        <url>https://github.com/pedrotoliveira/ppm-commons.git</url>
-        <connection>scm:git:https://github.com/pedrotoliveira/ppm-commons.git</connection>
-        <developerConnection>scm:git:https://github.com/pedrotoliveira/ppm-commons.git</developerConnection>
-        <tag>ppm-commons-2.0.0</tag>
+        <url>git://github.com/pedrotoliveira/ppm-commons.git</url>
+        <connection>scm:git:git://github.com/pedrotoliveira/ppm-commons.git</connection>
+        <developerConnection>scm:git:git://github.com/pedrotoliveira/ppm-commons.git</developerConnection>
+        <tag>ppm-commons-2.1.1</tag>
     </scm>
 
     <developers>
