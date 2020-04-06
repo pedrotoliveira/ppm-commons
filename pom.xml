@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.ppm</groupId>
     <artifactId>ppm-commons</artifactId>
@@ -22,7 +23,7 @@
         <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
         <jacoco.output.directory>${project.build.directory}/jacoco</jacoco.output.directory>
         <jacoco.report.directory>${project.build.directory}/jacoco-reports</jacoco.report.directory>
-        <jacoco.out.file>jacoco.exec</jacoco.out.file>        
+        <jacoco.out.file>jacoco.exec</jacoco.out.file>
         <sonar.jacoco.reportPath>${jacoco.output.directory}/${jacoco.out.file}</sonar.jacoco.reportPath>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
@@ -98,6 +99,15 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -201,7 +211,7 @@
                                     <name>listener</name>
                                     <value>org.sonar.java.jacoco.JUnitListener</value>
                                 </property>
-                            </properties>                            
+                            </properties>
                             <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                         </configuration>
                     </plugin>
