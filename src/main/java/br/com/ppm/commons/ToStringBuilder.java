@@ -112,7 +112,7 @@ public final class ToStringBuilder {
             return "Object=null ";
         }
         final StringBuilder builder = new StringBuilder();
-        if (StackDepthController.isAllowed()) {
+        if (DepthController.isAllowed(object)) {
             if (isArray(object)) {
                 builder.append(new ArrayToStringBuilder(object).build());
             } else if (isWrapper(object)) {

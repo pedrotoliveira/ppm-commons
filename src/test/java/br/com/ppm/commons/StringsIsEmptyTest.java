@@ -43,7 +43,7 @@ public class StringsIsEmptyTest {
     }
 
     @Parameterized.Parameters(name = "Case {index}: (For text: {0}, we got: {1})")
-    public static Collection<Object[]> parameters() {
+    public static Collection<Object[]> data() {
         return asList(new Object[][]{
             {"", true},
             {null, true},

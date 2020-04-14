@@ -3,4 +3,4 @@
 git tag -l | xargs git tag -d
 git fetch
 ## Release Project
-./mvnw release:prepare release:perform deploy -Prelease
+./mvnw release:prepare release:perform deploy -Prelease -s .mvn/settings.xml
