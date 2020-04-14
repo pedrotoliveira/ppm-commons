@@ -24,6 +24,9 @@ nb*
 .nb-gradle*
 .nb-gradle/*
 *.nb-gradle/*
+.mvn/settings.xml
+/.mvn/my-gpg-pub.asc
+/.mvn/settings.xml
 
 /.idea/*
 *.iml
@@ -37,4 +40,4 @@ nb*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-.mvn/settings.xml
+codacy-coverage-reporter-assembly-latest.jar
