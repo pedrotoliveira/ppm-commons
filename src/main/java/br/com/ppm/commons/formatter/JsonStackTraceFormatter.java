@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2017 pedrotoliveira
+/*
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,14 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.formatter;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
+ * Json Stack Trace Formatter
  *
  * @author pedrotoliveira
  */
-public interface StackTracerFormatter {
+final class JsonStackTraceFormatter implements StackTracerFormatter {
 
-    String formatToString(final Throwable throwable);
+    @Override
+    public String formatToString(final Throwable throwable) {
+        throwable.printStackTrace();
+        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+        return gson.toJson(throwable.getStackTrace());
+    }
 
 }

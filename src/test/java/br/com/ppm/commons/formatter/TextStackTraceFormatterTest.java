@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.formatter;
 
 import org.junit.Test;
 
@@ -22,23 +22,21 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 /**
- * Unit tests of class JsonStackTraceFormatter
+ * Unit Tests of class TextStackTraceFormatter
  *
  * @author pedrotoliveira
  */
-public class JsonStackTraceFormatterTest {
+public class TextStackTraceFormatterTest {
 
     /**
-     * Test of formatToString method, of class JsonStackTraceFormatter.
+     * Test of formatToString method, of class TextStackTraceFormatter.
      */
     @Test
     public void testFormatToString() {
         Throwable throwable = new RuntimeException("test format to string");
-        String result = new JsonStackTraceFormatter().formatToString(throwable);
-        String expected = "declaringClass\": \"br.com.ppm.commons.JsonStackTraceFormatterTest\",\n"
-                + "    \"methodName\": \"testFormatToString\",\n"
-                + "    \"fileName\": \"JsonStackTraceFormatterTest.java\",\n"
-                + "    \"lineNumber\": 36\n";
+        String result = new TextStackTraceFormatter().formatToString(throwable);
+        String expected = "java.lang.RuntimeException: test format to string\n"
+                + "	at br.com.ppm.commons.formatter.TextStackTraceFormatterTest.testFormatToString(TextStackTraceFormatterTest.java:36)\n";
 
         assertThat("Expect a string that contains: ".concat(expected), result, containsString(expected));
     }
