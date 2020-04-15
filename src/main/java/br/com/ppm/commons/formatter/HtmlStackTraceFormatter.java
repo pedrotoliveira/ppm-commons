@@ -34,19 +34,23 @@ class HtmlStackTraceFormatter implements StackTracerFormatter {
     @Override
     public String formatToString(Throwable throwable) {
         try (ByteArrayOutputStream buffer = new ByteArrayOutputStream(); PrintStream ps = new PrintStream(buffer)) {
-            return formatToHtml(throwable, ps, buffer);
+            throwable.printStackTrace(ps);
+            StringBuilder sb = createBuilder(buffer);
+            for (Throwable cause = throwable.getCause(); cause != null; cause = cause.getCause()) {
+                cause.printStackTrace(ps);
+                sb.append(format(buffer));
+            }
+            return sb.append(CLOSE_DIV).toString();
         } catch (IOException ex) {
             return "Unable to get stack trace [ " + ex.getMessage() + " ]";
         }
     }
 
-    private String formatToHtml(final Throwable throwable, final PrintStream ps, final ByteArrayOutputStream buffer) {
-        throwable.printStackTrace(ps);
-        StringBuilder sb = new StringBuilder(OPEN_DIV).append(buffer.toString().replaceAll("\n", NEW_LINE));
-        for (Throwable cause = throwable.getCause(); cause != null; cause = cause.getCause()) {
-            cause.printStackTrace(ps);
-            sb.append(buffer.toString().replaceAll("\n", NEW_LINE));
-        }
-        return sb.append(CLOSE_DIV).toString();
+    private String format(ByteArrayOutputStream buffer) {
+        return buffer.toString().replaceAll("\n", NEW_LINE);
+    }
+
+    private StringBuilder createBuilder(ByteArrayOutputStream buffer) {
+        return new StringBuilder(OPEN_DIV).append(format(buffer));
     }
 }
