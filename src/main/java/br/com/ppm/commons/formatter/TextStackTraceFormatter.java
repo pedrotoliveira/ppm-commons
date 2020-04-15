@@ -32,19 +32,15 @@ class TextStackTraceFormatter implements StackTracerFormatter {
     @Override
     public String formatToString(Throwable throwable) {
         try (ByteArrayOutputStream buffer = new ByteArrayOutputStream(); PrintStream ps = new PrintStream(buffer)) {
-            return formatToString(throwable, ps, buffer);
+            throwable.printStackTrace(ps);
+            StringBuilder sb = new StringBuilder(buffer.toString()).append(SEPARATOR);
+            for (Throwable cause = throwable.getCause(); cause != null; cause = cause.getCause()) {
+                cause.printStackTrace(ps);
+                sb.append(buffer.toString()).append(SEPARATOR);
+            }
+            return sb.toString();
         } catch (IOException ex) {
             return "Unable to get stack trace [ " + ex.getMessage() + " ]";
         }
-    }
-
-    private String formatToString(final Throwable throwable, final PrintStream ps, final ByteArrayOutputStream buffer) {
-        throwable.printStackTrace(ps);
-        StringBuilder sb = new StringBuilder(buffer.toString()).append(SEPARATOR);
-        for (Throwable cause = throwable.getCause(); cause != null; cause = cause.getCause()) {
-            cause.printStackTrace(ps);
-            sb.append(buffer.toString()).append(SEPARATOR);
-        }
-        return sb.toString();
     }
 }
