@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,8 +38,10 @@ public final class StringBuilderAppender {
 
     private static final Logger logger = LogManager.getFormatterLogger(StringBuilderAppender.class);
     private static final String DEFAULT_ERROR = "[Error on StringBuilderAppender]";
+    private final StringBuilder builder;
 
-    private StringBuilderAppender() {
+    private StringBuilderAppender(StringBuilder builder) {
+        this.builder = builder;
     }
 
     /**
@@ -48,7 +50,7 @@ public final class StringBuilderAppender {
      * @param element
      */
     public static void appendValue(final StringBuilder builder, final Object element) {
-        new StringBuilderAppender().append(builder, element);
+        new StringBuilderAppender(builder).append(element);
     }
 
     /**
@@ -61,10 +63,10 @@ public final class StringBuilderAppender {
      * @param style the style Style to apply
      */
     public static void appendValue(Object o, final Field field, final String name, final StringBuilder builder, ToStringStyle.Style style) {
-        new StringBuilderAppender().append(o, field, name, builder, style);
+        new StringBuilderAppender(builder).append(o, field, name, style);
     }
 
-    private void append(Object o, final Field field, final String name, final StringBuilder builder, ToStringStyle.Style style) {
+    private void append(Object o, final Field field, final String name, ToStringStyle.Style style) {
         try {
             if (!field.isAccessible()) {
                 field.setAccessible(true);
@@ -95,20 +97,14 @@ public final class StringBuilderAppender {
             builder.append(COMMA);
 
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            handleException(ex, builder);
+            handleException(ex);
         }
     }
 
-    /**
-     * Append collection value.
-     * <p>
-     * @param element the element
-     * @param builder the builder
-     */
-    private void append(final StringBuilder builder, final Object element) {
+    private void append(final Object element) {
         try {
             if (element == null) {
-                builder.append(element);
+                builder.append("null");
             } else if (isArray(element)) {
                 builder.append(new ArrayToStringBuilder(element).build());
             } else if (isWrapper(element) || hasImplementedToString(element)) {
@@ -121,17 +117,11 @@ public final class StringBuilderAppender {
                 builder.append(new ToStringBuilder(element).build(true));
             }
         } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
+            handleException(ex);
         }
     }
 
-    /**
-     * Handle exception.
-     * <p>
-     * @param ex the ex
-     * @param builder the builder
-     */
-    private void handleException(final Exception ex, final StringBuilder builder) {
+    private void handleException(final Exception ex) {
         logger.error(DEFAULT_ERROR, ex);
         builder.append("toStringError=");
         builder.append(DEFAULT_ERROR);
