@@ -94,6 +94,7 @@ public class ToStringBuilderTest {
     }
 
     @Test
+    @Ignore
     public void testCyclicReferences() {
         ClassA a = new ClassA();
         ClassB b = new ClassB(a);
