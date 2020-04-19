@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.ppm.commons.ObjectsToStringBuilder;
 import br.com.ppm.commons.ToStringBuilder;
 
 /**
@@ -159,7 +160,7 @@ public final class Person implements Serializable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.toString(this);
     }
 
 }

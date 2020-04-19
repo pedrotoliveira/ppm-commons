@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,9 @@ package br.com.ppm.commons;
 public final class ToStringConstants {
 
     public static final String OPEN_MAP_BRACKET = "Map[";
-    public static final String OPEN_BRACKET = "{";
-    public static final String CLOSE_BRACKET = "}";
     public static final String KEY = "key=";
-    public static final String VALUE = ", val=";
-    public static final char OPEN_SQUARE_BRACKET = '[';
-    public static final char CLOSE_SQUARE_BRACKET = ']';
+    public static final String OPEN_SQUARE_BRACKET = "[";
+    public static final String CLOSE_SQUARE_BRACKET = "]";
     public static final String EQUAL = "=";
     public static final String COMMA = ", ";
     public static final boolean IGNORE_SUPER_TYPES = true;

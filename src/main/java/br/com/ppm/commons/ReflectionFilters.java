@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2017 pedrotoliveira
+/*
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,29 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons;
 
-import br.com.ppm.commons.ToStringBuilder;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.function.Predicate;
 
-/**
- *
- * @author pedrotoliveira
- */
-public final class ClassA {
+interface ReflectionFilters {
 
-    private ClassB b;
-
-    public void setB(ClassB b) {
-        this.b = b;
+    static Predicate<Method> filterByMethodName(String name) {
+        return (method) -> method.getName().equals(name);
     }
 
-    public ClassB getB() {
-        return b;
+    static Predicate<Method> filterByMethodParameterTypes(Class<?>... typeParams) {
+        return (method) -> Arrays.equals(typeParams, method.getParameterTypes());
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
 }

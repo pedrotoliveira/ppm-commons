@@ -30,7 +30,7 @@ final class ClassNameHolder {
 	private final String className;
 	private final int hashCode;
 	private final AtomicInteger callCounts;
-	private final int MAX_CALL_COUNTS = 50;
+	private final int MAX_CALL_COUNTS = 2500;
 
 	/**
 	 * Instantiates a new stack trace holder.
@@ -49,7 +49,7 @@ final class ClassNameHolder {
 	/**
 	 * Increment call count.
 	 */
-	public ClassNameHolder incrementCallCount() {
+	 ClassNameHolder incrementCallCount() {
 		this.callCounts.incrementAndGet();
 		return this;
 	}

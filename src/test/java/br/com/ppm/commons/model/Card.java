@@ -18,6 +18,7 @@ package br.com.ppm.commons.model;
 
 import java.util.Objects;
 
+import br.com.ppm.commons.ObjectsToStringBuilder;
 import br.com.ppm.commons.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
@@ -78,6 +79,6 @@ public final class Card {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.toString(this);
     }
 }

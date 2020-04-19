@@ -50,4 +50,15 @@ public class ArrayToStringBuilderTest {
         assertThat("toString of Array should be equal to expected", result, equalTo(expected));
     }
 
+    @Test
+    public void build() {
+    }
+
+    @Test
+    public void testBuild1() {
+    }
+
+    @Test
+    public void testBuild2() {
+    }
 }

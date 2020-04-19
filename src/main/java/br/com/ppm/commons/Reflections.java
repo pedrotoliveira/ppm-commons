@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static br.com.ppm.commons.ReflectionFilters.filterByMethodName;
+import static br.com.ppm.commons.ReflectionFilters.filterByMethodParameterTypes;
 import static br.com.ppm.commons.Types.*;
 
 /**
@@ -35,29 +36,25 @@ import static br.com.ppm.commons.Types.*;
  *
  * @author Pedro T. Oliveira
  */
-public final class Reflections {
+public interface Reflections {
 
-    private static final Logger logger = LogManager.getLogger(Reflections.class);
+    Logger logger = LogManager.getLogger(Reflections.class);
 
-    private static final String FIELD = "field";
-    private static final String FIELD_NOT_FOUND = "Field Not Found";
-    private static final String EXCEPTION_ACCESSING_FIELD = "Exception accessing field";
-    private static final String FIELDS_SEPARATOR = "\\.";
+    String FIELD = "field";
+    String FIELD_NOT_FOUND = "Field Not Found";
+    String EXCEPTION_ACCESSING_FIELD = "Exception accessing field";
+    String FIELDS_SEPARATOR = "\\.";
+    String TARGET = "target";
+    String FIELD_NAME = "fieldName";
 
-    /**
-     * No instances for this class
-     */
-    private Reflections() {
-    }
 
     /**
      * Return the Method get "Accessor" to a given Class Field.
      *
      * @param field the field
-     *
      * @return the string "getFieldName"
      */
-    public static String methodGet(final Field field) {
+    static String methodGet(final Field field) {
         Validator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "get".concat(fieldName);
@@ -67,10 +64,9 @@ public final class Reflections {
      * Return Method set "Mutator" to a given Class Field
      *
      * @param field the field
-     *
      * @return the string "setFieldName"
      */
-    public static String methodSet(final Field field) {
+    static String methodSet(final Field field) {
         Validator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "set".concat(fieldName);
@@ -80,40 +76,31 @@ public final class Reflections {
      * Find method that has no parameters.
      *
      * @param clazz a class
-     * @param name the method name to find
-     *
+     * @param name  the method name to find
      * @return an Optional of Method
      */
-    public static Optional<Method> findMethod(final Class<?> clazz, final String name) {
+    static Optional<Method> findMethod(final Class<?> clazz, final String name) {
         return Arrays.stream(clazz.getMethods())
                 .filter(filterByMethodName(name))
                 .findFirst();
     }
 
-    private static Predicate<Method> filterByMethodName(String name) {
-        return (method) -> method.getName().equals(name);
-    }
 
     /**
      * Find a method with specified parameter.
      *
-     * @param clazz a class
-     * @param name the method name
+     * @param clazz      a class
+     * @param name       the method name
      * @param typeParams the method type parameters
-     *
      * @return an Optional of Method
      */
-    public static Optional<Method> findMethod(Class<?> clazz, String name, Class<?>... typeParams) {
+    static Optional<Method> findMethod(Class<?> clazz, String name, Class<?>... typeParams) {
         return Arrays.stream(clazz.getMethods())
                 .filter(filterByMethodName(name))
                 .filter(filterByMethodParameterTypes(typeParams))
                 .findFirst();
     }
 
-    private static Predicate<Method> filterByMethodParameterTypes(Class<?>... typeParams) {
-        return (method) -> Arrays.equals(typeParams, method.getParameterTypes());
-    }
-
     /**
      * Gets the value by field name spaces, navigating in object hierarchy
      * <p>
@@ -123,16 +110,16 @@ public final class Reflections {
      * To get List fields use the index "some.listField.0";
      * </p>
      *
-     * @param <T> return type
-     * @param fieldName the field name
-     * @param target the target instance
+     * @param <T>        return type
+     * @param fieldName  the field name
+     * @param target     the target instance
      * @param returnType expected type that will be use to cat the result.
      * @return the value
      */
-    @SuppressWarnings("unchecked")
-    public static <T> T getValueByNamespace(final String fieldName, final Object target, Class<T> returnType) {
+    static <T> T getValueByNamespace(final String fieldName, final Object target, Class<T> returnType) {
+        Validator.notNullParameter(returnType, "returnType");
         Optional<Object> optional = getValueByNamespace(fieldName, target);
-        return (T) optional.orElse(null);
+        return returnType.cast(optional.orElse(null));
     }
 
     /**
@@ -145,21 +132,23 @@ public final class Reflections {
      * </p>
      *
      * @param fieldName the field name
-     * @param target the target instance
+     * @param target    the target instance
      * @return the value
      */
-    public static Optional<Object> getValueByNamespace(final String fieldName, final Object target) {
-        Validator.notNullParameter(fieldName, "fieldName");
+    static Optional<Object> getValueByNamespace(final String fieldName, final Object target) {
+        Validator.notNullParameter(fieldName, FIELD_NAME);
         String[] fields = fieldName.split(FIELDS_SEPARATOR);
         try {
             Optional<Object> value = Optional.of(target);
             for (String name : fields) {
-                if (isMap(value.get())) {
-                    value = getMapValueByFieldName(name, value.get());
-                } else if (isList(value.get())) {
-                    value = getListValueByFieldName(name, value.get());
-                } else {
-                    value = getValueByFieldName(name, value.get());
+                if (value.isPresent()) {
+                    if (isMap(value.get())) {
+                        value = getMapValueByFieldName(name, value.get());
+                    } else if (isList(value.get())) {
+                        value = getListValueByFieldName(name, value.get());
+                    } else {
+                        value = getValueByFieldName(name, value.get());
+                    }
                 }
             }
             return value;
@@ -172,10 +161,10 @@ public final class Reflections {
      * Get a value from a given field name in the Target Object instance
      *
      * @param fieldName name of the field
-     * @param target instance
+     * @param target    instance
      * @return Optional of Object
      */
-    public static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
+    static Optional<Object> getValueByFieldName(final String fieldName, final Object target) {
         if (target == null) {
             return Optional.empty();
         }
@@ -191,7 +180,7 @@ public final class Reflections {
         throw Validator.handleIllegalArgumentException(FIELD_NOT_FOUND);
     }
 
-    private static Object getValueFromField(final String fieldName, final Class<?> targetClass, final Object target) {
+    static Object getValueFromField(final String fieldName, final Class<?> targetClass, final Object target) {
         try {
             Field targetField = targetClass.getDeclaredField(fieldName);
             targetField.setAccessible(true);
@@ -201,33 +190,27 @@ public final class Reflections {
         }
     }
 
-    private static Optional<Object> getMapValueByFieldName(final String fieldName, final Object target) {
-        if (target != null && isMap(target)) {
-            Object value = Map.class.cast(target).get(fieldName);
+    static Optional<Object> getMapValueByFieldName(final String fieldName, final Object target) {
+        if (isMap(target)) {
+            Object value = ((Map<?, ?>) target).get(fieldName);
             return Optional.ofNullable(value);
         }
         return Optional.empty();
     }
 
-    private static Optional<Object> getListValueByFieldName(final String fieldName, final Object target) {
-        if (target != null && isList(target) && Numbers.isNumber(fieldName)) {
+    static Optional<Object> getListValueByFieldName(final String fieldName, final Object target) {
+        if (isList(target) && Numbers.isNumber(fieldName)) {
             int index = Integer.parseInt(fieldName);
-            Object value = List.class.cast(target).get(index);
+            Object value = ((List<?>) target).get(index);
             return Optional.ofNullable(value);
         } else {
             return getValueByFieldName(fieldName, target);
         }
     }
 
-    /**
-     *
-     * @param field
-     * @param target
-     * @param value
-     */
-    public static void setByFieldName(final String field, final Object target, final Object value) {
+    static void setByFieldName(final String field, final Object target, final Object value) {
         Validator.notNullParameter(field, FIELD);
-        Validator.notNullParameter(target, "target");
+        Validator.notNullParameter(target, TARGET);
         try {
             Field targetField = target.getClass().getDeclaredField(field);
             targetField.setAccessible(true);
@@ -239,22 +222,33 @@ public final class Reflections {
 
     /**
      * Gets the by field "get" method.
-     * <p>
-     * @param field the field
+     *
+     * @param field  the field
      * @param target the target
-     * <p>
      * @return the by field get method
      */
-    public static Object getFieldByGetMethod(final Field field, final Object target) {
+    static Object getFieldByGetMethod(final Field field, final Object target) {
         Validator.notNullParameter(field, FIELD);
-        Validator.notNullParameter(target, "target");
+        Validator.notNullParameter(target, TARGET);
         try {
             String methodName = methodGet(field);
             Method method = target.getClass().getMethod(methodName);
             return method.invoke(target);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+        } catch (NoSuchMethodException
+                | SecurityException
+                | IllegalAccessException
+                | IllegalArgumentException
                 | InvocationTargetException ex) {
             throw new IllegalArgumentException(EXCEPTION_ACCESSING_FIELD, ex);
         }
+    }
+
+    static Optional<Object> getValueByField(Field field, Object target) throws IllegalAccessException {
+        Validator.notNullParameter(field, FIELD);
+        Validator.notNullParameter(target, TARGET);
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+        return Optional.ofNullable(field.get(target));
     }
 }

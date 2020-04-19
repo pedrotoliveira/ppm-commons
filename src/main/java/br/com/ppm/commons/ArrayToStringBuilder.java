@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,20 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.annotation.ToStringStyle;
+
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import static br.com.ppm.commons.ToStringConstants.*;
+import static br.com.ppm.commons.annotation.ToStringStyle.Style.CALL_TO_STRING;
 
 /**
  * Array ToStringBuilder
  *
  * @author pedrotoliveira
  */
-public final class ArrayToStringBuilder {
+public final class ArrayToStringBuilder implements ToStringBuilder {
 
     private static final int PAGE_SIZE = 15;
     private final Object array;
@@ -34,9 +38,6 @@ public final class ArrayToStringBuilder {
         this.array = array;
     }
 
-    /**
-     * Append array values.
-     */
     public String build() {
         StringBuilder builder = new StringBuilder();
         int length = Array.getLength(array);
@@ -51,13 +52,18 @@ public final class ArrayToStringBuilder {
         return builder.toString();
     }
 
-    /**
-     * Append array values range.
-     * <p>
-     * @param array the array
-     * @param builder the builder
-     * @param endIndex the end index
-     */
+    @Override
+    public String build(boolean ignoreSuperType) {
+        return build();
+    }
+
+    @Override
+    public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
+        return (CALL_TO_STRING.equals(style))
+                ? Arrays.deepToString(Object[].class.cast(array))
+                : build(ignoreSuperType);
+    }
+
     private void appendArrayValuesRange(Object array, StringBuilder builder, int endIndex) {
         for (int i = 0; i < endIndex; i++) {
             Object element = Array.get(array, i);

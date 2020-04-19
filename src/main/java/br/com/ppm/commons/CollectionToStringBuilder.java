@@ -1,15 +1,5 @@
-package br.com.ppm.commons;
-
-import java.util.Collection;
-import java.util.Iterator;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import static br.com.ppm.commons.ToStringConstants.*;
-
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,61 +14,54 @@ import static br.com.ppm.commons.ToStringConstants.*;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package br.com.ppm.commons;
+
+import br.com.ppm.commons.annotation.ToStringStyle;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import static br.com.ppm.commons.ToStringConstants.*;
+
 /**
  * Collection ToStringBuilder
  *
  * @author pedrotoliveira
  */
-public final class CollectionToStringBuilder {
-
-    private static final Logger logger = LogManager.getFormatterLogger(CollectionToStringBuilder.class);
+public final class CollectionToStringBuilder implements ToStringBuilder {
 
     private static final int PAGE_SIZE = 5;
-    private static final String DEFAULT_ERROR = "[Error on CollectionToStringBuilder]";
-
     private final Collection<?> collection;
 
     public CollectionToStringBuilder(final Collection<?> collection) {
         this.collection = collection;
     }
 
-    /**
-     * Append collection.
-     */
-    @SuppressWarnings("unchecked")
+    @Override
     public String build() {
-        final StringBuilder builder = new StringBuilder();
-        try {
-            builder.append(collection.getClass().getSimpleName()).append(OPEN_SQUARE_BRACKET);
-            int counter = 0;
-            for (Iterator<Object> it = (Iterator<Object>) collection.iterator(); it.hasNext();) {
-                Object element = it.next();
-                StringBuilderAppender.appendValue(builder, element);
-                if (it.hasNext()) {
-                    builder.append(COMMA);
-                }
-                counter++;
-                if (counter == PAGE_SIZE) {
-                    builder.append(", ...");
-                    break;
-                }
-            }
-            builder.append(CLOSE_SQUARE_BRACKET);
-        } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
-        }
-        return builder.toString();
+        return build(IGNORE_SUPER_TYPES);
     }
 
-    /**
-     * Handle exception.
-     * <p>
-     * @param ex the ex
-     * @param builder the builder
-     */
-    private void handleException(final Exception ex, final StringBuilder builder) {
-        logger.error(DEFAULT_ERROR, ex);
-        builder.append("toStringError=");
-        builder.append(DEFAULT_ERROR);
+    @Override
+    public String build(boolean ignoreSuperType) {
+        return build(ignoreSuperType, ToStringStyle.Style.REFLECTION);
+    }
+
+    @Override
+    public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
+        KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_SQUARE_BRACKET));
+        int counter = 0;
+        for (Iterator<?> it = collection.iterator(); it.hasNext();) {
+            appender.appendValue(it.next(), style);
+            if (it.hasNext()) {
+                appender.appendSeparator(COMMA);
+            }
+            counter++;
+            if (counter == PAGE_SIZE) {
+                appender.appendSeparator(" ...");
+                break;
+            }
+        }
+        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
     }
 }

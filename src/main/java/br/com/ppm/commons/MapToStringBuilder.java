@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,10 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.annotation.ToStringStyle;
+
 import java.util.Iterator;
 import java.util.Map;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import static br.com.ppm.commons.ToStringConstants.*;
 
@@ -29,51 +28,43 @@ import static br.com.ppm.commons.ToStringConstants.*;
  *
  * @author pedrotoliveira
  */
-public class MapToStringBuilder {
+public final class MapToStringBuilder implements ToStringBuilder {
 
-    private static final Logger logger = LogManager.getFormatterLogger(MapToStringBuilder.class);
-    private static final String DEFAULT_ERROR = "[Error on MapToStringBuilder]";
     private final Map<?, ?> map;
 
     public MapToStringBuilder(Map<?, ?> map) {
         this.map = map;
     }
 
-    /**
-     * Append map.
-     */
-    @SuppressWarnings("unchecked")
+    @Override
     public String build() {
-        final StringBuilder builder = new StringBuilder(OPEN_MAP_BRACKET);
-        try {
-            int counter = 1;
-            for (Iterator<Object> keyIt = (Iterator<Object>) map.keySet().iterator(); keyIt.hasNext();) {
-                Object key = keyIt.next();
-                builder.append(counter).append('.');
-                builder.append(KEY).append(key);
-                builder.append(VALUE);
-                StringBuilderAppender.appendValue(builder, map.get(key));
-                if (keyIt.hasNext()) {
-                    builder.append(COMMA);
-                }
-                counter++;
+        return build(NOT_IGNORE_SUPER_TYPES);
+    }
+
+    @Override
+    public String build(final boolean ignoreSuperType) {
+        return build(ignoreSuperType, ToStringStyle.Style.REFLECTION);
+    }
+
+    @Override
+    public String build(final boolean ignoreSuperType, final ToStringStyle.Style style) {
+        KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_MAP_BRACKET));
+        int counter = 1;
+        for (Iterator<?> keyIt = map.keySet().iterator(); keyIt.hasNext(); ) {
+            Object key = keyIt.next();
+            appender.appendKey(mapItemKey(counter))
+                    .appendSeparator(OPEN_SQUARE_BRACKET)
+                    .appendValue(map.get(key), style)
+                    .appendSeparator(CLOSE_SQUARE_BRACKET);
+            if (keyIt.hasNext()) {
+                appender.appendSeparator(COMMA);
             }
-        } catch (Exception ex) {//NOPMD - We want to catch generic exceptions here
-            handleException(ex, builder);
+            counter++;
         }
-        return builder.append(CLOSE_SQUARE_BRACKET).toString();
+        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
     }
 
-    /**
-     * Handle exception.
-     * <p>
-     * @param ex the ex
-     * @param builder the builder
-     */
-    private void handleException(final Exception ex, final StringBuilder builder) {
-        logger.error(DEFAULT_ERROR, ex);
-        builder.append("toStringError=");
-        builder.append(DEFAULT_ERROR);
+    private String mapItemKey(int counter) {
+        return OPEN_SQUARE_BRACKET + KEY + counter + CLOSE_SQUARE_BRACKET;
     }
-
 }
