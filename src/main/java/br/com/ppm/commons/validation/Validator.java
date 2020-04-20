@@ -16,8 +16,6 @@
  */
 package br.com.ppm.commons.validation;
 
-import br.com.ppm.commons.EmailPattern;
-
 import java.util.Collection;
 import java.util.NoSuchElementException;
 

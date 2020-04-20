@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.validation;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -28,30 +28,46 @@ import java.util.regex.Pattern;
  */
 public class EmailPattern {
     
-    public static final String REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z0-9]{2,6}$";
-    public final Pattern VALID_EMAIL_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
-    
+    private static final String REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z0-9]{2,6}$";
+    private final Pattern pattern;
     private final Matcher matcher;
     
     public EmailPattern(final String toMatch) {
-        this.matcher = VALID_EMAIL_PATTERN.matcher(toMatch);
+        this.pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
+        this.matcher = pattern.matcher(toMatch);
     }
     
     public boolean matches() {
         return matcher.matches();
     }
-    
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public Matcher getMatcher() {
+        return matcher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EmailPattern)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EmailPattern that = (EmailPattern) o;
-        return Objects.equals(VALID_EMAIL_PATTERN, that.VALID_EMAIL_PATTERN) &&
+        return Objects.equals(pattern, that.pattern) &&
                 Objects.equals(matcher, that.matcher);
     }
-    
+
     @Override
     public int hashCode() {
-        return Objects.hash(VALID_EMAIL_PATTERN, matcher);
+        return Objects.hash(pattern, matcher);
+    }
+
+    @Override
+    public String toString() {
+        return "EmailPattern{" +
+                "pattern=" + pattern +
+                ", matcher=" + matcher +
+                '}';
     }
 }
