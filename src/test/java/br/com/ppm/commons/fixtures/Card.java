@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons.fixtures;
 
 import java.util.Objects;
 
-import br.com.ppm.commons.ObjectsToStringBuilder;
 import br.com.ppm.commons.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 

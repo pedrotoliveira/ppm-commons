@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,10 +25,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import br.com.ppm.commons.model.Address;
-import br.com.ppm.commons.model.Card;
-import br.com.ppm.commons.model.Order;
-import br.com.ppm.commons.model.Person;
+import br.com.ppm.commons.fixtures.Address;
+import br.com.ppm.commons.fixtures.Card;
+import br.com.ppm.commons.fixtures.Order;
+import br.com.ppm.commons.fixtures.Person;
 
 import org.junit.Before;
 import org.junit.Test;

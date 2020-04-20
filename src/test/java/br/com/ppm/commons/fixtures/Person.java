@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.model;
+package br.com.ppm.commons.fixtures;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.com.ppm.commons.ObjectsToStringBuilder;
 import br.com.ppm.commons.ToStringBuilder;
 
 /**
@@ -32,7 +31,7 @@ import br.com.ppm.commons.ToStringBuilder;
 public final class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final String CONSTANTE = "constante";
+    public static final String CONSTANT = "constant";
     private String name;
     private int age;
     private Address address;
