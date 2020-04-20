@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.validation;
+
+import br.com.ppm.commons.EmailPattern;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;

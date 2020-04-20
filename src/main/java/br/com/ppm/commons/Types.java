@@ -32,13 +32,15 @@ import java.util.Map;
 public final class Types {
 
     private Types() {
+        throw new AssertionError("No instances for you!");
     }
 
     /**
      * Checks if is array.
      * <p>
+     *
      * @param value the value
-     * <p>
+     *              <p>
      * @return true, if is array
      */
     public static boolean isArray(Object value) {
@@ -47,9 +49,8 @@ public final class Types {
 
     /**
      * Have implemented to string.
-     * <p>
+     *
      * @param value the value
-     * <p>
      * @return true, if successful
      */
     public static boolean hasImplementedToString(Object value) {
@@ -63,14 +64,12 @@ public final class Types {
 
     /**
      * Checks if is wrapper.
-     * <p>
+     *
      * @param value the value
-     * <p>
      * @return true, if is wrapper
      */
     public static boolean isWrapper(Object value) {
         return value.getClass().isPrimitive()
-                || value.getClass().isInterface()
                 || value instanceof String
                 || value instanceof Integer
                 || value instanceof Double
@@ -88,10 +87,19 @@ public final class Types {
     }
 
     /**
-     * Checks if is map.
-     * <p>
+     * Check if the Object value is an Interface
+     *
+     * @param value value to check
+     * @return true if is an Interface
+     */
+    public static boolean isInterface(Object value) {
+        return value.getClass().isInterface();
+    }
+
+    /**
+     * Checks if is a map
+     *
      * @param value the value
-     * <p>
      * @return true, if is map
      */
     public static boolean isMap(Object value) {
@@ -100,10 +108,9 @@ public final class Types {
 
     /**
      * Checks if is collection.
-     * <p>
+     *
      * @param value the value
-     * <p>
-     * @return true, if is collection
+     * @return true, if is a Collection
      */
     public static boolean isCollection(Object value) {
         return value instanceof Collection;
@@ -113,7 +120,7 @@ public final class Types {
      * Checks if is List
      *
      * @param target the target
-     * @return true, if is list
+     * @return true, if is a List
      */
     public static boolean isList(final Object target) {
         return target instanceof List;

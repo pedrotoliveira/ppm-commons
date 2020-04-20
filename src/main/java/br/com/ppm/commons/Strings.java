@@ -16,6 +16,8 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.validation.Validator;
+
 /**
  * String Operations
  *

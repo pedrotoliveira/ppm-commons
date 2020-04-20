@@ -17,6 +17,7 @@
 package br.com.ppm.commons;
 
 import br.com.ppm.commons.annotation.ToStringStyle;
+import br.com.ppm.commons.reflect.Reflections;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

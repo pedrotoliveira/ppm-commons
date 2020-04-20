@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -24,12 +24,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import br.com.ppm.commons.Numbers;
+import br.com.ppm.commons.Strings;
+import br.com.ppm.commons.validation.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static br.com.ppm.commons.ReflectionFilters.filterByMethodName;
-import static br.com.ppm.commons.ReflectionFilters.filterByMethodParameterTypes;
 import static br.com.ppm.commons.Types.*;
+import static br.com.ppm.commons.reflect.ReflectionFilters.filterByMethodName;
+import static br.com.ppm.commons.reflect.ReflectionFilters.filterByMethodParameterTypes;
 
 /**
  * Reflections Operations
@@ -46,7 +49,6 @@ public interface Reflections {
     String FIELDS_SEPARATOR = "\\.";
     String TARGET = "target";
     String FIELD_NAME = "fieldName";
-
 
     /**
      * Return the Method get "Accessor" to a given Class Field.
@@ -84,7 +86,6 @@ public interface Reflections {
                 .filter(filterByMethodName(name))
                 .findFirst();
     }
-
 
     /**
      * Find a method with specified parameter.
