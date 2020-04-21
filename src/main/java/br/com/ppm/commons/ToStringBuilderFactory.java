@@ -16,6 +16,8 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.array.ArraysToStringBuilder;
+import br.com.ppm.commons.collection.CollectionToStringBuilder;
 import br.com.ppm.commons.type.Types;
 import br.com.ppm.commons.type.Wrapper;
 import br.com.ppm.commons.type.WrapperToStringBuilder;
@@ -43,7 +45,7 @@ public final class ToStringBuilderFactory {
             return new WrapperToStringBuilder(new Wrapper<>(element));
         }
         if (Types.isArray(element)) {
-            return new ArrayToStringBuilder(element);
+            return new ArraysToStringBuilder(element);
         }
         if (Types.isCollection(element)) {
             return new CollectionToStringBuilder(Collection.class.cast(element));

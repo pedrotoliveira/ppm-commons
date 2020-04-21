@@ -32,6 +32,7 @@ public enum WrapperTypes {
     Byte(java.lang.Byte.class),
     Date(java.util.Date.class),
     Calendar(java.util.Calendar.class),
+    GregorianCalendar(java.util.GregorianCalendar.class),
     SQLDate(java.sql.Date.class),
     LocalDate(java.time.LocalDate.class),
     LocalDateTime(java.time.LocalDateTime.class),
@@ -50,16 +51,19 @@ public enum WrapperTypes {
         this.classType = classType;
     }
 
+    public static boolean anyMatch(Object value) {
+        return Arrays.stream(values()).anyMatch(matcher(value));
+    }
+
+    public static Predicate<WrapperTypes> matcher(Object object) {
+        return wrapperTypes -> wrapperTypes.getName().equals(object.getClass().getName());
+    }
+
     public String getName() {
         return name;
     }
 
     public Class<?> getClassType() {
         return classType;
-    }
-
-    public static Predicate<WrapperTypes> matcher(Object object) {
-        return (wrapperTypes) -> wrapperTypes.getName().equals(object.getClass().getName())
-                || wrapperTypes.getClassType().isInstance(object);
     }
 }

@@ -46,6 +46,10 @@ public final class KeyValueAppender {
         return new KeyValueAppender(builder);
     }
 
+    public static KeyValueAppender start(String start) {
+        return new KeyValueAppender(new StringBuilder(start));
+    }
+
     public void appendKeyValue(final Object target, final Field key, final ToStringStyle.Style style) {
         try {
             if (ToStringStyle.Style.IGNORE_NULL.equals(style)) {

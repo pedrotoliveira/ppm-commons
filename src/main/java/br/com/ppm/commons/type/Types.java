@@ -65,8 +65,7 @@ public final class Types {
      */
     public static boolean isWrapper(Object value) {
         return Objects.nonNull(value) &&
-                (value.getClass().isPrimitive()
-                        || Arrays.stream(WrapperTypes.values()).anyMatch(WrapperTypes.matcher(value)));
+                (value.getClass().isPrimitive() || WrapperTypes.anyMatch(value));
     }
 
     /**

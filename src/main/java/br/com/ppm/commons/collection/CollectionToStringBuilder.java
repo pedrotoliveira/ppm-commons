@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.collection;
 
+import br.com.ppm.commons.KeyValueAppender;
+import br.com.ppm.commons.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
 import java.util.Collection;
@@ -39,7 +41,7 @@ public final class CollectionToStringBuilder implements ToStringBuilder {
 
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
-        KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_SQUARE_BRACKET));
+        KeyValueAppender appender = KeyValueAppender.start(OPEN_SQUARE_BRACKET);
         int counter = 0;
         for (Iterator<?> it = collection.iterator(); it.hasNext();) {
             appender.appendValue(it.next(), style);

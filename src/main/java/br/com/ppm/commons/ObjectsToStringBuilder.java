@@ -19,6 +19,8 @@ package br.com.ppm.commons;
 import br.com.ppm.commons.annotation.ToStringExclude;
 import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
+import br.com.ppm.commons.array.ArraysToStringBuilder;
+import br.com.ppm.commons.collection.CollectionToStringBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -56,7 +58,7 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
         final StringBuilder builder = new StringBuilder();
         if (DepthController.isAllowed(object)) {
             if (isArray(object)) {
-                builder.append(new ArrayToStringBuilder(object).build());
+                builder.append(new ArraysToStringBuilder(object).build());
             } else if (isWrapper(object)) {
                 builder.append(OPEN_SQUARE_BRACKET);
                 builder.append(object);
