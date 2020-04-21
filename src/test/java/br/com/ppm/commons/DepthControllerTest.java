@@ -1,6 +1,6 @@
 package br.com.ppm.commons;
 
-import br.com.ppm.commons.model.Order;
+import br.com.ppm.commons.fixtures.Order;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;

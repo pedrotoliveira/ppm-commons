@@ -26,11 +26,11 @@ import java.util.Optional;
 
 import br.com.ppm.commons.Numbers;
 import br.com.ppm.commons.Strings;
-import br.com.ppm.commons.validation.Validator;
+import br.com.ppm.commons.validation.ArgumentValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static br.com.ppm.commons.Types.*;
+import static br.com.ppm.commons.type.Types.*;
 import static br.com.ppm.commons.reflect.ReflectionFilters.filterByMethodName;
 import static br.com.ppm.commons.reflect.ReflectionFilters.filterByMethodParameterTypes;
 
@@ -57,7 +57,7 @@ public interface Reflections {
      * @return the string "getFieldName"
      */
     static String methodGet(final Field field) {
-        Validator.notNullParameter(field, FIELD);
+        ArgumentValidator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "get".concat(fieldName);
     }
@@ -69,7 +69,7 @@ public interface Reflections {
      * @return the string "setFieldName"
      */
     static String methodSet(final Field field) {
-        Validator.notNullParameter(field, FIELD);
+        ArgumentValidator.notNullParameter(field, FIELD);
         final String fieldName = Strings.capitalizeFirstLetter(field.getName());
         return "set".concat(fieldName);
     }
@@ -118,7 +118,7 @@ public interface Reflections {
      * @return the value
      */
     static <T> T getValueByNamespace(final String fieldName, final Object target, Class<T> returnType) {
-        Validator.notNullParameter(returnType, "returnType");
+        ArgumentValidator.notNullParameter(returnType, "returnType");
         Optional<Object> optional = getValueByNamespace(fieldName, target);
         return returnType.cast(optional.orElse(null));
     }
@@ -137,7 +137,7 @@ public interface Reflections {
      * @return the value
      */
     static Optional<Object> getValueByNamespace(final String fieldName, final Object target) {
-        Validator.notNullParameter(fieldName, FIELD_NAME);
+        ArgumentValidator.notNullParameter(fieldName, FIELD_NAME);
         String[] fields = fieldName.split(FIELDS_SEPARATOR);
         try {
             Optional<Object> value = Optional.of(target);
@@ -178,7 +178,7 @@ public interface Reflections {
                 return Optional.ofNullable(getValueFromField(fieldName, superClass, target));
             }
         }
-        throw Validator.handleIllegalArgumentException(FIELD_NOT_FOUND);
+        throw ArgumentValidator.handleIllegalArgumentException(FIELD_NOT_FOUND);
     }
 
     static Object getValueFromField(final String fieldName, final Class<?> targetClass, final Object target) {
@@ -210,8 +210,8 @@ public interface Reflections {
     }
 
     static void setByFieldName(final String field, final Object target, final Object value) {
-        Validator.notNullParameter(field, FIELD);
-        Validator.notNullParameter(target, TARGET);
+        ArgumentValidator.notNullParameter(field, FIELD);
+        ArgumentValidator.notNullParameter(target, TARGET);
         try {
             Field targetField = target.getClass().getDeclaredField(field);
             targetField.setAccessible(true);
@@ -229,8 +229,8 @@ public interface Reflections {
      * @return the by field get method
      */
     static Object getFieldByGetMethod(final Field field, final Object target) {
-        Validator.notNullParameter(field, FIELD);
-        Validator.notNullParameter(target, TARGET);
+        ArgumentValidator.notNullParameter(field, FIELD);
+        ArgumentValidator.notNullParameter(target, TARGET);
         try {
             String methodName = methodGet(field);
             Method method = target.getClass().getMethod(methodName);
@@ -245,8 +245,8 @@ public interface Reflections {
     }
 
     static Optional<Object> getValueByField(Field field, Object target) throws IllegalAccessException {
-        Validator.notNullParameter(field, FIELD);
-        Validator.notNullParameter(target, TARGET);
+        ArgumentValidator.notNullParameter(field, FIELD);
+        ArgumentValidator.notNullParameter(target, TARGET);
         if (!field.isAccessible()) {
             field.setAccessible(true);
         }

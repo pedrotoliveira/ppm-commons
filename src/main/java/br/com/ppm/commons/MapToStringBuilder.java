@@ -37,16 +37,6 @@ public final class MapToStringBuilder implements ToStringBuilder {
     }
 
     @Override
-    public String build() {
-        return build(NOT_IGNORE_SUPER_TYPES);
-    }
-
-    @Override
-    public String build(final boolean ignoreSuperType) {
-        return build(ignoreSuperType, ToStringStyle.Style.REFLECTION);
-    }
-
-    @Override
     public String build(final boolean ignoreSuperType, final ToStringStyle.Style style) {
         KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_MAP_BRACKET));
         int counter = 1;

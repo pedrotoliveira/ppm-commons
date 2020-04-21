@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-import br.com.ppm.commons.validation.Validator;
 import org.junit.Test;
 
 /**
@@ -28,61 +27,66 @@ import org.junit.Test;
  *
  * @author pedrotoliveira
  */
-public class ValidatorTest {
+public class ArgumentValidatorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNotNullParameter() {
-        Validator.notNullParameter(null, "some param");
+        ArgumentValidator.notNullParameter(null, "some param");
 	}
 
 	@Test
 	public void shoudPassWhenParameterNotNull() {
-        Validator.notNullParameter("Not Null", "some param");
+        ArgumentValidator.notNullParameter("Not Null", "some param");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNotEmptyParameter() {
-        Validator.notEmptyParameter(new String[]{}, "String Array");
+        ArgumentValidator.notEmptyParameter(new String[]{}, "String Array");
 	}
 
     @Test(expected = IllegalArgumentException.class)
     public void testNoNullElementsParameter() {
-        Validator.noNullElementsParameter(new String[]{"one", null, "three"}, "String Array");
+        ArgumentValidator.noNullElementsParameter(new String[]{"one", null, "three"}, "String Array");
 	}
 
     @Test(expected = IllegalArgumentException.class)
     public void testIsNotEmpty() {
-        Validator.isNotEmpty("", "string");
+        ArgumentValidator.isNotEmpty("", "string");
 	}
 
     @Test(expected = IllegalArgumentException.class)
     public void testCorrectSize() {
-        Collection<?> collection = Arrays.asList(new String[]{"one", "two", "three"});
-        Validator.correctSize(collection, 5, "collection");
+        Collection<?> collection = Arrays.asList("one", "two", "three");
+        ArgumentValidator.correctSize(collection, 5, "collection");
 	}
 
     @Test(expected = NoSuchElementException.class)
     public void testHandleNoSuchElement() {
-        throw Validator.handleNoSuchElement("element");
+        throw ArgumentValidator.handleNoSuchElement("element");
 	}
 
     @Test(expected = IllegalArgumentException.class)
     public void testHandleIllegalArgumentException() {
-        throw Validator.handleIllegalArgumentException("argument");
+        throw ArgumentValidator.handleIllegalArgumentException("argument");
 	}
 
     @Test(expected = IllegalStateException.class)
     public void testHandleIllegalStateException() {
-        throw Validator.handleIllegalStateException("message");
+        throw ArgumentValidator.handleIllegalStateException("message");
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidEmail() {
-        Validator.isValidEmail("email@aeh.cio.", "email");
+        ArgumentValidator.isValidEmail("email@aeh.cio.", "email");
     }
 
     @Test
     public void testValidEmail() {
-        Validator.isValidEmail("pedro.oliveira20@gmail.com", "email");
+        ArgumentValidator.isValidEmail("pedro.oliveira20@gmail.com", "email");
+    }
+
+    @Test
+    public void testValidCondition() {
+        ArgumentValidator.isTrue(true, "Should Not throw exception");
     }
 }

@@ -153,7 +153,7 @@ public class ReflectionsTest {
         person.setParents(parents);
 
         Person result = Reflections.getValueByNamespace("parents.father", person, Person.class);
-        assertThat("The father should be equal to ".concat(expected.toString()), result, equalTo(expected));
+        assertThat("The father should be equal to ", result, equalTo(expected));
     }
 
     @Test

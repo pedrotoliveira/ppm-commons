@@ -16,5 +16,42 @@
  */
 package br.com.ppm.commons.type;
 
-public class Wrapper {
+import br.com.ppm.commons.validation.ArgumentValidator;
+
+import java.io.Serializable;
+
+/**
+ * Encapsulates commons operations from a Type
+ *
+ * @param <T> type to hide
+ */
+public class Wrapper<T> implements Serializable, Comparable<T> {
+
+    private final T object;
+    private String className;
+
+    public Wrapper(T object) {
+        ArgumentValidator.notNullParameter(object, "object");
+        ArgumentValidator.isTrue(Types.isWrapper(object), "The object should be a Wrapper.");
+        this.object = object;
+        this.className = object.getClass().getName();
+    }
+
+    public T getObject() {
+        return object;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    @Override
+    public int compareTo(T o) {
+        return ((Comparable<T>) object).compareTo(o);
+    }
+
+    @Override
+    public String toString() {
+        return object.toString();
+    }
 }

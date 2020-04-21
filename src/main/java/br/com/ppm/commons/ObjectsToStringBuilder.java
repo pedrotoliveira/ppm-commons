@@ -25,9 +25,8 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 import static br.com.ppm.commons.ToStringConstants.*;
-import static br.com.ppm.commons.Types.*;
+import static br.com.ppm.commons.type.Types.*;
 import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
-import static br.com.ppm.commons.annotation.ToStringStyle.Style.REFLECTION;
 
 /**
  * Class ToStringBuilder is a Utility class to implement java toString pattern.
@@ -47,16 +46,6 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
 
     public ObjectsToStringBuilder(final Object object) {
         this.object = object;
-    }
-
-    @Override
-    public String build() {
-        return build(NOT_IGNORE_SUPER_TYPES);
-    }
-
-    @Override
-    public String build(final boolean ignoreSuperType) {
-        return build(ignoreSuperType, REFLECTION);
     }
 
     @Override

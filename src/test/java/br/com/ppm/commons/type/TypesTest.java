@@ -1,17 +1,28 @@
 /*
- * Copyright (C) 2020.
+ * Copyright (C) 2020 pedrotoliveira
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package br.com.ppm.commons.type;
 
 import br.com.ppm.commons.fixtures.Address;
 import br.com.ppm.commons.fixtures.Person;
 import br.com.ppm.commons.fixtures.States;
-import br.com.ppm.commons.type.Types;
 import org.junit.Test;
 
-import java.util.*;
 import java.time.Instant;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -100,8 +111,13 @@ public class TypesTest {
     }
 
     @Test
-    public void enumHasToBeWrapper() {
-        assertThat(Types.isWrapper(States.FINISHED)).isTrue();
+    public void enumShouldNotBeWrapper() {
+        assertThat(Types.isWrapper(States.FINISHED)).isFalse();
+    }
+
+    @Test
+    public void isEnumHasToBeTrue() {
+        assertThat(Types.isEnum(States.PROCESSED)).isTrue();
     }
 
     @Test

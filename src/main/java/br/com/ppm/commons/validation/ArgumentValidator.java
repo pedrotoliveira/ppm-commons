@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,16 +20,11 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 /**
- * Validator Utils - A class with some utilities methods
- * Useful for identifying programmer errors early and clearly at runtime.
+ * Argument Validator can be used to validate arguments passed to methods and functions.
  *
  * @author Pedro T. Oliveira
  */
-public final class Validator {
-
-	/** No instances for this class */
-    private Validator() {
-	}
+public final class ArgumentValidator {
 
 	/**
 	 * Validate if a parameter is Null.
@@ -131,7 +126,7 @@ public final class Validator {
 	}
 
 	private static String invalidParam(final String paramName) {
-		return String.format("%s is invalid.", paramName);
+		return String.format("[%s] is an invalid parameter.", paramName);
 	}
 
     private static void notEmpty(final Object[] param, final String message) {
@@ -169,4 +164,16 @@ public final class Validator {
             throw handleIllegalArgumentException(paramName);
         }
     }
+
+	/**
+	 * Verify if the condition is True, if it was false it throws IllegalArgumentException with message.
+	 *
+	 * @param condition to check
+	 * @param message message to the exception
+	 */
+	public static void isTrue(boolean condition, String message) {
+    	if (!condition) {
+    		throw new IllegalArgumentException(message);
+		}
+	}
 }

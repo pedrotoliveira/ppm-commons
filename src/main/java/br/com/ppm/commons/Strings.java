@@ -16,7 +16,7 @@
  */
 package br.com.ppm.commons;
 
-import br.com.ppm.commons.validation.Validator;
+import br.com.ppm.commons.validation.ArgumentValidator;
 
 /**
  * String Operations
@@ -60,7 +60,7 @@ public final class Strings {
      * @return the object
      */
     public static String mask(String value) {
-        Validator.notNullParameter(value, "value");
+        ArgumentValidator.notNullParameter(value, "value");
         final int size = value.length();
 
         if (size < 11) {

@@ -1,4 +1,8 @@
-package br.com.ppm.commons;
+/*
+ * Copyright (C) 2020.
+ */
+
+package br.com.ppm.commons.type;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

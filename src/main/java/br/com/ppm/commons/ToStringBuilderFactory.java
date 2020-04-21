@@ -16,6 +16,10 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.type.Types;
+import br.com.ppm.commons.type.Wrapper;
+import br.com.ppm.commons.type.WrapperToStringBuilder;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -26,7 +30,7 @@ public final class ToStringBuilderFactory {
 
     private final Object element;
 
-    public ToStringBuilderFactory(final Object element) {
+    private ToStringBuilderFactory(final Object element) {
         this.element = element;
     }
 
@@ -35,16 +39,18 @@ public final class ToStringBuilderFactory {
     }
 
     public ToStringBuilder create() {
+        if (Types.isWrapper(element)) {
+            return new WrapperToStringBuilder(new Wrapper<>(element));
+        }
         if (Types.isArray(element)) {
             return new ArrayToStringBuilder(element);
-        } else if (Types.isWrapper(element) || Types.hasImplementedToString(element)) {
-            return new WrapperToStringBuilder(element);
-        } else if (Types.isCollection(element)) {
-            return new CollectionToStringBuilder(Collection.class.cast(element));
-        } else if (Types.isMap(element)) {
-            return new MapToStringBuilder(Map.class.cast(element));
-        } else {
-            return new ObjectsToStringBuilder(element);
         }
+        if (Types.isCollection(element)) {
+            return new CollectionToStringBuilder(Collection.class.cast(element));
+        }
+        if (Types.isMap(element)) {
+            return new MapToStringBuilder(Map.class.cast(element));
+        }
+        return new ObjectsToStringBuilder(element);
     }
 }

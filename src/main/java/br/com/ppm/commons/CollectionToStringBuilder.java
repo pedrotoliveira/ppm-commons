@@ -38,16 +38,6 @@ public final class CollectionToStringBuilder implements ToStringBuilder {
     }
 
     @Override
-    public String build() {
-        return build(IGNORE_SUPER_TYPES);
-    }
-
-    @Override
-    public String build(boolean ignoreSuperType) {
-        return build(ignoreSuperType, ToStringStyle.Style.REFLECTION);
-    }
-
-    @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
         KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_SQUARE_BRACKET));
         int counter = 0;

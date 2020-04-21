@@ -18,13 +18,17 @@ package br.com.ppm.commons;
 
 import br.com.ppm.commons.annotation.ToStringStyle;
 
+import static br.com.ppm.commons.ToStringConstants.NOT_IGNORE_SUPER_TYPES;
+
 public interface ToStringBuilder {
     /**
      * Create a toString Pattern for an object and its super type, if any.
      *
      * @return toString Pattern
      */
-    String build();
+    default String build() {
+        return build(NOT_IGNORE_SUPER_TYPES);
+    }
 
     /**
      * Create a toString Pattern for an object and its super type, if any.
@@ -32,7 +36,9 @@ public interface ToStringBuilder {
      * @param ignoreSuperType has to ignore the superType ?
      * @return toString Pattern
      */
-    String build(boolean ignoreSuperType);
+    default String build(boolean ignoreSuperType) {
+        return build(ignoreSuperType, ToStringStyle.Style.REFLECTION);
+    }
 
     /**
      * Create a toString Pattern for an object and its super type, if any.
@@ -52,7 +58,7 @@ public interface ToStringBuilder {
      * @return toString Pattern
      */
     static String toString(final Object object) {
-        return new ObjectsToStringBuilder(object).build();
+        return ToStringBuilderFactory.of(object).build();
     }
 
     /**
@@ -64,6 +70,6 @@ public interface ToStringBuilder {
      * @return toString Pattern
      */
     static String toString(final Object object, final boolean ignoreSuperType) {
-        return new ObjectsToStringBuilder(object).build(ignoreSuperType);
+        return ToStringBuilderFactory.of(object).build(ignoreSuperType);
     }
 }

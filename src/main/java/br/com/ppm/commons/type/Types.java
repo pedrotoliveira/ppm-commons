@@ -64,22 +64,9 @@ public final class Types {
      * @return true, if is wrapper
      */
     public static boolean isWrapper(Object value) {
-        if (value == null) return false;
-        return value.getClass().isPrimitive()
-                || value instanceof String
-                || value instanceof Integer
-                || value instanceof Double
-                || value instanceof Short
-                || value instanceof Long
-                || value instanceof Float
-                || value instanceof Character
-                || value instanceof Boolean
-                || value instanceof Byte
-                || value instanceof Date
-                || value instanceof Calendar
-                || value instanceof Locale
-                || value instanceof Class<?>
-                || value instanceof Enum<?>;
+        return Objects.nonNull(value) &&
+                (value.getClass().isPrimitive()
+                        || Arrays.stream(WrapperTypes.values()).anyMatch(WrapperTypes.matcher(value)));
     }
 
     /**
@@ -89,7 +76,17 @@ public final class Types {
      * @return true if is an Interface
      */
     public static boolean isInterface(Object value) {
-        return value.getClass().isInterface();
+        return Objects.nonNull(value) && value.getClass().isInterface();
+    }
+
+    /**
+     * Checks if the Object value is an Enum
+     *
+     * @param value value to check
+     * @return true if is an Enum
+     */
+    public static boolean isEnum(Object value) {
+        return Objects.nonNull(value) && value instanceof Enum<?>;
     }
 
     /**
@@ -121,5 +118,4 @@ public final class Types {
     public static boolean isList(final Object target) {
         return target instanceof List;
     }
-
 }

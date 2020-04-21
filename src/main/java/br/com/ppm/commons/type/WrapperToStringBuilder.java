@@ -14,29 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.type;
 
+import br.com.ppm.commons.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
+public class WrapperToStringBuilder implements ToStringBuilder {
 
-/**
- * Array ToStringBuilder
- *
- * @author pedrotoliveira
- */
-public final class ArrayToStringBuilder implements ToStringBuilder {
+    private final Wrapper<?> wrapper;
 
-    private static final int PAGE_SIZE = 15;
-    private final Stream<Object> arrayStream;
-
-    public ArrayToStringBuilder(Object... array) {
-        this.arrayStream = Arrays.stream(array);
+    public WrapperToStringBuilder(Wrapper<?> wrapper) {
+        this.wrapper = wrapper;
     }
 
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
-        return null;
+        return wrapper.toString();
     }
 }

@@ -59,7 +59,7 @@ public final class KeyValueAppender {
                 builder.append("null");
             }
             appendSeparator(COMMA);
-        } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+        } catch (Throwable ex) { //NOPMD - We do not want to throw exception to this method.
             handleException(ex);
         }
     }
@@ -85,7 +85,7 @@ public final class KeyValueAppender {
         return builder.toString();
     }
 
-    private void handleException(final Exception ex) {
+    private void handleException(final Throwable ex) {
         logger.error(DEFAULT_ERROR, ex);
         builder.append("toStringError=");
         builder.append(DEFAULT_ERROR);
