@@ -38,6 +38,14 @@ public final class ArraysToStringBuilder implements ToStringBuilder {
 
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
+        KeyValueAppender appender = appendValues(style);
+        if (array.length > PAGE_SIZE) {
+            appender.appendSeparator("...");
+        }
+        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
+    }
+
+    private KeyValueAppender appendValues(ToStringStyle.Style style) {
         KeyValueAppender appender = KeyValueAppender.start(OPEN_SQUARE_BRACKET);
         for (int index = 0; index < array.length; index++) {
             appender.appendValue(array[index], style);
@@ -49,9 +57,6 @@ public final class ArraysToStringBuilder implements ToStringBuilder {
                 appender.appendSeparator(COMMA);
             }
         }
-        if (array.length > PAGE_SIZE) {
-            appender.appendSeparator("...");
-        }
-        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
+        return appender;
     }
 }
