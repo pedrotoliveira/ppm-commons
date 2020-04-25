@@ -3,6 +3,7 @@
  */
 package br.com.ppm.commons.array;
 
+import br.com.ppm.commons.collection.Seq;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,14 +25,14 @@ public class ArraysToStringBuilderTest {
 
     @Test
     public void testBuildBigArray() {
-        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+        Object[] array = Seq.array(1, 25);
         String result = new ArraysToStringBuilder(array).build();
         assertThat(result).isEqualTo("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ...]");
     }
 
     @Test
     public void testBuildMaxPageSize() {
-        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+        Object[] array = Seq.array(1, 15);
         String result = new ArraysToStringBuilder(array).build();
         assertThat(result).isEqualTo("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]");
     }

@@ -32,28 +32,41 @@ import static br.com.ppm.commons.ToStringConstants.*;
  */
 public final class CollectionToStringBuilder implements ToStringBuilder {
 
-    private static final int PAGE_SIZE = 5;
+    private final int pageSize;
     private final Collection<?> collection;
 
     public CollectionToStringBuilder(final Collection<?> collection) {
+        this(5, collection);
+    }
+
+    public CollectionToStringBuilder(int pageSize, Collection<?> collection) {
+        this.pageSize = pageSize;
         this.collection = collection;
     }
 
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
+        KeyValueAppender appender = appendCollectionValues(style);
+        if (collection.size() > pageSize) {
+            appender.appendSeparator("...");
+        }
+        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
+    }
+
+    private KeyValueAppender appendCollectionValues(ToStringStyle.Style style) {
         KeyValueAppender appender = KeyValueAppender.start(OPEN_SQUARE_BRACKET);
         int counter = 0;
         for (Iterator<?> it = collection.iterator(); it.hasNext();) {
             appender.appendValue(it.next(), style);
+            counter++;
+            if (counter == pageSize && collection.size() > pageSize) {
+                appender.appendSeparator(COMMA);
+                break;
+            }
             if (it.hasNext()) {
                 appender.appendSeparator(COMMA);
             }
-            counter++;
-            if (counter == PAGE_SIZE) {
-                appender.appendSeparator(" ...");
-                break;
-            }
         }
-        return appender.appendTerminator(CLOSE_SQUARE_BRACKET);
+        return appender;
     }
 }
