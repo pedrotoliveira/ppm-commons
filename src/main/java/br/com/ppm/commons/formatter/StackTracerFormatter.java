@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2020 pedrotoliveira
+/* 
+ * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,25 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.formatter;
 
 /**
- * Constants Used in ToStringBuilder Classes
  *
  * @author pedrotoliveira
  */
-public final class ToStringConstants {
+public interface StackTracerFormatter {
 
-    public static final String OPEN_MAP_BRACKET = "Map{";
-    public static final String OPEN_BRACKET = "{";
-    public static final String CLOSE_BRACKET = "}";
-    public static final String OPEN_SQUARE_BRACKET = "[";
-    public static final String CLOSE_SQUARE_BRACKET = "]";
-    public static final String EQUAL = "=";
-    public static final String COMMA = ", ";
-    public static final boolean IGNORE_SUPER_TYPES = true;
-    public static final boolean NOT_IGNORE_SUPER_TYPES = false;
+    String formatToString(final Throwable throwable);
 
-    private ToStringConstants() {
-    }
 }

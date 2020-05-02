@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 pedrotoliveira
+ * Copyright (C) 2020 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.validation.ArgumentValidator;
+
 /**
  * String Operations
  *
@@ -27,6 +29,7 @@ public final class Strings {
      * No instances for this class
      */
     private Strings() {
+        throw new AssertionError("No instances for you!");
     }
 
     /**
@@ -37,7 +40,7 @@ public final class Strings {
      * @return the new text with first letter Capitalized
      */
     public static String capitalizeFirstLetter(final String text) {
-        return String.valueOf(Character.toUpperCase(text.charAt(0))) +
+        return Character.toUpperCase(text.charAt(0)) +
                 text.substring(1);
     }
 
@@ -57,7 +60,7 @@ public final class Strings {
      * @return the object
      */
     public static String mask(String value) {
-        Validator.notNullParameter(value, "value");
+        ArgumentValidator.notNullParameter(value, "value");
         final int size = value.length();
 
         if (size < 11) {
@@ -72,6 +75,6 @@ public final class Strings {
         for (int i = 0; i < maskSize; i++) {
             sb.append('*');
         }
-        return sb.append(value.substring(size - lastPart, size)).toString();
+        return sb.append(value, size - lastPart, size).toString();
     }
 }

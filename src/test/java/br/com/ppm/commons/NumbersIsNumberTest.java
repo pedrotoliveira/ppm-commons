@@ -28,7 +28,7 @@ import static org.junit.Assert.assertThat;
  *
  * @author pedrotoliveira
  */
-@RunWith(value = Parameterized.class)
+@RunWith(Parameterized.class)
 public class NumbersIsNumberTest {
 
     private final String text;

@@ -16,6 +16,7 @@
  */
 package br.com.ppm.commons;
 
+import br.com.ppm.commons.formatter.StackTraceFormatters;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;

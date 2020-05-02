@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2020 pedrotoliveira
+/* 
+ * Copyright (C) 2017 pedrotoliveira
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,25 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.fixtures;
 
 /**
- * Constants Used in ToStringBuilder Classes
  *
  * @author pedrotoliveira
  */
-public final class ToStringConstants {
+public final class Address {
 
-    public static final String OPEN_MAP_BRACKET = "Map{";
-    public static final String OPEN_BRACKET = "{";
-    public static final String CLOSE_BRACKET = "}";
-    public static final String OPEN_SQUARE_BRACKET = "[";
-    public static final String CLOSE_SQUARE_BRACKET = "]";
-    public static final String EQUAL = "=";
-    public static final String COMMA = ", ";
-    public static final boolean IGNORE_SUPER_TYPES = true;
-    public static final boolean NOT_IGNORE_SUPER_TYPES = false;
+    private final String street;
+    private final int number;
+    private final String complement;
 
-    private ToStringConstants() {
+    public Address(String street, int number, String complement) {
+        super();
+        this.number = number;
+        this.street = street;
+        this.complement = complement;
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
 }
