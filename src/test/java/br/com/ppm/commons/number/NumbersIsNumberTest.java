@@ -14,9 +14,8 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons.numbers;
+package br.com.ppm.commons.number;
 
-import br.com.ppm.commons.number.Numbers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
