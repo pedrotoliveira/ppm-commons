@@ -38,6 +38,10 @@ public final class KeyValueAppender {
 
     private final StringBuilder builder;
 
+    public KeyValueAppender() {
+        this(new StringBuilder());
+    }
+
     public KeyValueAppender(StringBuilder builder) {
         this.builder = builder;
     }
@@ -93,6 +97,10 @@ public final class KeyValueAppender {
         logger.error(DEFAULT_ERROR, ex);
         builder.append("toStringError=");
         builder.append(DEFAULT_ERROR);
+    }
+
+    public StringBuilder getBuilder() {
+        return builder;
     }
 
     @Override

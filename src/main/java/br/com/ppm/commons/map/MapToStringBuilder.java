@@ -56,9 +56,8 @@ public final class MapToStringBuilder implements ToStringBuilder {
     }
 
     private String mapItemKey(Object key) {
-        StringBuilder builder = new StringBuilder();
-        KeyValueAppender keyAppender = KeyValueAppender.of(builder);
+        KeyValueAppender keyAppender = new KeyValueAppender();
         keyAppender.appendValue(key, ToStringStyle.Style.REFLECTION);
-        return builder.toString();
+        return keyAppender.getBuilder().toString();
     }
 }
