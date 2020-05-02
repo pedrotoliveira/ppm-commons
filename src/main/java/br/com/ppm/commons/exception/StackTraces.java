@@ -18,6 +18,8 @@ package br.com.ppm.commons.exception;
 
 import br.com.ppm.commons.formatter.StackTraceFormatters;
 
+import br.com.ppm.commons.formatter.StackTraceFormatters;
+
 /**
  * Utility Class to format Java Stack Traces.
  *
