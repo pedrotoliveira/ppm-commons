@@ -21,6 +21,7 @@ import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
 import br.com.ppm.commons.array.ArraysToStringBuilder;
 import br.com.ppm.commons.collection.CollectionToStringBuilder;
+import br.com.ppm.commons.map.MapToStringBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

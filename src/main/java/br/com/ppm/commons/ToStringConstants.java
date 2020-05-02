@@ -23,8 +23,9 @@ package br.com.ppm.commons;
  */
 public final class ToStringConstants {
 
-    public static final String OPEN_MAP_BRACKET = "Map[";
-    public static final String KEY = "key=";
+    public static final String OPEN_MAP_BRACKET = "Map{";
+    public static final String OPEN_BRACKET = "{";
+    public static final String CLOSE_BRACKET = "}";
     public static final String OPEN_SQUARE_BRACKET = "[";
     public static final String CLOSE_SQUARE_BRACKET = "]";
     public static final String EQUAL = "=";

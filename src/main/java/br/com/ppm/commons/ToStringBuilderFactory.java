@@ -18,6 +18,7 @@ package br.com.ppm.commons;
 
 import br.com.ppm.commons.array.ArraysToStringBuilder;
 import br.com.ppm.commons.collection.CollectionToStringBuilder;
+import br.com.ppm.commons.map.MapToStringBuilder;
 import br.com.ppm.commons.type.Types;
 import br.com.ppm.commons.type.Wrapper;
 import br.com.ppm.commons.type.WrapperToStringBuilder;
