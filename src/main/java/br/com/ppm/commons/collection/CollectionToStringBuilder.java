@@ -16,14 +16,14 @@
  */
 package br.com.ppm.commons.collection;
 
-import br.com.ppm.commons.KeyValueAppender;
-import br.com.ppm.commons.ToStringBuilder;
+import br.com.ppm.commons.string.KeyValueAppender;
+import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-import static br.com.ppm.commons.ToStringConstants.*;
+import static br.com.ppm.commons.string.ToStringConstants.*;
 
 /**
  * Collection ToStringBuilder

@@ -16,7 +16,7 @@
  */
 package br.com.ppm.commons.type;
 
-import br.com.ppm.commons.ToStringBuilder;
+import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
 public class WrapperToStringBuilder implements ToStringBuilder {

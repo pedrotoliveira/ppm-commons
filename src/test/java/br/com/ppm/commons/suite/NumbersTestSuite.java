@@ -16,7 +16,7 @@
  */
 package br.com.ppm.commons.suite;
 
-import br.com.ppm.commons.NumbersIsNumberTest;
+import br.com.ppm.commons.numbers.NumbersIsNumberTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

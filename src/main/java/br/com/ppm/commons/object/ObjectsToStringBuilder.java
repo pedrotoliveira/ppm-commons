@@ -1,21 +1,23 @@
 /*
- * Copyright (C) 2020 pedrotoliveira
+ *     Copyright (C) 2020 - pedro.oliveira20@gmail.com
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.ppm.commons;
+package br.com.ppm.commons.object;
 
+import br.com.ppm.commons.string.KeyValueAppender;
+import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringExclude;
 import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
@@ -27,9 +29,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-import static br.com.ppm.commons.ToStringConstants.*;
-import static br.com.ppm.commons.type.Types.*;
+import static br.com.ppm.commons.string.ToStringConstants.CLOSE_SQUARE_BRACKET;
+import static br.com.ppm.commons.string.ToStringConstants.OPEN_SQUARE_BRACKET;
 import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
+import static br.com.ppm.commons.type.Types.*;
 
 /**
  * Class ToStringBuilder is a Utility class to implement java toString pattern.
