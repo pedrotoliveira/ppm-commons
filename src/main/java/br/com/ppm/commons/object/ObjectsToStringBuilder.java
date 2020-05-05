@@ -37,16 +37,10 @@ import static br.com.ppm.commons.type.Types.*;
 /**
  * Class ToStringBuilder is a Utility class to implement java toString pattern.
  *
- * This implementation should be more realible, faster and secure them other ToStringBuilders on the market.
- *
  * @author Pedro T. Oliveira (pedrotoliveira)
  * @since 05/15/2013
- *
  */
 public final class ObjectsToStringBuilder implements ToStringBuilder {
-
-    private static final String TO_MANY_TO_STRING_CALLS_VIOLATION = "[Error on ToStringBuilder, "
-            + "reflectionToString method has reached the max depth calls! Please verify the circular references]";
 
     private final Object object;
 
@@ -60,27 +54,21 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
             return "Object=null ";
         }
         final StringBuilder builder = new StringBuilder();
-        if (DepthController.isAllowed(object)) {
-            if (isArray(object)) {
-                builder.append(new ArraysToStringBuilder(object).build());
-            } else if (isWrapper(object)) {
-                builder.append(OPEN_SQUARE_BRACKET);
-                builder.append(object);
-                builder.append(CLOSE_SQUARE_BRACKET);
-            } else if (isCollection(object)) {
-                builder.append(new CollectionToStringBuilder(Collection.class.cast(object)).build());
-            } else if (isMap(object)) {
-                builder.append(new MapToStringBuilder(Map.class.cast(object)).build());
-            } else {
-                builder.append(object.getClass().getSimpleName());
-                builder.append(OPEN_SQUARE_BRACKET);
-                builder.append(toStringFields(object, ignoreSuperType, style));
-                builder.delete(builder.length() - 2, builder.length());
-                builder.append(CLOSE_SQUARE_BRACKET);
-            }
-        } else {
+        if (isArray(object)) {
+            builder.append(new ArraysToStringBuilder(object).build());
+        } else if (isWrapper(object)) {
             builder.append(OPEN_SQUARE_BRACKET);
-            builder.append("toStringError=").append(TO_MANY_TO_STRING_CALLS_VIOLATION);
+            builder.append(object);
+            builder.append(CLOSE_SQUARE_BRACKET);
+        } else if (isCollection(object)) {
+            builder.append(new CollectionToStringBuilder(Collection.class.cast(object)).build());
+        } else if (isMap(object)) {
+            builder.append(new MapToStringBuilder(Map.class.cast(object)).build());
+        } else {
+            builder.append(object.getClass().getSimpleName());
+            builder.append(OPEN_SQUARE_BRACKET);
+            builder.append(toStringFields(object, ignoreSuperType, style));
+            builder.delete(builder.length() - 2, builder.length());
             builder.append(CLOSE_SQUARE_BRACKET);
         }
         return builder.toString();
