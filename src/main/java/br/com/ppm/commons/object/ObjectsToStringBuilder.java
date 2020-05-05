@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
@@ -49,27 +50,38 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
 
     @Override
     public String build(final boolean ignoreSuperType, final Style style) {
-        if (object == null) {
-            return KeyValueAppender.start("Object")
-                    .appendSeparator(EQUAL)
-                    .appendNullValue()
-                    .getBuilder()
-                    .toString();
-        }
+        return (object == null) ? buildNullToString() : buildObjectToString(ignoreSuperType, style);
+    }
 
-        KeyValueAppender appender = KeyValueAppender.start(object.getClass().getSimpleName());
-        appender.appendSeparator(OPEN_BRACKET);
-        Field[] fields = !ignoreSuperType && hasSuperType(object)
-                ? extractSuperClassFields(object)
-                : object.getClass().getDeclaredFields();
-
-        for (Field field : fields) {
-            if (isToPrintField(field)) {
-                Style selectedStyle = selectStyle(style, field);
-                appender.appendKeyValue(object, field, selectedStyle);
-            }
-        }
+    private String buildObjectToString(boolean ignoreSuperType, Style style) {
+        KeyValueAppender appender = KeyValueAppender
+                .start(object.getClass().getSimpleName())
+                .appendSeparator(OPEN_BRACKET);
+        extractFields(ignoreSuperType)
+                .filter(this::isToPrintField)
+                .forEach(appendToString(style, appender));
         return appender.deleteLastComma().appendTerminator(CLOSE_BRACKET);
+    }
+
+    private Consumer<Field> appendToString(Style style, KeyValueAppender appender) {
+        return field -> {
+            Style selectedStyle = selectStyle(style, field);
+            appender.appendKeyValue(object, field, selectedStyle);
+        };
+    }
+
+    private Stream<Field> extractFields(boolean ignoreSuperType) {
+        return !ignoreSuperType && hasSuperType(object)
+                ? extractSuperClassFields(object)
+                : Arrays.stream(object.getClass().getDeclaredFields());
+    }
+
+    private String buildNullToString() {
+        return KeyValueAppender.start("Object")
+                .appendSeparator(EQUAL)
+                .appendNullValue()
+                .getBuilder()
+                .toString();
     }
 
     private Style selectStyle(Style current, Field field) {
@@ -82,18 +94,17 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
                 : Style.REFLECTION;
     }
 
-    private Field[] extractSuperClassFields(Object o) {
+    private Stream<Field> extractSuperClassFields(Object o) {
         Field[] classFields = o.getClass().getDeclaredFields();
         Stream<Field> superFields = Arrays.stream(o.getClass().getSuperclass().getDeclaredFields());
         List<Field> fields = new ArrayList<>();
-        superFields
-                .filter(field -> isNotOn(classFields, field))
+        superFields.filter(field -> isNotOn(classFields, field))
                 .forEach(fields::add);
         if (fields.isEmpty()) {
-            return classFields;
+            return Arrays.stream(classFields);
         } else {
             Collections.addAll(fields, classFields);
-            return fields.toArray(new Field[]{});
+            return fields.stream();
         }
     }
 
