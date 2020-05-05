@@ -20,7 +20,7 @@ public class ArraysToStringBuilderTest {
     public void testBuild() {
         Object[] stringArray = {"one", "two", "three"};
         String result = new ArraysToStringBuilder(stringArray).build();
-        assertThat(result).isEqualTo("[one, two, three]");
+        assertThat(result).isEqualTo("['one', 'two', 'three']");
     }
 
     @Test

@@ -16,7 +16,10 @@
  */
 package br.com.ppm.commons.type;
 
+import br.com.ppm.commons.number.Numbers;
+
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public enum WrapperTypes {
@@ -45,10 +48,12 @@ public enum WrapperTypes {
 
     private final String name;
     private final Class<?> classType;
+    private final boolean isNumber;
 
     WrapperTypes(Class<?> classType) {
         this.name = classType.getName();
         this.classType = classType;
+        this.isNumber = Numbers.isNumber(classType);
     }
 
     public static boolean anyMatch(Object value) {
@@ -59,11 +64,31 @@ public enum WrapperTypes {
         return wrapperTypes -> wrapperTypes.getName().equals(object.getClass().getName());
     }
 
+    public static <T> WrapperTypes find(T object) {
+       return Arrays.stream(values())
+               .filter(matcher(object))
+               .findFirst()
+               .orElseThrow(NoSuchElementException::new);
+    }
+
     public String getName() {
         return name;
     }
 
     public Class<?> getClassType() {
         return classType;
+    }
+
+    public boolean isNumber() {
+        return isNumber;
+    }
+
+    @Override
+    public java.lang.String toString() {
+        return "WrapperTypes{" +
+                "name='" + name + '\'' +
+                ", classType=" + classType +
+                ", isNumber=" + isNumber +
+                '}';
     }
 }

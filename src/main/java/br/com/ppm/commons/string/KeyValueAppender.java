@@ -64,7 +64,7 @@ public final class KeyValueAppender {
             if (optional.isPresent()) {
                 appendValue(optional.get(), style);
             } else {
-                builder.append("null");
+                appendNullValue();
             }
             appendSeparator(COMMA);
         } catch (Throwable ex) { //NOPMD - We do not want to throw exception to this method.
@@ -77,6 +77,11 @@ public final class KeyValueAppender {
         return this;
     }
 
+    public KeyValueAppender appendNullValue() {
+        builder.append("null");
+        return this;
+    }
+
     public KeyValueAppender appendValue(Object element, ToStringStyle.Style style) {
         ToStringBuilder toStringBuilder = ToStringBuilderFactory.of(element);
         builder.append(toStringBuilder.build(IGNORE_SUPER_TYPES, style));
@@ -85,6 +90,11 @@ public final class KeyValueAppender {
 
     public KeyValueAppender appendSeparator(String separator) {
         builder.append(separator);
+        return this;
+    }
+
+    public KeyValueAppender deleteLastComma() {
+        builder.delete(builder.length() - 2, builder.length());
         return this;
     }
 

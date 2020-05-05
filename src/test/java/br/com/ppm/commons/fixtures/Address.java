@@ -27,7 +27,6 @@ public final class Address {
     private final String complement;
 
     public Address(String street, int number, String complement) {
-        super();
         this.number = number;
         this.street = street;
         this.complement = complement;

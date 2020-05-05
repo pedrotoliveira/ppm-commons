@@ -136,4 +136,7 @@ public final class Numbers {
         return !allowSigns && foundDigit;
     }
 
+    public static boolean isNumber(Class<?> classType) {
+        return Number.class.isAssignableFrom(classType);
+    }
 }

@@ -28,21 +28,17 @@ import java.io.Serializable;
 public class Wrapper<T> implements Serializable, Comparable<T> {
 
     private final T object;
-    private String className;
+    private WrapperTypes wrapperType;
 
     public Wrapper(T object) {
         ArgumentValidator.notNullParameter(object, "object");
         ArgumentValidator.isTrue(Types.isWrapper(object), "The object should be a Wrapper.");
         this.object = object;
-        this.className = object.getClass().getName();
+        this.wrapperType = WrapperTypes.find(object);
     }
 
     public T getObject() {
         return object;
-    }
-
-    public String getClassName() {
-        return className;
     }
 
     @Override
@@ -52,6 +48,8 @@ public class Wrapper<T> implements Serializable, Comparable<T> {
 
     @Override
     public String toString() {
-        return object.toString();
+        return  (wrapperType.isNumber())
+                ? object.toString()
+                : "'" + object.toString() + "'";
     }
 }

@@ -16,23 +16,22 @@
  */
 package br.com.ppm.commons.object;
 
-import br.com.ppm.commons.string.KeyValueAppender;
-import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringExclude;
 import br.com.ppm.commons.annotation.ToStringStyle;
 import br.com.ppm.commons.annotation.ToStringStyle.Style;
-import br.com.ppm.commons.array.ArraysToStringBuilder;
-import br.com.ppm.commons.collection.CollectionToStringBuilder;
-import br.com.ppm.commons.map.MapToStringBuilder;
+import br.com.ppm.commons.string.KeyValueAppender;
+import br.com.ppm.commons.string.ToStringBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static br.com.ppm.commons.string.ToStringConstants.CLOSE_SQUARE_BRACKET;
-import static br.com.ppm.commons.string.ToStringConstants.OPEN_SQUARE_BRACKET;
 import static br.com.ppm.commons.annotation.ToStringStyle.Style.NO_STYLE;
-import static br.com.ppm.commons.type.Types.*;
+import static br.com.ppm.commons.string.ToStringConstants.*;
 
 /**
  * Class ToStringBuilder is a Utility class to implement java toString pattern.
@@ -51,39 +50,26 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
     @Override
     public String build(final boolean ignoreSuperType, final Style style) {
         if (object == null) {
-            return "Object=null ";
+            return KeyValueAppender.start("Object")
+                    .appendSeparator(EQUAL)
+                    .appendNullValue()
+                    .getBuilder()
+                    .toString();
         }
-        final StringBuilder builder = new StringBuilder();
-        if (isArray(object)) {
-            builder.append(new ArraysToStringBuilder(object).build());
-        } else if (isWrapper(object)) {
-            builder.append(OPEN_SQUARE_BRACKET);
-            builder.append(object);
-            builder.append(CLOSE_SQUARE_BRACKET);
-        } else if (isCollection(object)) {
-            builder.append(new CollectionToStringBuilder(Collection.class.cast(object)).build());
-        } else if (isMap(object)) {
-            builder.append(new MapToStringBuilder(Map.class.cast(object)).build());
-        } else {
-            builder.append(object.getClass().getSimpleName());
-            builder.append(OPEN_SQUARE_BRACKET);
-            builder.append(toStringFields(object, ignoreSuperType, style));
-            builder.delete(builder.length() - 2, builder.length());
-            builder.append(CLOSE_SQUARE_BRACKET);
-        }
-        return builder.toString();
-    }
 
-    private String toStringFields(final Object object, final boolean ignoreSuperType, final Style style) {
-        StringBuilder builder = new StringBuilder();
-        Field[] fields = ignoreSuperType ? object.getClass().getDeclaredFields() : extractSuperClassFields(object);
+        KeyValueAppender appender = KeyValueAppender.start(object.getClass().getSimpleName());
+        appender.appendSeparator(OPEN_BRACKET);
+        Field[] fields = !ignoreSuperType && hasSuperType(object)
+                ? extractSuperClassFields(object)
+                : object.getClass().getDeclaredFields();
+
         for (Field field : fields) {
             if (isToPrintField(field)) {
                 Style selectedStyle = selectStyle(style, field);
-                KeyValueAppender.of(builder).appendKeyValue(object, field, selectedStyle);
+                appender.appendKeyValue(object, field, selectedStyle);
             }
         }
-        return builder.toString();
+        return appender.deleteLastComma().appendTerminator(CLOSE_BRACKET);
     }
 
     private Style selectStyle(Style current, Field field) {
@@ -98,22 +84,16 @@ public final class ObjectsToStringBuilder implements ToStringBuilder {
 
     private Field[] extractSuperClassFields(Object o) {
         Field[] classFields = o.getClass().getDeclaredFields();
-        if (hasSuperType(o)) {
-            Field[] superFields = o.getClass().getSuperclass().getDeclaredFields();
-            List<Field> fields = new ArrayList<>();
-            for (Field field : superFields) {
-                if (isNotOn(classFields, field)) {
-                    fields.add(field);
-                }
-            }
-            if (fields.isEmpty()) {
-                return classFields;
-            } else {
-                Collections.addAll(fields, classFields);
-                return fields.toArray(new Field[]{});
-            }
-        } else {
+        Stream<Field> superFields = Arrays.stream(o.getClass().getSuperclass().getDeclaredFields());
+        List<Field> fields = new ArrayList<>();
+        superFields
+                .filter(field -> isNotOn(classFields, field))
+                .forEach(fields::add);
+        if (fields.isEmpty()) {
             return classFields;
+        } else {
+            Collections.addAll(fields, classFields);
+            return fields.toArray(new Field[]{});
         }
     }
 
