@@ -71,7 +71,7 @@ public class CollectionToStringBuilderTest {
     }
 
     private static Object[] testListOfStrings() {
-        return new Object[]{Arrays.asList("one", "two", "three"), "[one, two, three]"};
+        return new Object[]{Arrays.asList("one", "two", "three"), "['one', 'two', 'three']"};
     }
 
     private static Object[] testBigCollection() {

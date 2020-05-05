@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import br.com.ppm.commons.Numbers;
-import br.com.ppm.commons.Strings;
+import br.com.ppm.commons.number.Numbers;
+import br.com.ppm.commons.string.Strings;
 import br.com.ppm.commons.validation.ArgumentValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

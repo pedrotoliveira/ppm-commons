@@ -52,7 +52,7 @@ public class MapToStringBuilderTest {
         map.put("keyOne", "one");
         map.put("keyTwo", "two");
         map.put("keyThree", "three");
-        String expected = "Map{[keyOne, one], [keyTwo, two], [keyThree, three]}";
+        String expected = "Map{ ['keyOne', 'one'], ['keyTwo', 'two'], ['keyThree', 'three'] }";
         return new Object[]{map, expected};
     }
 
@@ -66,11 +66,11 @@ public class MapToStringBuilderTest {
         map.put("keyTwo", person2);
         map.put("keyThree", person3);
 
-        String expected = "Map{" +
-                "[keyOne, " + person1.toString() + "], " +
-                "[keyTwo, " + person2.toString() + "], " +
-                "[keyThree, " + person3.toString() + "]" +
-                "}";
+        String expected = "Map{ " +
+                "['keyOne', " + person1.toString() + "], " +
+                "['keyTwo', " + person2.toString() + "], " +
+                "['keyThree', " + person3.toString() + "]" +
+                " }";
         return new Object[]{map, expected};
     }
 

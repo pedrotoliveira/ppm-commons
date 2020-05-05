@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.com.ppm.commons.ToStringBuilder;
+import br.com.ppm.commons.string.ToStringBuilder;
 
 /**
  *

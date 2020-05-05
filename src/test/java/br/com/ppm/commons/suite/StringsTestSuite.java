@@ -16,9 +16,9 @@
  */
 package br.com.ppm.commons.suite;
 
-import br.com.ppm.commons.StringsCapitalizeFirstLetterTest;
-import br.com.ppm.commons.StringsIsBlankTest;
-import br.com.ppm.commons.StringsIsEmptyTest;
+import br.com.ppm.commons.string.StringsCapitalizeFirstLetterTest;
+import br.com.ppm.commons.string.StringsIsBlankTest;
+import br.com.ppm.commons.string.StringsIsEmptyTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

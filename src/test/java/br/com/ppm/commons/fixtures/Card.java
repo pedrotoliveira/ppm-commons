@@ -18,7 +18,7 @@ package br.com.ppm.commons.fixtures;
 
 import java.util.Objects;
 
-import br.com.ppm.commons.ToStringBuilder;
+import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
 /**

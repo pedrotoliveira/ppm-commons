@@ -16,11 +16,11 @@
  */
 package br.com.ppm.commons.array;
 
-import br.com.ppm.commons.KeyValueAppender;
-import br.com.ppm.commons.ToStringBuilder;
+import br.com.ppm.commons.string.KeyValueAppender;
+import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
-import static br.com.ppm.commons.ToStringConstants.*;
+import static br.com.ppm.commons.string.ToStringConstants.*;
 
 /**
  * Array ToStringBuilder
