@@ -27,6 +27,7 @@ nb*
 .mvn/settings.xml
 /.mvn/my-gpg-pub.asc
 /.mvn/settings.xml
+.DS_Store
 
 /.idea/*
 *.iml
