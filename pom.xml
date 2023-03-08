@@ -19,7 +19,7 @@
         <dependency.version.assertj>3.15.0</dependency.version.assertj>
         <dependency.version.hamcrest-core>1.3</dependency.version.hamcrest-core>
         <dependency.version.log4j>2.17.1</dependency.version.log4j>
-        <dependency.version.jacoco>0.8.5</dependency.version.jacoco>
+        <dependency.version.jacoco>0.8.8</dependency.version.jacoco>
         <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
         <jacoco.output.directory>${project.build.directory}/jacoco</jacoco.output.directory>
         <jacoco.report.directory>${project.build.directory}/jacoco-reports</jacoco.report.directory>
