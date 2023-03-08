@@ -16,12 +16,11 @@
  */
 package br.com.ppm.commons.string;
 
-import java.util.Collection;
-
-import br.com.ppm.commons.string.Strings;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.util.Collection;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
