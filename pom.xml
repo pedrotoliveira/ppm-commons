@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.ppm</groupId>
     <artifactId>ppm-commons</artifactId>
-    <version>2.1.4-SNAPSHOT</version>
+    <version>2.1.4</version>
     <packaging>jar</packaging>
 
     <name>PPM Commons</name>
@@ -32,7 +32,7 @@
         <url>https://github.com/pedrotoliveira/ppm-commons.git</url>
         <connection>scm:git:ssh://git@github.com/pedrotoliveira/ppm-commons.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/pedrotoliveira/ppm-commons.git</developerConnection>
-        <tag>ppm-commons-2.1.1</tag>
+        <tag>2.1.4</tag>
     </scm>
 
     <developers>
