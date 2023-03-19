@@ -247,7 +247,7 @@ public interface Reflections {
     static Optional<Object> getValueByField(Field field, Object target) throws IllegalAccessException {
         ArgumentValidator.notNullParameter(field, FIELD);
         ArgumentValidator.notNullParameter(target, TARGET);
-        if (!field.isAccessible()) {
+        if (!field.canAccess(target)) {
             field.setAccessible(true);
         }
         return Optional.ofNullable(field.get(target));
