@@ -37,7 +37,7 @@ class TextStackTraceFormatter implements StackTracerFormatter {
         ArgumentValidator.notNullParameter(throwable, "Throwable should not be null");
         try (ByteArrayOutputStream buffer = new ByteArrayOutputStream(); PrintStream ps = new PrintStream(buffer)) {
             throwable.printStackTrace(ps);
-            StringBuilder sb = new StringBuilder(buffer.toString()).append(SEPARATOR);
+            StringBuilder sb = new StringBuilder(buffer.toString(Charset.defaultCharset())).append(SEPARATOR);
             var cause = throwable.getCause();
             while (cause != null) {
                 cause.printStackTrace(ps);
