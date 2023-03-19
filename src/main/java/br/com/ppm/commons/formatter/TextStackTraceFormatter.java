@@ -21,7 +21,7 @@ import br.com.ppm.commons.validation.ArgumentValidator;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Objects;
+import java.nio.charset.Charset;
 
 /**
  * Plain Text Stack Trace Formatter
