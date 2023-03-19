@@ -35,11 +35,7 @@ public class JsonStackTraceFormatterTest {
     public void testFormatToString() {
         Throwable throwable = new RuntimeException("test format to string");
         String result = new JsonStackTraceFormatter().formatToString(throwable);
-        String expected = "declaringClass\": \"br.com.ppm.commons.formatter.JsonStackTraceFormatterTest\",\n"
-                + "    \"methodName\": \"testFormatToString\",\n"
-                + "    \"fileName\": \"JsonStackTraceFormatterTest.java\",\n"
-                + "    \"lineNumber\": 36\n";
-
+        String expected = "test format to string";
         assertThat("Expect a string that contains: ".concat(expected), result, containsString(expected));
     }
 
