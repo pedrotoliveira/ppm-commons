@@ -16,9 +16,12 @@
  */
 package br.com.ppm.commons.formatter;
 
+import br.com.ppm.commons.validation.ArgumentValidator;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Objects;
 
 /**
  * Plain Text Stack Trace Formatter
@@ -31,12 +34,15 @@ class TextStackTraceFormatter implements StackTracerFormatter {
 
     @Override
     public String formatToString(Throwable throwable) {
+        ArgumentValidator.notNullParameter(throwable, "Throwable should not be null");
         try (ByteArrayOutputStream buffer = new ByteArrayOutputStream(); PrintStream ps = new PrintStream(buffer)) {
             throwable.printStackTrace(ps);
             StringBuilder sb = new StringBuilder(buffer.toString()).append(SEPARATOR);
-            for (Throwable cause = throwable.getCause(); cause != null; cause = cause.getCause()) {
+            var cause = throwable.getCause();
+            while (cause != null) {
                 cause.printStackTrace(ps);
-                sb.append(buffer.toString()).append(SEPARATOR);
+                sb.append(buffer).append(SEPARATOR);
+                cause = cause.getCause();
             }
             return sb.toString();
         } catch (IOException ex) {

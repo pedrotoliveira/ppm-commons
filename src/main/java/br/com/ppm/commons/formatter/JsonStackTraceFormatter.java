@@ -16,8 +16,12 @@
  */
 package br.com.ppm.commons.formatter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Json Stack Trace Formatter
@@ -28,9 +32,28 @@ final class JsonStackTraceFormatter implements StackTracerFormatter {
 
     @Override
     public String formatToString(final Throwable throwable) {
-        throwable.printStackTrace();
-        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-        return gson.toJson(throwable.getStackTrace());
+        Objects.requireNonNull(throwable, "Throwable should not be null");
+        var objectBuilder = Json.createObjectBuilder();
+        var cause = throwable;
+        AtomicInteger counter = new AtomicInteger();
+        while (cause != null) {
+            var index = counter.getAndIncrement();
+            objectBuilder.add(String.format("exception-%d", index), cause.toString());
+            objectBuilder.add(String.format("message-%d", index), cause.getMessage());
+            objectBuilder.add(String.format("localizedMessage-%d", index), cause.getMessage());
+            objectBuilder.add(String.format("stackTrace-%d", index), stackJson(cause));
+            cause = cause.getCause();
+        }
+        return objectBuilder.build().toString();
+    }
+
+    private static JsonObjectBuilder stackJson(Throwable cause) {
+        var objectBuilder = Json.createObjectBuilder();
+        var elements = cause.getStackTrace();
+        for (int index = 0; index < elements.length; index++) {
+            objectBuilder.add(String.format("%d", index), elements[index].toString());
+        }
+        return objectBuilder;
     }
 
 }

@@ -16,7 +16,6 @@
  */
 package br.com.ppm.commons.formatter;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -33,15 +32,10 @@ public class JsonStackTraceFormatterTest {
      * Test of formatToString method, of class JsonStackTraceFormatter.
      */
     @Test
-    @Ignore
     public void testFormatToString() {
         Throwable throwable = new RuntimeException("test format to string");
         String result = new JsonStackTraceFormatter().formatToString(throwable);
-        String expected = "declaringClass\": \"br.com.ppm.commons.formatter.JsonStackTraceFormatterTest\",\n"
-                + "    \"methodName\": \"testFormatToString\",\n"
-                + "    \"fileName\": \"JsonStackTraceFormatterTest.java\",\n"
-                + "    \"lineNumber\": 36\n";
-
+        String expected = "test format to string";
         assertThat("Expect a string that contains: ".concat(expected), result, containsString(expected));
     }
 

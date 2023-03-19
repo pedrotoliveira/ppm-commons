@@ -14,7 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <dependency.version.gson>2.10.1</dependency.version.gson>
+        <dependency.version.jakarta.json-api>2.1.1</dependency.version.jakarta.json-api>
+        <dependency.version.parsson>1.1.1</dependency.version.parsson>
         <dependency.version.junit>4.13.2</dependency.version.junit>
         <dependency.version.assertj>3.24.2</dependency.version.assertj>
         <dependency.version.hamcrest-core>2.2</dependency.version.hamcrest-core>
@@ -63,10 +64,17 @@
     </distributionManagement>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/jakarta.json/jakarta.json-api -->
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${dependency.version.gson}</version>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>${dependency.version.jakarta.json-api}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.parsson/parsson -->
+        <dependency>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
+            <version>${dependency.version.parsson}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
