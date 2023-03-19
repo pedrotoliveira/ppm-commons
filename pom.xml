@@ -134,6 +134,9 @@
                     <release>11</release>
                     <verbose>true</verbose>
                     <fork>true</fork>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
