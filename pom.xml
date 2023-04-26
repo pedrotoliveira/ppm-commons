@@ -8,7 +8,7 @@
 
     <name>PPM Commons</name>
     <description>PPM Commons Library</description>
-    <url>http://pedrotoliveira.github.io/ppm-commons/</url>
+    <url>https://pedrotoliveira.github.io/ppm-commons/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,7 +47,7 @@
     <licenses>
         <license>
             <name>GNU GENERAL PUBLIC LICENSE, Version 3</name>
-            <url>http://www.gnu.org/licenses/gpl.txt</url>
+            <url>https://www.gnu.org/licenses/gpl.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -80,14 +80,12 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${dependency.version.log4j}</version>
-            <scope>compile</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${dependency.version.log4j}</version>
-            <scope>compile</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
