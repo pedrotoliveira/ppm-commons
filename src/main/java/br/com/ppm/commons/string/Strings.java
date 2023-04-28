@@ -1,5 +1,5 @@
 /*
- *     Copyright (C) 2020 - pedro.oliveira20@gmail.com
+ *     Copyright (C) 2023 - pedro.oliveira20@gmail.com
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -23,14 +23,7 @@ import br.com.ppm.commons.validation.ArgumentValidator;
  *
  * @author pedrotoliveira
  */
-public final class Strings {
-
-    /**
-     * No instances for this class
-     */
-    private Strings() {
-        throw new AssertionError("No instances for you!");
-    }
+public interface Strings {
 
     /**
      * Capitalize the first letter from a Text
@@ -39,27 +32,26 @@ public final class Strings {
      *
      * @return the new text with first letter Capitalized
      */
-    public static String capitalizeFirstLetter(final String text) {
+    static String capitalizeFirstLetter(final String text) {
         return Character.toUpperCase(text.charAt(0)) +
                 text.substring(1);
     }
 
-    public static boolean isEmpty(final String text) {
+    static boolean isEmpty(final String text) {
         return text == null || text.isEmpty();
     }
 
-    public static boolean isBlank(final String text) {
+    static boolean isBlank(final String text) {
         return text != null && text.isEmpty();
     }
 
     /**
      * Mask a String
-     * <p>
+     *
      * @param value the value
-     * <p>
-     * @return the object
+     * @return the masked string
      */
-    public static String mask(String value) {
+    static String mask(final String value) {
         ArgumentValidator.notNullParameter(value, "value");
         final int size = value.length();
 
@@ -71,10 +63,7 @@ public final class Strings {
         final int firstPart = 6;
         final int maskSize = size - lastPart - firstPart;
 
-        final StringBuilder sb = new StringBuilder(value.substring(0, firstPart));
-        for (int i = 0; i < maskSize; i++) {
-            sb.append('*');
-        }
-        return sb.append(value, size - lastPart, size).toString();
+        return value.substring(0, firstPart) + "*".repeat(maskSize) +
+                value.substring(size - lastPart, size);
     }
 }
