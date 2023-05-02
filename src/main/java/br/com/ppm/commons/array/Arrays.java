@@ -16,4 +16,9 @@ public interface Arrays {
         }
         return empty;
     }
+
+    static boolean notEmpty(final Object[] array) {
+        ArgumentValidator.notNullParameter(array, "array");
+        return !isEmpty(array);
+    }
 }
