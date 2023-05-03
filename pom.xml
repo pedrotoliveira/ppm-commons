@@ -16,9 +16,9 @@
         <maven.compiler.target>11</maven.compiler.target>
         <dependency.version.jakarta.json-api>2.1.1</dependency.version.jakarta.json-api>
         <dependency.version.parsson>1.1.1</dependency.version.parsson>
-        <dependency.version.junit>4.13.2</dependency.version.junit>
+        <dependency.version.junit>5.9.2</dependency.version.junit>
         <dependency.version.assertj>3.24.2</dependency.version.assertj>
-        <dependency.version.hamcrest-core>2.2</dependency.version.hamcrest-core>
+        <dependency.version.hamcrest>2.2</dependency.version.hamcrest>
         <dependency.version.log4j>2.20.0</dependency.version.log4j>
         <dependency.version.jacoco>0.8.8</dependency.version.jacoco>
         <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
@@ -95,15 +95,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${dependency.version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
             <version>${dependency.version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>${dependency.version.hamcrest-core}</version>
+            <artifactId>hamcrest-library</artifactId>
+            <version>${dependency.version.hamcrest}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
