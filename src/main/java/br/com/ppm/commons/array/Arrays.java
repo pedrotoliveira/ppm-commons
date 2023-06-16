@@ -50,7 +50,7 @@ public interface Arrays {
      * This method will return a new array with the elements in reverse order,
      * the given array will NOT be modified.
      *
-     * @param array
+     *
      * @returnÒÒ
      */
     static Object[] newReverse(final Object[] array) {
