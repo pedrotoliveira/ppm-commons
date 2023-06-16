@@ -176,4 +176,13 @@ public final class ArgumentValidator {
     		throw new IllegalArgumentException(message);
 		}
 	}
+
+	/**
+	 * Create a new instance of {@link NumberValidation} to validate a number.
+	 *
+	 * @param number the number to check
+	 */
+	public static NumberValidation number(Number number) {
+		return new NumberValidation(number);
+	}
 }
