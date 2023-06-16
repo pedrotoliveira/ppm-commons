@@ -17,6 +17,8 @@
 
 package br.com.ppm.commons.time;
 
+import br.com.ppm.commons.validation.ArgumentValidator;
+
 import java.time.LocalDateTime;
 
 public final class Week {
@@ -24,11 +26,30 @@ public final class Week {
     private final LocalDateTime time;
 
     public Week(int year, int month, int day) {
+        ArgumentValidator.number(year).inRange(0, 9999);
+        ArgumentValidator.number(month).inRange(1, 12);
+        ArgumentValidator.number(day).inRange(1, 31);
         this.time = LocalDateTime.of(year, month, day, 0, 0);
     }
 
+
+    /**
+     * Get the day of week
+     *
+     * @return a string with the day of week
+     */
     public String getDay() {
         return time.getDayOfWeek().name();
+    }
+
+    /**
+     * Get the day of week with first letter in upper caseÏ
+     *
+     * @return String
+     */
+    public String day() {
+        char[] chars = getDay().toCharArray();
+        return chars[0] + getDay().substring(1).toLowerCase();
     }
 
     @Override
