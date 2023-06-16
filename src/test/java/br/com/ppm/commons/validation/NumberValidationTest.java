@@ -45,6 +45,4 @@ class NumberValidationTest {
         );
         assertEquals("The range must be not null [ 10, null]", exception.getMessage());
     }
-
-
 }
