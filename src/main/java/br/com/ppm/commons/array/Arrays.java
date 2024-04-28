@@ -28,9 +28,9 @@ public interface Arrays {
      * @param array the array to reverse
      * @throws IllegalArgumentException if the array is null
      */
-    static Object[] reverse(final Object[] array) {
+    static void reverse(final Object[] array) {
         ArgumentValidator.notNullParameter(array, "array");
-        if (array.length == 0) return array;
+        if (array.length == 0) return;
         int start = 0;
         int end = array.length - 1;
         while (start < end) {
@@ -41,7 +41,6 @@ public interface Arrays {
             start = start + 1;
             end = end - 1;
         }
-        return array;
     }
 
     /**
@@ -50,8 +49,8 @@ public interface Arrays {
      * This method will return a new array with the elements in reverse order,
      * the given array will NOT be modified.
      *
-     * @param array
-     * @returnÒÒ
+     * @param array the array to reverse
+     * @return a new array with the elements in reverse order
      */
     static Object[] newReverse(final Object[] array) {
         ArgumentValidator.notNullParameter(array, "array");
