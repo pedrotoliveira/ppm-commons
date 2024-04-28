@@ -23,6 +23,7 @@ import java.util.*;
  * Expose type checks
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class Types {
 

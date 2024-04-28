@@ -38,16 +38,24 @@ import static br.com.ppm.commons.reflect.ReflectionFilters.filterByMethodParamet
  * Reflections Operations
  *
  * @author Pedro T. Oliveira
+ * @version $Id: $Id
  */
 public interface Reflections {
 
+    /** Constant <code>logger</code> */
     Logger logger = LogManager.getLogger(Reflections.class);
 
+    /** Constant <code>FIELD="field"</code> */
     String FIELD = "field";
+    /** Constant <code>FIELD_NOT_FOUND="Field Not Found"</code> */
     String FIELD_NOT_FOUND = "Field Not Found";
+    /** Constant <code>EXCEPTION_ACCESSING_FIELD="Exception accessing field"</code> */
     String EXCEPTION_ACCESSING_FIELD = "Exception accessing field";
+    /** Constant <code>FIELDS_SEPARATOR="\\."</code> */
     String FIELDS_SEPARATOR = "\\.";
+    /** Constant <code>TARGET="target"</code> */
     String TARGET = "target";
+    /** Constant <code>FIELD_NAME="fieldName"</code> */
     String FIELD_NAME = "fieldName";
 
     /**
@@ -105,9 +113,9 @@ public interface Reflections {
     /**
      * Gets the value by field name spaces, navigating in object hierarchy
      * <p>
-     * Use the dot notation to navigate to the desired field <br />
-     * Example: "thing.child" <br />
-     * To get Map fields use the same notation "some.mapField.thing" <br />
+     * Use the dot notation to navigate to the desired field
+     * Example: "thing.child"
+     * To get Map fields use the same notation "some.mapField.thing"
      * To get List fields use the index "some.listField.0";
      * </p>
      *
@@ -126,9 +134,9 @@ public interface Reflections {
     /**
      * Gets the value by field name spaces, navigating in object hierarchy
      * <p>
-     * Use the dot notation to navigate to the desired field <br />
-     * Example: "thing.child" <br />
-     * To get Map fields use the same notation "some.mapField.thing" <br />
+     * Use the dot notation to navigate to the desired field
+     * Example: "thing.child"
+     * To get Map fields use the same notation "some.mapField.thing"
      * To get List fields use the index "some.listField.0";
      * </p>
      *
@@ -181,6 +189,14 @@ public interface Reflections {
         throw ArgumentValidator.handleIllegalArgumentException(FIELD_NOT_FOUND);
     }
 
+    /**
+     * <p>getValueFromField.</p>
+     *
+     * @param fieldName a {@link java.lang.String} object.
+     * @param targetClass a {@link java.lang.Class} object.
+     * @param target a {@link java.lang.Object} object.
+     * @return a {@link java.lang.Object} object.
+     */
     static Object getValueFromField(final String fieldName, final Class<?> targetClass, final Object target) {
         try {
             Field targetField = targetClass.getDeclaredField(fieldName);
@@ -191,6 +207,13 @@ public interface Reflections {
         }
     }
 
+    /**
+     * <p>getMapValueByFieldName.</p>
+     *
+     * @param fieldName a {@link java.lang.String} object.
+     * @param target a {@link java.lang.Object} object.
+     * @return a {@link java.util.Optional} object.
+     */
     static Optional<Object> getMapValueByFieldName(final String fieldName, final Object target) {
         if (isMap(target)) {
             Object value = ((Map<?, ?>) target).get(fieldName);
@@ -199,6 +222,13 @@ public interface Reflections {
         return Optional.empty();
     }
 
+    /**
+     * <p>getListValueByFieldName.</p>
+     *
+     * @param fieldName a {@link java.lang.String} object.
+     * @param target a {@link java.lang.Object} object.
+     * @return a {@link java.util.Optional} object.
+     */
     static Optional<Object> getListValueByFieldName(final String fieldName, final Object target) {
         if (isList(target) && Numbers.isNumber(fieldName)) {
             int index = Integer.parseInt(fieldName);
@@ -209,6 +239,13 @@ public interface Reflections {
         }
     }
 
+    /**
+     * <p>setByFieldName.</p>
+     *
+     * @param field a {@link java.lang.String} object.
+     * @param target a {@link java.lang.Object} object.
+     * @param value a {@link java.lang.Object} object.
+     */
     static void setByFieldName(final String field, final Object target, final Object value) {
         ArgumentValidator.notNullParameter(field, FIELD);
         ArgumentValidator.notNullParameter(target, TARGET);
@@ -244,6 +281,14 @@ public interface Reflections {
         }
     }
 
+    /**
+     * <p>getValueByField.</p>
+     *
+     * @param field a {@link java.lang.reflect.Field} object.
+     * @param target a {@link java.lang.Object} object.
+     * @return a {@link java.util.Optional} object.
+     * @throws java.lang.IllegalAccessException if any.
+     */
     static Optional<Object> getValueByField(Field field, Object target) throws IllegalAccessException {
         ArgumentValidator.notNullParameter(field, FIELD);
         ArgumentValidator.notNullParameter(target, TARGET);

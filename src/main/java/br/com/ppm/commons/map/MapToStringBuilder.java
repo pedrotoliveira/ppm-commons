@@ -29,15 +29,22 @@ import static br.com.ppm.commons.string.ToStringConstants.*;
  * Map to String Builder
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class MapToStringBuilder implements ToStringBuilder {
 
     private final Map<?, ?> map;
 
+    /**
+     * <p>Constructor for MapToStringBuilder.</p>
+     *
+     * @param map a {@link java.util.Map} object.
+     */
     public MapToStringBuilder(Map<?, ?> map) {
         this.map = map;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String build(final boolean ignoreSuperType, final ToStringStyle.Style style) {
         KeyValueAppender appender = KeyValueAppender.of(new StringBuilder(OPEN_MAP_BRACKET));

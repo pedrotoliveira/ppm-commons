@@ -21,10 +21,23 @@ import br.com.ppm.commons.validation.ArgumentValidator;
 
 import java.time.LocalDateTime;
 
+/**
+ * <p>Week class.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public final class Week {
 
     private final LocalDateTime time;
 
+    /**
+     * <p>Constructor for Week.</p>
+     *
+     * @param year a int.
+     * @param month a int.
+     * @param day a int.
+     */
     public Week(int year, int month, int day) {
         ArgumentValidator.number(year).inRange(0, 9999);
         ArgumentValidator.number(month).inRange(1, 12);
@@ -52,6 +65,7 @@ public final class Week {
         return chars[0] + getDay().substring(1).toLowerCase();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "Week{" + "time=" + time + '}';

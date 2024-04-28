@@ -54,10 +54,16 @@ final class ClassNameHolder {
 		return this;
 	}
 
+	/**
+	 * <p>validateCallCounts.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean validateCallCounts() {
 		return callCounts.get() <= MAX_CALL_COUNTS;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -67,11 +73,13 @@ final class ClassNameHolder {
 				Objects.equals(className, holder.className);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
 		return Objects.hash(className, hashCode);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return "ClassHolder{" +

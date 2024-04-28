@@ -24,12 +24,19 @@ import java.io.Serializable;
  * Encapsulates commons operations from a Type
  *
  * @param <T> type to hide
+ * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public class Wrapper<T> implements Serializable, Comparable<T> {
 
     private final T object;
     private WrapperTypes wrapperType;
 
+    /**
+     * <p>Constructor for Wrapper.</p>
+     *
+     * @param object a T object.
+     */
     public Wrapper(T object) {
         ArgumentValidator.notNullParameter(object, "object");
         ArgumentValidator.isTrue(Types.isWrapper(object), "The object should be a Wrapper.");
@@ -37,15 +44,22 @@ public class Wrapper<T> implements Serializable, Comparable<T> {
         this.wrapperType = WrapperTypes.find(object);
     }
 
+    /**
+     * <p>Getter for the field <code>object</code>.</p>
+     *
+     * @return a T object.
+     */
     public T getObject() {
         return object;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int compareTo(T o) {
         return ((Comparable<T>) object).compareTo(o);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return  (wrapperType.isNumber())

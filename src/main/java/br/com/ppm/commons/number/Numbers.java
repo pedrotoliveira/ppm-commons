@@ -22,6 +22,7 @@ import br.com.ppm.commons.string.Strings;
  * Utility class Numbers
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class Numbers {
 
@@ -136,6 +137,12 @@ public final class Numbers {
         return !allowSigns && foundDigit;
     }
 
+    /**
+     * <p>isNumber.</p>
+     *
+     * @param classType a {@link java.lang.Class} object.
+     * @return a boolean.
+     */
     public static boolean isNumber(Class<?> classType) {
         return Number.class.isAssignableFrom(classType);
     }

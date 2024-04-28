@@ -36,11 +36,12 @@ final class DepthController {
 	private DepthController() {
 	}
 
-	/**
-	 * Checks if is allowed.
-	 *
-	 * @return true, if is allowed
-	 */
+    /**
+     * Checks if is allowed.
+     *
+     * @return true, if is allowed
+     * @param object a {@link java.lang.Object} object.
+     */
     public static boolean isAllowed(final Object object) {
     	return object == null || registerCaller(object).validateCallCounts();
 	}

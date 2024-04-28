@@ -20,17 +20,27 @@ package br.com.ppm.commons.string;
  * Constants Used in ToStringBuilder Classes
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class ToStringConstants {
 
+    /** Constant <code>OPEN_MAP_BRACKET="Map{ "</code> */
     public static final String OPEN_MAP_BRACKET = "Map{ ";
+    /** Constant <code>OPEN_BRACKET="{ "</code> */
     public static final String OPEN_BRACKET = "{ ";
+    /** Constant <code>CLOSE_BRACKET=" }"</code> */
     public static final String CLOSE_BRACKET = " }";
+    /** Constant <code>OPEN_SQUARE_BRACKET="["</code> */
     public static final String OPEN_SQUARE_BRACKET = "[";
+    /** Constant <code>CLOSE_SQUARE_BRACKET="]"</code> */
     public static final String CLOSE_SQUARE_BRACKET = "]";
+    /** Constant <code>EQUAL="="</code> */
     public static final String EQUAL = "=";
+    /** Constant <code>COMMA=", "</code> */
     public static final String COMMA = ", ";
+    /** Constant <code>IGNORE_SUPER_TYPES=true</code> */
     public static final boolean IGNORE_SUPER_TYPES = true;
+    /** Constant <code>NOT_IGNORE_SUPER_TYPES=false</code> */
     public static final boolean NOT_IGNORE_SUPER_TYPES = false;
 
     private ToStringConstants() {

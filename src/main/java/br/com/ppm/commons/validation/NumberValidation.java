@@ -16,14 +16,31 @@
  */
 package br.com.ppm.commons.validation;
 
+/**
+ * <p>NumberValidation class.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public final class NumberValidation {
 
     private final Number toCheck;
 
+    /**
+     * <p>Constructor for NumberValidation.</p>
+     *
+     * @param number a {@link java.lang.Number} object.
+     */
     public NumberValidation(Number number) {
         this.toCheck = number;
     }
 
+    /**
+     * <p>inRange.</p>
+     *
+     * @param start a {@link java.lang.Number} object.
+     * @param end a {@link java.lang.Number} object.
+     */
     public void inRange(Number start, Number end) {
         if (start == null || end == null) {
             throw new IllegalArgumentException(

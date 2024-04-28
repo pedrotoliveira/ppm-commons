@@ -26,16 +26,23 @@ import static br.com.ppm.commons.string.ToStringConstants.*;
  * Array ToStringBuilder
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class ArraysToStringBuilder implements ToStringBuilder {
 
     private static final int PAGE_SIZE = 15;
     private final Object[] array;
 
+    /**
+     * <p>Constructor for ArraysToStringBuilder.</p>
+     *
+     * @param array a {@link java.lang.Object} object.
+     */
     public ArraysToStringBuilder(Object... array) {
         this.array = array;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
         KeyValueAppender appender = appendArrayValues(style);

@@ -17,11 +17,19 @@
 package br.com.ppm.commons.formatter;
 
 /**
+ * <p>StackTracerFormatter interface.</p>
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public interface StackTracerFormatter {
 
+    /**
+     * <p>formatToString.</p>
+     *
+     * @param throwable a {@link java.lang.Throwable} object.
+     * @return a {@link java.lang.String} object.
+     */
     String formatToString(final Throwable throwable);
 
 }

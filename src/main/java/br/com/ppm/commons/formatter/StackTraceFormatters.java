@@ -17,8 +17,10 @@
 package br.com.ppm.commons.formatter;
 
 /**
+ * <p>StackTraceFormatters class.</p>
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public enum StackTraceFormatters implements StackTracerFormatter {
 
@@ -32,6 +34,7 @@ public enum StackTraceFormatters implements StackTracerFormatter {
         this.formatter = formatter;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String formatToString(final Throwable t) {
         return this.formatter.formatToString(t);
