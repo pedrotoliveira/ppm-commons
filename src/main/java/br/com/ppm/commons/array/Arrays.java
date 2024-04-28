@@ -2,8 +2,20 @@ package br.com.ppm.commons.array;
 
 import br.com.ppm.commons.validation.ArgumentValidator;
 
+/**
+ * <p>Arrays interface.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public interface Arrays {
 
+    /**
+     * <p>isEmpty.</p>
+     *
+     * @param array an array of {@link java.lang.Object} objects.
+     * @return a boolean.
+     */
     static boolean isEmpty(final Object[] array) {
         ArgumentValidator.notNullParameter(array, "array");
         if (array.length == 0) return true;
@@ -17,6 +29,12 @@ public interface Arrays {
         return empty;
     }
 
+    /**
+     * <p>notEmpty.</p>
+     *
+     * @param array an array of {@link java.lang.Object} objects.
+     * @return a boolean.
+     */
     static boolean notEmpty(final Object[] array) {
         ArgumentValidator.notNullParameter(array, "array");
         return !isEmpty(array);
@@ -26,7 +44,7 @@ public interface Arrays {
      * Reverse the order of the given array using the same array as reference.
      *
      * @param array the array to reverse
-     * @throws IllegalArgumentException if the array is null
+     * @throws java.lang.IllegalArgumentException if the array is null
      */
     static void reverse(final Object[] array) {
         ArgumentValidator.notNullParameter(array, "array");

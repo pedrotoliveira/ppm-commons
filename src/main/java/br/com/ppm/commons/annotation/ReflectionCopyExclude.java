@@ -22,8 +22,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * <p>ReflectionCopyExclude class.</p>
  *
  * @author Pedro T. Oliveira
+ * @version $Id: $Id
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

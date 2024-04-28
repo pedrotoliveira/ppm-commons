@@ -22,6 +22,7 @@ import br.com.ppm.commons.validation.ArgumentValidator;
  * String Operations
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public interface Strings {
 
@@ -29,7 +30,6 @@ public interface Strings {
      * Capitalize the first letter from a Text
      *
      * @param text the text string
-     *
      * @return the new text with first letter Capitalized
      */
     static String capitalizeFirstLetter(final String text) {
@@ -37,10 +37,22 @@ public interface Strings {
                 text.substring(1);
     }
 
+    /**
+     * <p>isEmpty.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     static boolean isEmpty(final String text) {
         return text == null || text.isEmpty();
     }
 
+    /**
+     * <p>isBlank.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     static boolean isBlank(final String text) {
         return text != null && text.isEmpty();
     }

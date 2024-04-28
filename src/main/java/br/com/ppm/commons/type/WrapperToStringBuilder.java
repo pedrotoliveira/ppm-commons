@@ -19,14 +19,26 @@ package br.com.ppm.commons.type;
 import br.com.ppm.commons.string.ToStringBuilder;
 import br.com.ppm.commons.annotation.ToStringStyle;
 
+/**
+ * <p>WrapperToStringBuilder class.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public class WrapperToStringBuilder implements ToStringBuilder {
 
     private final Wrapper<?> wrapper;
 
+    /**
+     * <p>Constructor for WrapperToStringBuilder.</p>
+     *
+     * @param wrapper a {@link br.com.ppm.commons.type.Wrapper} object.
+     */
     public WrapperToStringBuilder(Wrapper<?> wrapper) {
         this.wrapper = wrapper;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
         return wrapper.toString();

@@ -22,10 +22,22 @@ import java.util.function.Predicate;
 
 interface ReflectionFilters {
 
+    /**
+     * <p>filterByMethodName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link java.util.function.Predicate} object.
+     */
     static Predicate<Method> filterByMethodName(String name) {
         return (method) -> method.getName().equals(name);
     }
 
+    /**
+     * filterByMethodParameterTypes.
+     *
+     * @param typeParams a {@link java.lang.Class} object.
+     * @return a {@link java.util.function.Predicate} object.
+     */
     static Predicate<Method> filterByMethodParameterTypes(Class<?>... typeParams) {
         return (method) -> Arrays.equals(typeParams, method.getParameterTypes());
     }

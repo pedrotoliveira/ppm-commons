@@ -29,6 +29,9 @@ import java.util.Map;
 
 /**
  * Factory of ToStringBuilders
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class ToStringBuilderFactory {
 
@@ -38,10 +41,22 @@ public final class ToStringBuilderFactory {
         this.element = element;
     }
 
+    /**
+     * <p>of.</p>
+     *
+     * @param element a T object.
+     * @param <T> a T object.
+     * @return a {@link br.com.ppm.commons.string.ToStringBuilder} object.
+     */
     public static <T> ToStringBuilder of(T element) {
         return new ToStringBuilderFactory(element).create();
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @return a {@link br.com.ppm.commons.string.ToStringBuilder} object.
+     */
     public ToStringBuilder create() {
         if (Types.isWrapper(element)) {
             return new WrapperToStringBuilder(new Wrapper<>(element));

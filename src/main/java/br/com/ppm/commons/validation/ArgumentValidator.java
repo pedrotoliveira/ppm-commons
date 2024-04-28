@@ -23,68 +23,64 @@ import java.util.NoSuchElementException;
  * Argument Validator can be used to validate arguments passed to methods and functions.
  *
  * @author Pedro T. Oliveira
+ * @version $Id: $Id
  */
 public final class ArgumentValidator {
 
-	/**
-	 * Validate if a parameter is Null.
-	 *
-	 * @param param     a Object parameter.
-	 * @param paramName the parameter name.
-	 *
-	 * @throws IllegalArgumentException if the parameter is null
-	 */
+    /**
+     * Validate if a parameter is Null.
+     *
+     * @param param     a Object parameter.
+     * @param paramName the parameter name.
+     * @throws java.lang.IllegalArgumentException if the parameter is null
+     */
     public static void notNullParameter(final Object param, final String paramName) {
 		notNull(param, invalidParam(paramName));
 	}
 
-	/**
-	 * Validate if a Array is Empty.
-	 *
-	 * @param param     a Array parameter.
-	 * @param paramName the parameter name.
-	 *
-	 * @throws IllegalArgumentException if the array parameter is empty
-	 */
+    /**
+     * Validate if a Array is Empty.
+     *
+     * @param param     a Array parameter.
+     * @param paramName the parameter name.
+     * @throws java.lang.IllegalArgumentException if the array parameter is empty
+     */
     public static void notEmptyParameter(final Object[] param, final String paramName) {
 		notEmpty(param, invalidParam(paramName));
 	}
 
-	/**
-	 * Validate if a Array contains null elements.
-	 *
-	 * @param param     a Array parameter.
-	 * @param paramName the parameter name.
-	 *
-	 * @throws IllegalArgumentException if the array parameter contains null elements.
-	 */
+    /**
+     * Validate if a Array contains null elements.
+     *
+     * @param param     a Array parameter.
+     * @param paramName the parameter name.
+     * @throws java.lang.IllegalArgumentException if the array parameter contains null elements.
+     */
     public static void noNullElementsParameter(final Object[] param, final String paramName) {
 		noNullElements(param, invalidParam(paramName));
 	}
 
-	/**
-	 * Validate if a String is not empty or null!
-	 *
-	 * @param param     a String parameter
-	 * @param paramName the parameter name.
-	 *
-	 * @throws IllegalArgumentException if the parameter is null or empty
-	 */
+    /**
+     * Validate if a String is not empty or null!
+     *
+     * @param param     a String parameter
+     * @param paramName the parameter name.
+     * @throws java.lang.IllegalArgumentException if the parameter is null or empty
+     */
     public static void isNotEmpty(final String param, final String paramName) {
 		if (param == null || param.isEmpty()) {
 			throw handleIllegalArgumentException(paramName);
 		}
 	}
 
-	/**
-	 * Validate if size is different from the parameter
-	 *
-	 * @param collection a Collection
-	 * @param size the size of the collection
-	 * @param paramName  the parameter name.
-	 *
-	 * @throws IllegalArgumentException if the parameter size is different
-	 */
+    /**
+     * Validate if size is different from the parameter
+     *
+     * @param collection a Collection
+     * @param size the size of the collection
+     * @param paramName  the parameter name.
+     * @throws java.lang.IllegalArgumentException if the parameter size is different
+     */
     public static void correctSize(final Collection<?> collection, final int size, final String paramName) {
 		notEmpty(collection, invalidParam(paramName));
 		if (collection.size() != size) {
@@ -92,35 +88,32 @@ public final class ArgumentValidator {
 		}
 	}
 
-	/**
-	 * Create a NoSuchElementException with a message: element + " not found."
-	 *
-	 * @param element the element name.
-	 *
-	 * @return NoSuchElementException
-	 */
+    /**
+     * Create a NoSuchElementException with a message: element + " not found."
+     *
+     * @param element the element name.
+     * @return NoSuchElementException
+     */
     public static NoSuchElementException handleNoSuchElement(final String element) {
 		return new NoSuchElementException(element + " not found.");
 	}
 
-	/**
-	 * Create a IllegalArgumentException with a message: paramName is invalid.
-	 *
-	 * @param paramName the parameter name.
-	 *
-	 * @return IllegalArgumentException
-	 */
+    /**
+     * Create a IllegalArgumentException with a message: paramName is invalid.
+     *
+     * @param paramName the parameter name.
+     * @return IllegalArgumentException
+     */
     public static IllegalArgumentException handleIllegalArgumentException(final String paramName) {
 		return new IllegalArgumentException(invalidParam(paramName));
 	}
 
-	/**
-	 * Create a NoSuchElementException with a message equal the message
-	 *
-	 * @param msg the message
-	 *
-	 * @return IllegalStateException
-	 */
+    /**
+     * Create a NoSuchElementException with a message equal the message
+     *
+     * @param msg the message
+     * @return IllegalStateException
+     */
     public static IllegalStateException handleIllegalStateException(final String msg) {
 		return new IllegalStateException(msg);
 	}
@@ -159,6 +152,12 @@ public final class ArgumentValidator {
 		}
 	}
 	
+	/**
+	 * <p>isValidEmail.</p>
+	 *
+	 * @param email a {@link java.lang.String} object.
+	 * @param paramName a {@link java.lang.String} object.
+	 */
 	public static void isValidEmail(final String email, final String paramName) {
         if (!new EmailPattern(email).matches()) {
             throw handleIllegalArgumentException(paramName);
@@ -178,9 +177,10 @@ public final class ArgumentValidator {
 	}
 
 	/**
-	 * Create a new instance of {@link NumberValidation} to validate a number.
+	 * Create a new instance of {@link br.com.ppm.commons.validation.NumberValidation} to validate a number.
 	 *
 	 * @param number the number to check
+	 * @return a {@link br.com.ppm.commons.validation.NumberValidation} object.
 	 */
 	public static NumberValidation number(Number number) {
 		return new NumberValidation(number);

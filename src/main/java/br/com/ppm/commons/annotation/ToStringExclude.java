@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * Exclude field from the toString.
  *
  * @author Pedro T. Oliveira
- *
+ * @version $Id: $Id
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

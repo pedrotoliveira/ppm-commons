@@ -22,6 +22,12 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
+/**
+ * <p>WrapperTypes class.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public enum WrapperTypes {
 
     String(java.lang.String.class),
@@ -56,14 +62,33 @@ public enum WrapperTypes {
         this.isNumber = Numbers.isNumber(classType);
     }
 
+    /**
+     * <p>anyMatch.</p>
+     *
+     * @param value a {@link java.lang.Object} object.
+     * @return a boolean.
+     */
     public static boolean anyMatch(Object value) {
         return Arrays.stream(values()).anyMatch(matcher(value));
     }
 
+    /**
+     * <p>matcher.</p>
+     *
+     * @param object a {@link java.lang.Object} object.
+     * @return a {@link java.util.function.Predicate} object.
+     */
     public static Predicate<WrapperTypes> matcher(Object object) {
         return wrapperTypes -> wrapperTypes.getName().equals(object.getClass().getName());
     }
 
+    /**
+     * <p>find.</p>
+     *
+     * @param object a T object.
+     * @param <T> a T object.
+     * @return a {@link br.com.ppm.commons.type.WrapperTypes} object.
+     */
     public static <T> WrapperTypes find(T object) {
        return Arrays.stream(values())
                .filter(matcher(object))
@@ -71,18 +96,34 @@ public enum WrapperTypes {
                .orElseThrow(NoSuchElementException::new);
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <p>Getter for the field <code>classType</code>.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     public Class<?> getClassType() {
         return classType;
     }
 
+    /**
+     * <p>isNumber.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isNumber() {
         return isNumber;
     }
 
+    /** {@inheritDoc} */
     @Override
     public java.lang.String toString() {
         return "WrapperTypes{" +

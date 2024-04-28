@@ -32,6 +32,7 @@ class TextStackTraceFormatter implements StackTracerFormatter {
 
     private static final String SEPARATOR = "\n";
 
+    /** {@inheritDoc} */
     @Override
     public String formatToString(Throwable throwable) {
         ArgumentValidator.notNullParameter(throwable, "Throwable should not be null");

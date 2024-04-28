@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * Call the toString method from the field.
  *
  * @author Pedro T. Oliveira
- *
+ * @version $Id: $Id
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

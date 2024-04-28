@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
  *
  * @author Pedro T. Oliveira (pedrotoliveira)
  * @since 12/05/18 09:47
+ * @version $Id: $Id
  */
 public class EmailPattern {
     
@@ -32,23 +33,44 @@ public class EmailPattern {
     private final Pattern pattern;
     private final Matcher matcher;
     
+    /**
+     * <p>Constructor for EmailPattern.</p>
+     *
+     * @param toMatch a {@link java.lang.String} object.
+     */
     public EmailPattern(final String toMatch) {
         this.pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
         this.matcher = pattern.matcher(toMatch);
     }
     
+    /**
+     * <p>matches.</p>
+     *
+     * @return a boolean.
+     */
     public boolean matches() {
         return matcher.matches();
     }
 
+    /**
+     * <p>Getter for the field <code>pattern</code>.</p>
+     *
+     * @return a {@link java.util.regex.Pattern} object.
+     */
     public Pattern getPattern() {
         return pattern;
     }
 
+    /**
+     * <p>Getter for the field <code>matcher</code>.</p>
+     *
+     * @return a {@link java.util.regex.Matcher} object.
+     */
     public Matcher getMatcher() {
         return matcher;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,11 +80,13 @@ public class EmailPattern {
                 Objects.equals(matcher, that.matcher);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hash(pattern, matcher);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "EmailPattern{" +

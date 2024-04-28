@@ -31,6 +31,7 @@ class HtmlStackTraceFormatter implements StackTracerFormatter {
     private static final String CLOSE_DIV = "</div>";
     private static final String NEW_LINE = "<br />\n";
 
+    /** {@inheritDoc} */
     @Override
     public String formatToString(Throwable throwable) {
         try (ByteArrayOutputStream buffer = new ByteArrayOutputStream(); PrintStream ps = new PrintStream(buffer)) {

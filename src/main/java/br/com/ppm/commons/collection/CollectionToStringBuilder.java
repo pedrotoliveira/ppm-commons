@@ -29,21 +29,34 @@ import static br.com.ppm.commons.string.ToStringConstants.*;
  * Collection ToStringBuilder
  *
  * @author pedrotoliveira
+ * @version $Id: $Id
  */
 public final class CollectionToStringBuilder implements ToStringBuilder {
 
     private final int pageSize;
     private final Collection<?> collection;
 
+    /**
+     * <p>Constructor for CollectionToStringBuilder.</p>
+     *
+     * @param collection a {@link java.util.Collection} object.
+     */
     public CollectionToStringBuilder(final Collection<?> collection) {
         this(5, collection);
     }
 
+    /**
+     * <p>Constructor for CollectionToStringBuilder.</p>
+     *
+     * @param pageSize a int.
+     * @param collection a {@link java.util.Collection} object.
+     */
     public CollectionToStringBuilder(int pageSize, Collection<?> collection) {
         this.pageSize = pageSize;
         this.collection = collection;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String build(boolean ignoreSuperType, ToStringStyle.Style style) {
         KeyValueAppender appender = appendCollectionValues(style);

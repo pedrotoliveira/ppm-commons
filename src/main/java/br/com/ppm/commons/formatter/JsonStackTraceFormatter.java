@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 final class JsonStackTraceFormatter implements StackTracerFormatter {
 
+    /** {@inheritDoc} */
     @Override
     public String formatToString(final Throwable throwable) {
         Objects.requireNonNull(throwable, "Throwable should not be null");

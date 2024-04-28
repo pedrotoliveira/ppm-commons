@@ -24,6 +24,7 @@ import br.com.ppm.commons.formatter.StackTraceFormatters;
  * Utility Class to format Java Stack Traces.
  *
  * @author Pedro T. Oliveira
+ * @version $Id: $Id
  */
 public final class StackTraces {
 
@@ -39,7 +40,6 @@ public final class StackTraces {
      * @param throwable Exception to format
      * @param format Specified Format
      * @return <code> String </code> StackTrace String Formated.
-     *
      */
     public static String toString(final Throwable throwable, StackTraceFormatters format) {
         return format.formatToString(throwable);

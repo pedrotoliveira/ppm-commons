@@ -20,6 +20,12 @@ import br.com.ppm.commons.annotation.ToStringStyle;
 
 import static br.com.ppm.commons.string.ToStringConstants.NOT_IGNORE_SUPER_TYPES;
 
+/**
+ * <p>ToStringBuilder interface.</p>
+ *
+ * @author pedrotoliveira
+ * @version $Id: $Id
+ */
 public interface ToStringBuilder {
     /**
      * Create a toString Pattern for an object and its super type, if any.
@@ -45,7 +51,6 @@ public interface ToStringBuilder {
      *
      * @param ignoreSuperType has to ignore the superType ?
      * @param style a ToStringStyle.Style
-     *
      * @return toString Pattern
      */
     String build(boolean ignoreSuperType, ToStringStyle.Style style);
@@ -54,7 +59,6 @@ public interface ToStringBuilder {
      * Create a toString Pattern for an object and its super type, if any.
      *
      * @param object the Object
-     *
      * @return toString Pattern
      */
     static String toString(final Object object) {
@@ -66,7 +70,6 @@ public interface ToStringBuilder {
      *
      * @param object the Object
      * @param ignoreSuperType has to ignore the superType ?
-     *
      * @return toString Pattern
      */
     static String toString(final Object object, final boolean ignoreSuperType) {

@@ -39,15 +39,22 @@ import static br.com.ppm.commons.string.ToStringConstants.*;
  *
  * @author Pedro T. Oliveira (pedrotoliveira)
  * @since 05/15/2013
+ * @version $Id: $Id
  */
 public final class ObjectsToStringBuilder implements ToStringBuilder {
 
     private final Object object;
 
+    /**
+     * <p>Constructor for ObjectsToStringBuilder.</p>
+     *
+     * @param object a {@link java.lang.Object} object.
+     */
     public ObjectsToStringBuilder(final Object object) {
         this.object = object;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String build(final boolean ignoreSuperType, final Style style) {
         return (object == null) ? buildNullToString() : buildObjectToString(ignoreSuperType, style);
