@@ -20,13 +20,7 @@
         <dependency.version.junit>5.9.2</dependency.version.junit>
         <dependency.version.assertj>3.24.2</dependency.version.assertj>
         <dependency.version.hamcrest>2.2</dependency.version.hamcrest>
-        <dependency.version.log4j>2.20.0</dependency.version.log4j>
-        <dependency.version.jacoco>0.8.12</dependency.version.jacoco>
-        <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
-        <jacoco.output.directory>${project.build.directory}/jacoco</jacoco.output.directory>
-        <jacoco.report.directory>${project.build.directory}/jacoco-reports</jacoco.report.directory>
-        <jacoco.out.file>jacoco.exec</jacoco.out.file>
-        <sonar.jacoco.reportPath>${jacoco.output.directory}/${jacoco.out.file}</sonar.jacoco.reportPath>
+        <dependency.version.log4j>2.23.1</dependency.version.log4j>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
 
@@ -88,12 +82,6 @@
             <artifactId>log4j-core</artifactId>
             <version>${dependency.version.log4j}</version>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${dependency.version.jacoco}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
