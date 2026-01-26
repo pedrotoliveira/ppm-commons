@@ -18,7 +18,7 @@
         <dependency.version.jakarta.json-api>2.1.1</dependency.version.jakarta.json-api>
         <dependency.version.parsson>1.1.6</dependency.version.parsson>
         <dependency.version.junit>5.9.2</dependency.version.junit>
-        <dependency.version.assertj>3.24.2</dependency.version.assertj>
+        <dependency.version.assertj>3.27.7</dependency.version.assertj>
         <dependency.version.hamcrest>2.2</dependency.version.hamcrest>
         <dependency.version.log4j>2.20.0</dependency.version.log4j>
         <dependency.version.jacoco>0.8.12</dependency.version.jacoco>
